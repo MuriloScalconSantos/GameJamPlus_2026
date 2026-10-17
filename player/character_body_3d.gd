@@ -1,6 +1,7 @@
 extends CharacterBody3D
 ## Movimentação com momentum estilo Mario (eixos do mundo, sem rotação do personagem).
-## Sprite olha para a DIREITA por padrão e é espelhado ao virar para a esquerda.
+## Usa animações por direção quando o sprite tem SpriteFrames configurado.
+## Sprites sem animações direcionais continuam sendo espelhados na horizontal.
 ## Input e sprite são detectados automaticamente (veja o Output ao iniciar o jogo).
 
 # ===========================================================================
@@ -42,7 +43,7 @@ extends CharacterBody3D
 
 # --- SPRITE / DIREÇÃO -------------------------------------------------------
 @export_group("Sprite")
-## Opcional: Sprite3D ou AnimatedSprite3D a espelhar. Vazio = procura nos filhos.
+## Opcional: Sprite3D ou AnimatedSprite3D. Vazio = procura nos filhos.
 @export var sprite: SpriteBase3D
 ## Durante a derrapada o sprite continua olhando para onde está deslizando,
 ## e só vira quando a derrapada termina.
@@ -84,6 +85,8 @@ var _act_down: StringName = &""
 var _is_skidding: bool = false
 var _facing_right: bool = true
 var _use_scale_flip: bool = false
+var _directional_sprite: AnimatedSprite3D
+var _last_animation_direction: String = "down"
 
 # Mola do squash: positivo = achatado, negativo = esticado.
 var _squash: float = 0.0
@@ -116,10 +119,26 @@ func _resolve_visuals() -> void:
 
 	# Sem sprite: espelha invertendo a escala X do visual.
 	_use_scale_flip = sprite == null
+	if sprite is AnimatedSprite3D:
+		var candidate: AnimatedSprite3D = sprite as AnimatedSprite3D
+		var frames: SpriteFrames = candidate.sprite_frames
+		if frames:
+			var all_directions: bool = true
+			for direction_name: String in ["down", "up", "left", "right"]:
+				if not frames.has_animation("walk_" + direction_name) or not frames.has_animation("idle_" + direction_name):
+						all_directions = false
+						break
+			if all_directions:
+				_directional_sprite = candidate
 
 	if sprite:
-		sprite.flip_h = not _facing_right
-		print("[Player] sprite espelhado: ", sprite.name)
+		if _directional_sprite:
+			_directional_sprite.flip_h = false
+			_directional_sprite.play(&"idle_down")
+			print("[Player] animações direcionais: ", sprite.name)
+		else:
+			sprite.flip_h = not _facing_right
+			print("[Player] sprite espelhado: ", sprite.name)
 	elif visual:
 		print("[Player] nenhum Sprite3D encontrado; espelhando pela escala de: ", visual.name)
 	else:
@@ -266,15 +285,37 @@ func _physics_process(delta: float) -> void:
 		_squash_velocity = 0.0
 
 	_update_juice(delta)
+	_update_directional_animation(input_dir, has_input)
 
 
 func _set_facing(facing_right: bool) -> void:
 	if facing_right == _facing_right:
 		return
 	_facing_right = facing_right
-	if sprite:
+	if sprite and not _directional_sprite:
 		sprite.flip_h = not facing_right
 	facing_changed.emit(facing_right)
+
+
+func _update_directional_animation(input_dir: Vector2, has_input: bool) -> void:
+	if not _directional_sprite:
+		return
+
+	var movement: Vector2 = Vector2(velocity.x, velocity.z)
+	var moving: bool = has_input or movement.length_squared() > 0.04
+	if moving:
+		var facing_input: Vector2 = input_dir
+		if not has_input or (_is_skidding and hold_facing_while_skidding):
+			facing_input = movement
+		if facing_input.length_squared() > 0.0001:
+			if absf(facing_input.x) >= absf(facing_input.y):
+				_last_animation_direction = "right" if facing_input.x > 0.0 else "left"
+			else:
+				_last_animation_direction = "down" if facing_input.y > 0.0 else "up"
+
+	var animation_name: StringName = StringName(("walk_" if moving else "idle_") + _last_animation_direction)
+	if _directional_sprite.animation != animation_name or not _directional_sprite.is_playing():
+		_directional_sprite.play(animation_name)
 
 
 func _update_juice(delta: float) -> void:
