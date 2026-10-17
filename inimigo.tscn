@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://dw23kos0nwqal"]
+
+[ext_resource type="Script" path="res://character_body_3d.gd" id="1_a202f"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xvofd"]
+size = Vector2(100, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bhunq"]
+
+[node name="Inimigo" type="CharacterBody3D" unique_id=1116121820]
+script = ExtResource("1_a202f")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=856740404]
+texture = SubResource("PlaceholderTexture2D_xvofd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1976061144]
+shape = SubResource("BoxShape3D_bhunq")

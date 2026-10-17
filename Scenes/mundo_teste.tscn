@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://c68libqy6s458"]
 
 [ext_resource type="PackedScene" uid="uid://b16475ajm6rpp" path="res://player/Player2.tscn" id="1_ebs18"]
+[ext_resource type="Script" uid="uid://c62u6rrqrw14i" path="res://spawner.gd" id="2_bmojv"]
+[ext_resource type="PackedScene" uid="uid://dw23kos0nwqal" path="res://inimigo.tscn" id="3_puaij"]
 
 [sub_resource type="Environment" id="Environment_3fsuj"]
 background_mode = 1
@@ -10,8 +12,10 @@ background_color = Color(0.599367, 0.727131, 0.776669, 1)
 albedo_color = Color(0.192032, 0.199781, 0.200824, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_7uiq5"]
+size = Vector2(20, 20)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4r3th"]
+size = Vector3(20, 1, 20)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c6p0m"]
 albedo_color = Color(0.145266, 0.145266, 0.145266, 1)
@@ -87,3 +91,8 @@ mesh = SubResource("BoxMesh_sowaw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/bloco2/StaticBody3D" unique_id=1136265419]
 shape = SubResource("ConcavePolygonShape3D_ml3pm")
+
+[node name="Enemy Spawn" type="Node3D" parent="." unique_id=951080156 node_paths=PackedStringArray("player")]
+script = ExtResource("2_bmojv")
+player = NodePath("../Player")
+enemy_scene = ExtResource("3_puaij")

@@ -1,9 +1,9 @@
-[gd_resource type="SpriteFrames" format=3]
+[gd_resource type="SpriteFrames" format=3 uid="uid://fsi5acaksxi7"]
 
-[ext_resource type="Texture2D" path="res://Sprites/FRENTE_sprite_sheet.png" id="1_wx4uq"]
-[ext_resource type="Texture2D" path="res://Sprites/LADO_ESQUERDO_sprite_sheet.png" id="2_qyk50"]
-[ext_resource type="Texture2D" path="res://Sprites/LADO_DIREITO_sprite_sheet.png" id="3_c8man"]
-[ext_resource type="Texture2D" path="res://Sprites/COSTAS_sprite_sheet.png" id="4_j5sue"]
+[ext_resource type="Texture2D" uid="uid://behqiw1h4kr5p" path="res://Sprites/FRENTE_sprite_sheet.png" id="1_wx4uq"]
+[ext_resource type="Texture2D" uid="uid://yvohpnthmflv" path="res://Sprites/LADO_ESQUERDO_sprite_sheet.png" id="2_qyk50"]
+[ext_resource type="Texture2D" uid="uid://csbvfbnsfqo04" path="res://Sprites/LADO_DIREITO_sprite_sheet.png" id="3_c8man"]
+[ext_resource type="Texture2D" uid="uid://dgdo2ks21evct" path="res://Sprites/COSTAS_sprite_sheet.png" id="4_j5sue"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_adyyc"]
 atlas = ExtResource("1_wx4uq")
