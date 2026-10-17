@@ -1,6 +1,6 @@
 extends Camera3D
 ## Câmera com seguimento por mola (delay + momentum).
-## Desloca parte do offset X quando o jogador vira para a esquerda.
+## Espelha o offset X (ex.: 1.30 -> -1.30) quando o jogador vira para a esquerda.
 ## Mantenha a Camera3D como filha do jogador: o script a desacopla sozinho.
 ## A posição/ângulo que você deixar no editor define o offset e a rotação fixa
 ## (o offset do editor corresponde ao jogador olhando para a DIREITA).
@@ -27,10 +27,8 @@ extends Camera3D
 # ESPELHAMENTO HORIZONTAL
 # ---------------------------------------------------------------------------
 @export_group("Espelhamento")
-## Desloca o offset X do editor ao virar para a esquerda.
+## Espelha o offset X do editor ao virar para a esquerda (1.30 -> -1.30).
 @export var mirror_offset: bool = true
-## Fração da troca completa de lado: 0 = sem troca, 1 = espelhamento total.
-@export_range(0.0, 1.0) var mirror_strength: float = 0.15
 ## Velocidade da troca de lado. Menor = troca mais lenta e suave.
 @export var flip_smoothing: float = 6.0
 ## Deslocamento extra em X na direção em que o jogador olha (0 = só espelha o offset).
@@ -136,10 +134,9 @@ func _process(delta: float) -> void:
 	fov = lerpf(fov, target_fov, 1.0 - exp(-fov_smoothing * delta))
 
 
-## Offset do editor com uma troca parcial de lado (1 = direita, -1 = esquerda).
+## Offset do editor com o X espelhado conforme o lado (1 = direita, -1 = esquerda).
 func _get_mirrored_offset(side: float) -> Vector3:
-	var mirrored_x: float = _offset.x * side
-	var x: float = lerpf(_offset.x, mirrored_x, mirror_strength) if mirror_offset else _offset.x
+	var x: float = _offset.x * (side if mirror_offset else 1.0)
 	x += facing_offset * side
 	return Vector3(x, _offset.y, _offset.z)
 
