@@ -1,7 +1,9 @@
 extends Camera3D
 ## Câmera com seguimento por mola (delay + momentum).
+## Espelha o offset X (ex.: 1.30 -> -1.30) quando o jogador vira para a esquerda.
 ## Mantenha a Camera3D como filha do jogador: o script a desacopla sozinho.
-## A posição/ângulo que você deixar no editor define o offset e a rotação fixa.
+## A posição/ângulo que você deixar no editor define o offset e a rotação fixa
+## (o offset do editor corresponde ao jogador olhando para a DIREITA).
 
 # ---------------------------------------------------------------------------
 # ALVO
@@ -20,6 +22,17 @@ extends Camera3D
 @export var vertical_frequency: float = 8.0
 ## 1.0 = sem oscilação. Abaixo de 1.0 a câmera "passa do ponto" e volta (efeito mola).
 @export_range(0.1, 2.0) var damping_ratio: float = 0.75
+
+# ---------------------------------------------------------------------------
+# ESPELHAMENTO HORIZONTAL
+# ---------------------------------------------------------------------------
+@export_group("Espelhamento")
+## Espelha o offset X do editor ao virar para a esquerda (1.30 -> -1.30).
+@export var mirror_offset: bool = true
+## Velocidade da troca de lado. Menor = troca mais lenta e suave.
+@export var flip_smoothing: float = 6.0
+## Deslocamento extra em X na direção em que o jogador olha (0 = só espelha o offset).
+@export var facing_offset: float = 0.0
 
 # ---------------------------------------------------------------------------
 # ANTECIPAÇÃO
@@ -54,6 +67,8 @@ extends Camera3D
 var _offset: Vector3 = Vector3.ZERO
 var _velocity: Vector3 = Vector3.ZERO
 var _base_fov: float = 75.0
+var _facing_sign: float = 1.0     # alvo: 1 = direita, -1 = esquerda
+var _facing_current: float = 1.0  # valor suavizado entre 1 e -1
 
 
 func _ready() -> void:
@@ -75,6 +90,10 @@ func _ready() -> void:
 
 	if target.has_signal(&"landed"):
 		target.connect(&"landed", _on_target_landed)
+	if target.has_signal(&"facing_changed"):
+		target.connect(&"facing_changed", _on_target_facing_changed)
+	else:
+		push_warning("CameraFollow: o alvo não tem o sinal 'facing_changed'; o espelhamento não vai funcionar.")
 
 
 func _process(delta: float) -> void:
@@ -85,9 +104,13 @@ func _process(delta: float) -> void:
 		target_velocity = (target as CharacterBody3D).velocity
 	var horizontal_velocity: Vector3 = Vector3(target_velocity.x, 0.0, target_velocity.z)
 
-	# Posição desejada: alvo + offset + antecipação na direção do movimento
+	# Suaviza a troca de lado (1 -> -1) e monta o offset espelhado
+	_facing_current = lerpf(_facing_current, _facing_sign, 1.0 - exp(-flip_smoothing * delta))
+	var current_offset: Vector3 = _get_mirrored_offset(_facing_current)
+
+	# Posição desejada: alvo + offset espelhado + antecipação na direção do movimento
 	var lead: Vector3 = (horizontal_velocity * look_ahead).limit_length(look_ahead_max)
-	var desired: Vector3 = target.global_position + _offset + lead
+	var desired: Vector3 = target.global_position + current_offset + lead
 
 	# Mola amortecida: aceleração = -k * deslocamento - c * velocidade
 	var k_h: float = follow_frequency * follow_frequency
@@ -111,11 +134,23 @@ func _process(delta: float) -> void:
 	fov = lerpf(fov, target_fov, 1.0 - exp(-fov_smoothing * delta))
 
 
+## Offset do editor com o X espelhado conforme o lado (1 = direita, -1 = esquerda).
+func _get_mirrored_offset(side: float) -> Vector3:
+	var x: float = _offset.x * (side if mirror_offset else 1.0)
+	x += facing_offset * side
+	return Vector3(x, _offset.y, _offset.z)
+
+
 func _on_target_landed(impact_speed: float) -> void:
 	_velocity.y -= clampf(impact_speed * landing_kick, 0.0, landing_kick_max)
+
+
+func _on_target_facing_changed(facing_right: bool) -> void:
+	_facing_sign = 1.0 if facing_right else -1.0
 
 
 ## Teleporta a câmera para a posição ideal sem mola (use ao dar respawn).
 func snap_to_target() -> void:
 	_velocity = Vector3.ZERO
-	global_position = target.global_position + _offset
+	_facing_current = _facing_sign
+	global_position = target.global_position + _get_mirrored_offset(_facing_current)

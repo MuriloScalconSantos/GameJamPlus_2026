@@ -85,5 +85,5 @@ mesh = SubResource("BoxMesh_sowaw")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/bloco2/StaticBody3D" unique_id=1136265419]
 shape = SubResource("ConcavePolygonShape3D_ml3pm")
 
-[node name="CharacterBody3D" parent="Ambiente" unique_id=725353514 instance=ExtResource("1_ebs18")]
+[node name="Player" parent="Ambiente" unique_id=725353514 instance=ExtResource("1_ebs18")]
 transform = Transform3D(1, 0, 0, 0, 0.8539098, 0.520421, 0, -0.520421, 0.8539098, 0, 1.545512, 0)
