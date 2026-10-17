@@ -39,9 +39,9 @@ extends Camera3D
 # ---------------------------------------------------------------------------
 @export_group("Antecipação")
 ## A câmera mira à frente na direção do movimento (0 desliga).
-@export var look_ahead: float = 0.3
+@export var look_ahead: float = 0.15
 ## Distância máxima da antecipação.
-@export var look_ahead_max: float = 3.0
+@export var look_ahead_max: float = 1.0
 
 # ---------------------------------------------------------------------------
 # FOV
