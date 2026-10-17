@@ -1,0 +1,15 @@
+[gd_resource type="AudioBusLayout" format=3 uid="uid://k3cnt1dg1i7c"]
+
+[resource]
+bus/1/name = &"Espada"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = -35.6847
+bus/1/send = &"Master"
+bus/2/name = &"Morte"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = -31.7022
+bus/2/send = &"Master"

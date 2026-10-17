@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://b16475ajm6rpp"]
+
+[ext_resource type="Script" uid="uid://4nm0em0rtbqj" path="res://player/character_body_3d.gd" id="1_s7sam"]
+[ext_resource type="Texture2D" uid="uid://7vhsby5aj0rr" path="res://Sprites/Player.png" id="2_iflxx"]
+[ext_resource type="Script" uid="uid://bl7bie1qhykdt" path="res://player/camera_3d.gd" id="3_iflxx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4r3th"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=725353514]
+script = ExtResource("1_s7sam")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=16179569]
+shape = SubResource("BoxShape3D_4r3th")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1472032615]
+texture = ExtResource("2_iflxx")
+
+[node name="Camera3D" type="Camera3D" parent="Sprite3D" unique_id=1458957469]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3111937, 0.51951885, 12.098373)
+script = ExtResource("3_iflxx")
