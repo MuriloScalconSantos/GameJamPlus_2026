@@ -21,8 +21,12 @@ func _ready() -> void:
 func atualizar(animar: bool = true) -> void:
 	if animacao and animacao.is_running():
 		animacao.kill()
-	var novo_maximo: float = maxf(1.0, float(EstadoJogo.XP_POR_CARTA))
+	
+	# Pega o custo dinâmico atualizado do EstadoJogo
+	var maximo_atual = EstadoJogo.xp_necessario_para_proximo_nivel()
+	var novo_maximo: float = maxf(1.0, float(maximo_atual))
 	var novo_valor: float = clampf(float(EstadoJogo.xp_atual), 0.0, novo_maximo)
+	
 	if not animar or novo_valor < value:
 		max_value = novo_maximo
 		value = novo_valor
@@ -30,4 +34,5 @@ func atualizar(animar: bool = true) -> void:
 		max_value = novo_maximo
 		animacao = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 		animacao.tween_property(self, "value", novo_valor, 0.2).set_trans(Tween.TRANS_SINE)
-	numero.text = "%d / %d" % [EstadoJogo.xp_atual, EstadoJogo.XP_POR_CARTA]
+		
+	numero.text = "%d / %d" % [EstadoJogo.xp_atual, maximo_atual]

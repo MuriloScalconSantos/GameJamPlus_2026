@@ -11,7 +11,11 @@ const VIDA_SLIME: float = 4.0
 const DANO_SLIME: float = 2.0
 const XP_ARANHA: int = 1
 const XP_SLIME: int = 2
-const XP_POR_CARTA: int = 15
+
+# XP base inicial e o acréscimo progressivo por nível
+const XP_BASE_INICIAL: int = 10
+const XP_INCREMENTO_POR_NIVEL: int = 10
+
 const INTERVALO_MACHADO_INICIAL: float = 8.0
 const VELOCIDADE_MACHADO_INICIAL: float = 12.0
 const INTERVALO_MACHADO_MINIMO: float = 2.0
@@ -30,7 +34,7 @@ const TODAS_AS_CARTAS: Array[Dictionary] = [
 
 var velocidade_movimento: float = VELOCIDADE_INICIAL
 var velocidade_ataque: float = ATTACK_SPEED_INICIAL
-var cartas_disponiveis_atuais: Array[Dictionary] = [] # Corrigido aqui com o "="
+var cartas_disponiveis_atuais: Array[Dictionary] = []
 
 signal status_alterado
 signal escolha_solicitada
@@ -50,6 +54,10 @@ var escolhendo_carta: bool = false
 var cartas_selecionadas: Array[StringName] = []
 var abates_total: int = 0
 
+# Retorna quanto de XP é necessário para o nível atual com base nas cartas já pegas
+func xp_necessario_para_proximo_nivel() -> int:
+	return XP_BASE_INICIAL + (cartas_selecionadas.size() * XP_INCREMENTO_POR_NIVEL)
+
 func registrar_abate() -> void:
 	abates_total += 1
 	abates_alterados.emit(abates_total)
@@ -66,9 +74,12 @@ func adicionar_xp(quantidade: int) -> void:
 		return
 	xp_total += quantidade
 	xp_atual += quantidade
-	while xp_atual >= XP_POR_CARTA:
-		xp_atual -= XP_POR_CARTA
+	
+	# Loop para lidar caso ganhe XP suficiente para subir múltiplos níveis de uma vez
+	while xp_atual >= xp_necessario_para_proximo_nivel():
+		xp_atual -= xp_necessario_para_proximo_nivel()
 		cartas_pendentes += 1
+		
 	status_alterado.emit()
 	solicitar_carta.call_deferred()
 
