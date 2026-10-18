@@ -12,6 +12,9 @@ const DANO_SLIME: float = 2.0
 const XP_ARANHA: int = 1
 const XP_SLIME: int = 2
 const XP_POR_CARTA: int = 15
+const INTERVALO_MACHADO_INICIAL: float = 8.0
+const VELOCIDADE_MACHADO_INICIAL: float = 12.0
+const INTERVALO_MACHADO_MINIMO: float = 2.0
 
 # Pré-carrega as cartas uma única vez para otimizar desempenho e memória
 const TODAS_AS_CARTAS: Array[Dictionary] = [
@@ -19,7 +22,10 @@ const TODAS_AS_CARTAS: Array[Dictionary] = [
 	{"id": &"vitalidade", "titulo": "VITALIDADE", "texto": "+2 de vida máxima\ne recupera 2 de vida.", "imagem": preload("res://progressao/imagens/vitalidade.svg")},
 	{"id": &"cura", "titulo": "RECUPERAÇÃO", "texto": "Recupera toda\na sua vida atual.", "imagem": preload("res://progressao/imagens/cura.svg")},
 	{"id": &"acelerar", "titulo": "ACELERAR", "texto": "Aumenta a velocidade\nde movimento em 10%.", "imagem": preload("res://progressao/imagens/acelerar.png")},
-	{"id": &"destreza", "titulo": "DESTREZA", "texto": "Aumenta a velocidade\nde ataque em 20%.", "imagem": preload("res://progressao/imagens/destreza.png")}
+	{"id": &"destreza", "titulo": "DESTREZA", "texto": "Aumenta a velocidade\nde ataque em 20%.", "imagem": preload("res://progressao/imagens/destreza.png")},
+	{"id": &"machado_dano", "titulo": "LÂMINA FORTE", "texto": "+1 de dano\npara o machado.", "imagem": preload("res://progressao/imagens/machado_animacao/machado_1.png")},
+	{"id": &"machado_velocidade", "titulo": "LÂMINA VELOZ", "texto": "Machado voa 20%\nmais rápido.", "imagem": preload("res://progressao/imagens/machado_animacao/machado_2.png")},
+	{"id": &"machado_intervalo", "titulo": "ARREMESSO RÁPIDO", "texto": "Machado sai 2 s\nmais cedo (mín. 2 s).", "imagem": preload("res://progressao/imagens/machado_animacao/machado_3.png")}
 ]
 
 var velocidade_movimento: float = VELOCIDADE_INICIAL
@@ -29,19 +35,31 @@ var cartas_disponiveis_atuais: Array[Dictionary] = [] # Corrigido aqui com o "="
 signal status_alterado
 signal escolha_solicitada
 signal carta_escolhida(id: StringName)
+signal abates_alterados(total: int)
 
 var vida_maxima: float = VIDA_INICIAL
 var vida_atual: float = VIDA_INICIAL
 var dano_jogador: float = DANO_INICIAL
+var dano_extra_machado: float = 0.0
+var velocidade_machado: float = VELOCIDADE_MACHADO_INICIAL
+var intervalo_machado: float = INTERVALO_MACHADO_INICIAL
 var xp_total: int = 0
 var xp_atual: int = 0
 var cartas_pendentes: int = 0
 var escolhendo_carta: bool = false
 var cartas_selecionadas: Array[StringName] = []
+var abates_total: int = 0
+
+func registrar_abate() -> void:
+	abates_total += 1
+	abates_alterados.emit(abates_total)
 
 func atualizar_vida(valor: float) -> void:
 	vida_atual = clampf(valor, 0.0, vida_maxima)
 	status_alterado.emit()
+
+func dano_machado_atual() -> float:
+	return dano_jogador + dano_extra_machado
 
 func adicionar_xp(quantidade: int) -> void:
 	if quantidade <= 0 or vida_atual <= 0.0:
@@ -80,6 +98,12 @@ func selecionar_carta(id: StringName) -> void:
 			velocidade_movimento += 0.1
 		&"destreza":
 			velocidade_ataque += 0.2
+		&"machado_dano":
+			dano_extra_machado += 1.0
+		&"machado_velocidade":
+			velocidade_machado *= 1.2
+		&"machado_intervalo":
+			intervalo_machado = maxf(INTERVALO_MACHADO_MINIMO, intervalo_machado - 2.0)
 		_:
 			return
 	cartas_selecionadas.append(id)
@@ -93,6 +117,9 @@ func nova_partida() -> void:
 	vida_maxima = VIDA_INICIAL
 	vida_atual = VIDA_INICIAL
 	dano_jogador = DANO_INICIAL
+	dano_extra_machado = 0.0
+	velocidade_machado = VELOCIDADE_MACHADO_INICIAL
+	intervalo_machado = INTERVALO_MACHADO_INICIAL
 	velocidade_movimento = VELOCIDADE_INICIAL
 	velocidade_ataque = ATTACK_SPEED_INICIAL
 	xp_total = 0
@@ -100,4 +127,6 @@ func nova_partida() -> void:
 	cartas_pendentes = 0
 	escolhendo_carta = false
 	cartas_selecionadas.clear()
+	abates_total = 0
+	abates_alterados.emit(abates_total)
 	status_alterado.emit()

@@ -19,6 +19,8 @@ var _ate_proximo_swarm: float = 0.0
 var _primeira_onda_disparada: bool = false
 
 func _ready() -> void:
+	if enemy_scene == null:
+		enemy_scene = aranha_scene
 	super._ready()
 	_ate_proximo_swarm = maxf(0.0, atraso_inicial)
 
