@@ -60,6 +60,8 @@ material = SubResource("ShaderMaterial_4r3th")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_puaij"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_qqa8o"]
+
 [node name="MundoTeste" type="Node3D" unique_id=1545951197]
 
 [node name="HUD" parent="." unique_id=83938570 instance=ExtResource("1_e3en3")]
@@ -422,7 +424,7 @@ transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.866
 texture = ExtResource("10_fpred")
 
 [node name="CenarioPT8" type="Sprite3D" parent="." unique_id=149558242]
-transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.8660253, 30.126167, 1.0970659, 29.915573)
+transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.8660253, 30.126167, 1.0970659, 30.965225)
 texture = ExtResource("18_pl8r0")
 
 [node name="CenarioPT9" type="Sprite3D" parent="." unique_id=802695293]
@@ -454,7 +456,7 @@ transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.866
 texture = ExtResource("24_6ad21")
 
 [node name="CenarioPT15" type="Sprite3D" parent="." unique_id=756029014]
-transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.8660253, 34.341507, 1.097064, 19.239357)
+transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.8660253, 34.341507, 1.097064, 20.28901)
 texture = ExtResource("25_xyorm")
 
 [node name="CenarioPT16" type="Sprite3D" parent="." unique_id=2005522532]
@@ -561,17 +563,44 @@ texture = ExtResource("29_hdtvt")
 transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.8660253, 82.06379, 3.9445086, -5.348175)
 texture = ExtResource("30_dnaho")
 
+[node name="StaticBody3D3" type="StaticBody3D" parent="CenarioPT20" unique_id=502144547]
+transform = Transform3D(1, 0, 0, 0, 1, 5.9604645e-08, 0, -5.9604645e-08, 1, -19.84679, -8.508737, 13.960989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CenarioPT20/StaticBody3D3" unique_id=1877376370]
+transform = Transform3D(14.234141, 0, 0, 0, 3.7629135, 1.1920929e-07, 0, -4.7683716e-07, 0.66241854, 19.489803, 4.010107, -11.898198)
+shape = SubResource("BoxShape3D_qqa8o")
+
 [node name="CenarioPT21" type="Sprite3D" parent="." unique_id=1992060670]
 transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.8660253, 103.4682, 3.9445086, 10.996763)
 texture = ExtResource("31_qqa8o")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="CenarioPT21" unique_id=1385019811]
+transform = Transform3D(1, 0, 0, 0, 1, 5.9604645e-08, 0, -5.9604645e-08, 1, -41.2512, -0.33626723, -0.19414425)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CenarioPT21/StaticBody3D2" unique_id=1897631754]
+transform = Transform3D(14.234141, 0, 0, 0, 3.7629135, 1.1920929e-07, 0, -4.7683716e-07, 0.66241854, 41.460514, -3.8480308, 1.7124958)
+shape = SubResource("BoxShape3D_qqa8o")
 
 [node name="CenarioPT22" type="Sprite3D" parent="." unique_id=1026862929]
 transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.8660253, 42.731544, 3.556221, 22.406622)
 texture = ExtResource("32_rm74e")
 
+[node name="StaticBody3D3" type="StaticBody3D" parent="CenarioPT22" unique_id=1066992686]
+transform = Transform3D(1, 0, 0, 0, 1, 2.9802322e-08, 0, -2.9802322e-08, 1, 19.485455, 5.7049294, -9.881228)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CenarioPT22/StaticBody3D3" unique_id=351461620]
+transform = Transform3D(14.234141, 0, 0, 0, 3.7629135, 1.1920929e-07, 0, -4.7683716e-07, 0.66241854, -19.87725, -9.220065, 12.920447)
+shape = SubResource("BoxShape3D_qqa8o")
+
 [node name="CenarioPT23" type="Sprite3D" parent="." unique_id=2039599014]
 transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.8660253, 62.217, 3.556221, 10.996763)
 texture = ExtResource("33_pft7j")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="CenarioPT23" unique_id=663915763]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CenarioPT23/StaticBody3D" unique_id=461019960]
+transform = Transform3D(14.234141, 0, 0, 0, 3.762913, 5.9604645e-08, 0, -7.1525574e-07, 0.6624186, 0, -3.0238688, 2.188323)
+shape = SubResource("BoxShape3D_qqa8o")
 
 [node name="CenarioPT24" type="Sprite3D" parent="." unique_id=114483307]
 transform = Transform3D(0.9999976, 0.0010852161, -0.0018796494, 0, 0.8660253, 0.5, 0.0021704324, -0.4999988, 0.86602324, -2.2775187, 3.727579, 26.951742)
