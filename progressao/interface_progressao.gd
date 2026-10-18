@@ -9,14 +9,9 @@ var _label_dano: Label
 
 var _overlay: ColorRect
 var _botoes: Array[Button] = []
+var _linha_cartas: HBoxContainer # Referência para atualizar as cartas dinamicamente
 var _pausa_anterior: bool = false
 var _aberto: bool = false
-
-const CARTAS: Array[Dictionary] = [
-	{"id": &"forca", "titulo": "FORÇA", "texto": "+1 de dano\npara todos os seus ataques.", "imagem": preload("res://progressao/imagens/forca.svg")},
-	{"id": &"vitalidade", "titulo": "VITALIDADE", "texto": "+2 de vida máxima\ne recupera 2 de vida.", "imagem": preload("res://progressao/imagens/vitalidade.svg")},
-	{"id": &"cura", "titulo": "RECUPERAÇÃO", "texto": "Recupera toda\na sua vida atual.", "imagem": preload("res://progressao/imagens/cura.svg")}
-]
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -110,15 +105,24 @@ func _construir_interface() -> void:
 	dica.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	coluna.add_child(dica)
 
-	var linha := HBoxContainer.new()
-	linha.add_theme_constant_override("separation", 20)
-	coluna.add_child(linha)
+	_linha_cartas = HBoxContainer.new()
+	_linha_cartas.add_theme_constant_override("separation", 20)
+	coluna.add_child(_linha_cartas)
 
-	for carta: Dictionary in CARTAS:
+# --- FUNÇÃO PARA GERAR AS CARTAS DINAMICAMENTE (SORTEADAS) ---
+
+func _atualizar_cartas_visuais() -> void:
+	# Limpa as cartas antigas da tela
+	for child in _linha_cartas.get_children():
+		child.queue_free()
+	_botoes.clear()
+
+	# Cria os painéis com base nas cartas sorteadas pelo EstadoJogo
+	for carta: Dictionary in EstadoJogo.cartas_disponiveis_atuais:
 		var painel := PanelContainer.new()
 		painel.custom_minimum_size = Vector2(260, 380)
 		painel.add_theme_stylebox_override("panel", _estilo(Color("202d43"), Color("3b4e6d"), 2))
-		linha.add_child(painel)
+		_linha_cartas.add_child(painel)
 
 		var conteudo := VBoxContainer.new()
 		conteudo.add_theme_constant_override("separation", 16)
@@ -199,11 +203,15 @@ func _abrir_cartas() -> void:
 	if not _aberto:
 		_pausa_anterior = get_tree().paused
 		_aberto = true
+	
+	_atualizar_cartas_visuais() # Gera as cartas sorteadas no EstadoJogo
+	
 	get_tree().paused = true
 	_overlay.show()
 	for botao: Button in _botoes:
 		botao.disabled = false
-	_botoes[0].grab_focus()
+	if _botoes.size() > 0:
+		_botoes[0].grab_focus()
 
 func _selecionar(id: StringName) -> void:
 	if not _aberto or not EstadoJogo.escolhendo_carta:
