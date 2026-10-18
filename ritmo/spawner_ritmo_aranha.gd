@@ -18,8 +18,7 @@ var _ate_spawn: float = 15.0
 
 func _ready() -> void:
 	super._ready()
-	# Não adicionamos ao grupo "spawner_ritmo" principal se o HUD usa apenas um contador,
-	# ou mantemos se quiser que o total de vivos englobe as aranhas.
+	
 	_ate_spawn = maxf(0.0, atraso_inicial)
 	_atualizar_etapa()
 
