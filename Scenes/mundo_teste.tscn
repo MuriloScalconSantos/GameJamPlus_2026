@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://dqdf3frvxppds" path="res://fluid_agua.gd" id="2_u5lmb"]
 [ext_resource type="Texture2D" uid="uid://fuplaev56gx2" path="res://icon.svg" id="3_h5dsh"]
 [ext_resource type="PackedScene" uid="uid://dw23kos0nwqal" path="res://inimigo.tscn" id="3_puaij"]
+[ext_resource type="PackedScene" uid="uid://bokx2hc2q1j02" path="res://enemy.tscn" id="6_h5dsh"]
 
 [sub_resource type="Environment" id="Environment_3fsuj"]
 background_mode = 1
@@ -114,3 +115,12 @@ shape = SubResource("ConcavePolygonShape3D_ml3pm")
 script = ExtResource("2_bmojv")
 player = NodePath("../Player")
 enemy_scene = ExtResource("3_puaij")
+
+[node name="Aranha spawn" type="Node3D" parent="." unique_id=1755357061 node_paths=PackedStringArray("player")]
+script = ExtResource("2_bmojv")
+atraso_inicial = 10.0
+intervalos = Array[float]([2.0, 1.5, 1.0, 0.7, 0.4])
+limites = Array[int]([10, 20, 35, 50, 75])
+maximo_absoluto = 75
+player = NodePath("../Player")
+enemy_scene = ExtResource("6_h5dsh")

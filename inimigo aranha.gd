@@ -48,12 +48,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	# Verificação segura para evitar crash caso a variável não exista no EstadoJogo
-	var encerrado: bool = false
-	if EstadoJogo and "partida_encerrada" in EstadoJogo:
-		encerrado = EstadoJogo.partida_encerrada
-
-	if _morto or encerrado:
+	if _morto or not is_inside_tree():
 		return
 
 	if not is_on_floor():
@@ -93,18 +88,23 @@ func _physics_process(delta: float) -> void:
 
 
 func _begin_attack(to_player: Vector3) -> void:
-	if _morto:
+	if _morto or not sprite or not sprite.sprite_frames:
 		return
 	_attacking = true
 	_attack_time = 0.0
 	_hit_done = false
 	_attack_direction = to_player.normalized()
 	_stop_horizontal()
-	if sprite:
-		sprite.scale = Vector3.ONE
-		if sprite.sprite_frames and sprite.sprite_frames.has_animation(&"attack"):
-			sprite.speed_scale = 2.0 / maxf(attack_duration, 0.01) / sprite.sprite_frames.get_animation_speed(&"attack")
-			sprite.play(&"attack")
+	sprite.scale = Vector3.ONE
+	
+	if sprite.sprite_frames.has_animation(&"attack"):
+		var anim_speed: float = sprite.sprite_frames.get_animation_speed(&"attack")
+		if anim_speed > 0.0:
+			sprite.speed_scale = 2.0 / maxf(attack_duration, 0.01) / anim_speed
+		else:
+			sprite.speed_scale = 1.0
+		sprite.play(&"attack")
+		
 	cabecada_iniciada.emit()
 
 
@@ -130,7 +130,7 @@ func _update_attack(delta: float) -> void:
 
 
 func _hit_player() -> bool:
-	if _morto or not is_instance_valid(player):
+	if _morto or not is_instance_valid(player) or get_world_3d() == null:
 		return false
 	var separation: Vector3 = player.global_position - global_position
 	separation.y = 0.0

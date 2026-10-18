@@ -2,11 +2,11 @@ extends "res://spawner.gd"
 ## Progressão por tempo dedicada exclusivamente ao Swarm de Aranhas.
 
 @export_group("Ritmo da partida")
-@export var atraso_inicial: float = 15.0 # Começa a spawnar após um tempo de respiro na partida
+@export var atraso_inicial: float = 10.0 # Um pequeno respiro antes de começarem a surgir
 @export var inicio_etapas: Array[float] = [0.0, 30.0, 60.0, 120.0, 180.0]
-@export var intervalos: Array[float] = [2.0, 1.5, 1.0, 0.6, 0.4] # Intervalos menores para gerar mais volume (swarm)
-@export var limites: Array[int] = [10, 20, 35, 50, 70] # Limite de aranhas maior em campo
-@export_range(1, 200) var maximo_absoluto: int = 70
+@export var intervalos: Array[float] = [2.0, 1.5, 1.0, 0.7, 0.4] # Intervalos mais rápidos para gerar volume
+@export var limites: Array[int] = [10, 20, 35, 50, 75] # Limites maiores em campo
+@export_range(1, 200) var maximo_absoluto: int = 75
 
 @export_group("Inimigo")
 @export var aranha_scene: PackedScene
@@ -14,16 +14,16 @@ extends "res://spawner.gd"
 var tempo_partida: float = 0.0
 var etapa: int = 0
 var limite_atual: int = 10
-var _ate_spawn: float = 15.0
+var _ate_spawn: float = 10.0
 
 func _ready() -> void:
 	super._ready()
-	# Não adicionamos ao grupo "spawner_ritmo" principal se o HUD usa apenas um contador, 
-	# ou mantemos se quiser que o total de vivos englobe as aranhas.
+	add_to_group("spawner_ritmo")
 	_ate_spawn = maxf(0.0, atraso_inicial)
 	_atualizar_etapa()
 
 func _process(delta: float) -> void:
+	# Fallback para usar o enemy_scene da classe pai se a cena específica não for atribuída
 	var cena_alvo = aranha_scene if aranha_scene != null else enemy_scene
 	if not is_instance_valid(player) or cena_alvo == null or EstadoJogo.vida_atual <= 0.0:
 		return
