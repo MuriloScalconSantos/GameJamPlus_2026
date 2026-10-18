@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://dkc73obey7kw8" path="res://inimigo aranha.gd" id="1_jihof"]
 [ext_resource type="SpriteFrames" uid="uid://cng2mmkpfyx6u" path="res://Sprites/Aranha/AranhaAnimations.tres" id="2_slime"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_bhunq"]
-size = Vector3(1.05, 1.15, 0.8)
+[sub_resource type="SphereShape3D" id="SphereShape3D_0b8xr"]
+radius = 0.4
 
 [node name="Aranha" type="CharacterBody3D" unique_id=1116121820 groups=["inimigos"]]
 collision_layer = 3
@@ -24,4 +24,4 @@ animation = &"walk"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1976061144]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.575, 0)
-shape = SubResource("BoxShape3D_bhunq")
+shape = SubResource("SphereShape3D_0b8xr")

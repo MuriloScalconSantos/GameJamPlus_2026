@@ -1,7 +1,8 @@
 extends Area3D
 
-@export var velocidade_agua: float = 1.0     
-@export var fov_agua: float = 50.0 
+## Fator de desaceleração (0.5 = reduz para a metade / 50%)
+@export_range(0.1, 1.0, 0.05) var fator_desaceleracao: float = 0.5
+@export var fov_agua: float = 50.0
 
 var corpos_na_agua: Dictionary = {}
 
@@ -12,7 +13,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	for body in corpos_na_agua.keys():
 		var dados = corpos_na_agua[body]
-		if dados["tipo"] == "player" and "camera" in dados and is_instance_valid(dados["camera"]):
+		if dados["tipo"] == "player" and is_instance_valid(dados.get("camera")):
 			var cam: Camera3D = dados["camera"]
 			cam.fov = lerp(cam.fov, fov_agua, 15.0 * delta)
 
@@ -20,28 +21,34 @@ func _on_body_entered(body: Node3D) -> void:
 	if not (body is CharacterBody3D) or corpos_na_agua.has(body):
 		return
 		
-	var dados = {}
+	var dados := {}
 
-	if "velocidade_andar" in body:
+	# Se for o Jogador
+	if "velocidade_movimento" in EstadoJogo or "velocidade_andar" in body:
 		dados["tipo"] = "player"
-		dados["speed_original"] = body.velocidade_andar
-		
 		var cam: Camera3D = _find_camera(body)
 		if cam:
 			dados["camera"] = cam
 			dados["fov_original"] = cam.fov
-		
-		body.velocidade_andar = velocidade_agua
+			
+		# Aplica o multiplicador de água no player (se ele tiver essa variável)
+		if "multiplicador_agua" in body:
+			body.multiplicador_agua = fator_desaceleracao
+		elif "walk_speed" in body:
+			dados["speed_original"] = body.walk_speed
+			body.walk_speed *= fator_desaceleracao
+			
+		# Corta a inércia imediatamente dividindo a velocidade atual
+		body.velocity.x *= fator_desaceleracao
+		body.velocity.z *= fator_desaceleracao
 
-	elif "individual_speed" in body:
-		dados["tipo"] = "enemy_individual"
-		dados["speed_original"] = body.individual_speed
-		body.individual_speed = velocidade_agua
-
+	# Se for Inimigo (Slime / Aranha / etc)
 	elif "speed" in body:
-		dados["tipo"] = "enemy_speed"
+		dados["tipo"] = "enemy"
 		dados["speed_original"] = body.speed
-		body.speed = velocidade_agua
+		body.speed *= fator_desaceleracao
+		body.velocity.x *= fator_desaceleracao
+		body.velocity.z *= fator_desaceleracao
 
 	if not dados.is_empty():
 		corpos_na_agua[body] = dados
@@ -53,24 +60,15 @@ func _on_body_exited(body: Node3D) -> void:
 	var dados = corpos_na_agua[body]
 	
 	if dados["tipo"] == "player":
-		if "velocidade_andar" in body and "speed_original" in dados:
-			body.velocidade_andar = dados["speed_original"]
-			
-			# FORÇA O RESET IMEDIATO DA VELOCIDADE NO MOMENTO DA SAÍDA:
-			# Zera a inércia horizontal acumulada para o player não ficar "arrastando" lento
-			var horizontal = Vector3(body.velocity.x, 0.0, body.velocity.z)
-			if horizontal.length_squared() > 0.0:
-				horizontal = horizontal.normalized() * dados["speed_original"]
-				body.velocity.x = horizontal.x
-				body.velocity.z = horizontal.z
+		if "multiplicador_agua" in body:
+			body.multiplicador_agua = 1.0
+		elif "walk_speed" in body and "speed_original" in dados:
+			body.walk_speed = dados["speed_original"]
 
-		if "camera" in dados and is_instance_valid(dados["camera"]):
+		if is_instance_valid(dados.get("camera")):
 			dados["camera"].fov = dados["fov_original"]
 
-	elif dados["tipo"] == "enemy_individual" and "individual_speed" in body:
-		body.individual_speed = dados["speed_original"]
-
-	elif dados["tipo"] == "enemy_speed" and "speed" in body:
+	elif dados["tipo"] == "enemy" and "speed" in body:
 		body.speed = dados["speed_original"]
 		
 	corpos_na_agua.erase(body)

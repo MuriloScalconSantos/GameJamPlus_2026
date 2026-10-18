@@ -19,6 +19,9 @@ extends CharacterBody3D
 @export var velocidade_recuo: float = 2.5
 @export var duracao_recuo: float = 0.12
 
+# Multiplicador temporário (modificado pela água/lama/etc.)
+var multiplicador_agua: float = 1.0
+
 signal pousou(velocidade_impacto: float)
 signal derrapou
 signal lado_alterado(olhando_direita: bool)
@@ -46,6 +49,10 @@ func _physics_process(delta: float) -> void:
 	var horizontal: Vector3 = Vector3(velocity.x, 0.0, velocity.z)
 	var no_chao: bool = is_on_floor()
 
+	# Pega a velocidade base do EstadoJogo (com bônus de cartas) ou a local
+	var vel_base: float = EstadoJogo.velocidade_movimento if "velocidade_movimento" in EstadoJogo else velocidade_andar
+	var vel_atual: float = vel_base * multiplicador_agua
+
 	if _tempo_recuo > 0.0:
 		var freio_recuo: float = velocidade_recuo / maxf(duracao_recuo, 0.001)
 		horizontal = horizontal.move_toward(Vector3.ZERO, freio_recuo * delta)
@@ -64,7 +71,7 @@ func _physics_process(delta: float) -> void:
 				visual_jogador.reagir_derrapagem()
 		else:
 			var controle: float = 1.0 if no_chao else controle_no_ar
-			var velocidade_desejada: Vector3 = direcao * velocidade_andar
+			var velocidade_desejada: Vector3 = direcao * vel_atual
 			horizontal = horizontal.move_toward(velocidade_desejada, aceleracao * controle * delta)
 
 		_derrapando = derrapando_agora
@@ -85,7 +92,7 @@ func _physics_process(delta: float) -> void:
 		visual_jogador.reagir_pouso(velocidade_queda)
 
 	var usar_velocidade: bool = _derrapando and manter_lado_na_derrapagem
-	visual_jogador.atualizar(delta, entrada, usar_velocidade, velocidade_andar)
+	visual_jogador.atualizar(delta, entrada, usar_velocidade, vel_atual)
 
 
 func _definir_lado(olhando_direita: bool) -> void:
@@ -105,6 +112,3 @@ func _ao_receber_dano(origem: Vector3) -> void:
 	velocity.x = direcao_recuo.x * velocidade_recuo
 	velocity.z = direcao_recuo.z * velocidade_recuo
 	_tempo_recuo = duracao_recuo
-
-
-##  H A D E S MS

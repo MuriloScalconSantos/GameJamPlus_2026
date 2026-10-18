@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://7onmr3kwnmi1" path="res://ritmo/spawner_ritmo_slime.gd" id="2_bmojv"]
 [ext_resource type="Script" uid="uid://dqdf3frvxppds" path="res://fluid_agua.gd" id="2_u5lmb"]
 [ext_resource type="Texture2D" uid="uid://fuplaev56gx2" path="res://icon.svg" id="3_h5dsh"]
-[ext_resource type="PackedScene" uid="uid://dw23kos0nwqal" path="res://inimigo.tscn" id="3_puaij"]
+[ext_resource type="PackedScene" uid="uid://dw23kos0nwqal" path="res://slime.tscn" id="3_puaij"]
 [ext_resource type="PackedScene" uid="uid://d147prpew0y6c" path="res://aranha.tscn" id="5_ui858"]
 [ext_resource type="Script" uid="uid://cmfp7kfexhayy" path="res://ritmo/spawner_ritmo_aranha.gd" id="6_2u6wu"]
 

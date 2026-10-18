@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://7onmr3kwnmi1" path="res://ritmo/spawner_ritmo_slime.gd" id="2_bmojv"]
 [ext_resource type="Script" uid="uid://dqdf3frvxppds" path="res://fluid_agua.gd" id="2_u5lmb"]
 [ext_resource type="Texture2D" uid="uid://fuplaev56gx2" path="res://icon.svg" id="3_h5dsh"]
-[ext_resource type="PackedScene" uid="uid://dw23kos0nwqal" path="res://inimigo.tscn" id="3_puaij"]
+[ext_resource type="PackedScene" uid="uid://dw23kos0nwqal" path="res://slime.tscn" id="3_puaij"]
 [ext_resource type="Texture2D" uid="uid://bl7esoc7hyt0b" path="res://Scenes/BackGroundGround.png" id="4_tcipn"]
 [ext_resource type="Script" uid="uid://g3t2v4e30w6q" path="res://ritmo/spawner_ritmo_aranha_swarm.gd" id="6_0tywp"]
 [ext_resource type="Script" uid="uid://cmfp7kfexhayy" path="res://ritmo/spawner_ritmo_aranha.gd" id="6_aranha_spawner"]
@@ -18,8 +18,7 @@
 background_mode = 1
 background_color = Color(0.599367, 0.727131, 0.776669, 1)
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_rmxy5"]
-height = 0.6973877
+[sub_resource type="BoxShape3D" id="BoxShape3D_bhunq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tcipn"]
 albedo_texture = ExtResource("3_h5dsh")
@@ -78,15 +77,14 @@ shadow_enabled = true
 [node name="Ambiente" type="Node3D" parent="." unique_id=469963802]
 
 [node name="Agua" type="Area3D" parent="Ambiente" unique_id=327809513]
-transform = Transform3D(5.8723955, 0, 0, 0, 1, 0, 0, 0, 6.1222377, 5.9413595, 0, 0)
+transform = Transform3D(12.265832, 0, 2.9164565, 0, 1.1327555, 0, -21.057514, 0, 1.6988121, 6.752002, 0.5565891, 25.250006)
+visible = false
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("2_u5lmb")
-velocidade_agua = 2.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/Agua" unique_id=1086386979]
-transform = Transform3D(1, 0, 0, 0, 3.7040722, 0, 0, 0, 1, 0, 1.6777363, -0.20341355)
-shape = SubResource("CylinderShape3D_rmxy5")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/Agua" unique_id=1869486175]
+shape = SubResource("BoxShape3D_bhunq")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ambiente/Agua" unique_id=1607791770]
 transform = Transform3D(1, 0, 0, 0, 0.05283642, 0, 0, 0, 1, 0, 0.54933167, -0.20341355)
@@ -94,6 +92,193 @@ material_override = SubResource("StandardMaterial3D_tcipn")
 mesh = SubResource("CylinderMesh_0tywp")
 
 [node name="Damage timer" type="Timer" parent="Ambiente/Agua" unique_id=1334349439]
+
+[node name="Agua2" type="Area3D" parent="Ambiente" unique_id=1846721469]
+transform = Transform3D(10.348752, 0, 3.055706, 0, 1.1327554, 0, -22.06293, 0, 1.4332975, -2.6735077, 0.5565891, 43.933594)
+visible = false
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_u5lmb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/Agua2" unique_id=1516138297]
+shape = SubResource("BoxShape3D_bhunq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ambiente/Agua2" unique_id=1032078190]
+transform = Transform3D(1, 0, 0, 0, 0.05283642, 0, 0, 0, 1, 0, 0.54933167, -0.20341355)
+material_override = SubResource("StandardMaterial3D_tcipn")
+mesh = SubResource("CylinderMesh_0tywp")
+
+[node name="Damage timer" type="Timer" parent="Ambiente/Agua2" unique_id=687643119]
+
+[node name="Agua3" type="Area3D" parent="Ambiente" unique_id=435542428]
+transform = Transform3D(6.4615393, 0, 3.2543507, 0, 1.1327554, 0, -23.497196, 0, 0.89492023, -12.514988, 0.5565891, 71.576584)
+visible = false
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_u5lmb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/Agua3" unique_id=1450710620]
+shape = SubResource("BoxShape3D_bhunq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ambiente/Agua3" unique_id=2061766755]
+transform = Transform3D(1, 0, 0, 0, 0.05283642, 0, 0, 0, 1, 0, 0.54933167, -0.20341355)
+material_override = SubResource("StandardMaterial3D_tcipn")
+mesh = SubResource("CylinderMesh_0tywp")
+
+[node name="Damage timer" type="Timer" parent="Ambiente/Agua3" unique_id=588529484]
+
+[node name="Agua4" type="Area3D" parent="Ambiente" unique_id=958369437]
+transform = Transform3D(-4.9805264, 0, 3.3039148, 0, 1.1327554, 0, -23.855064, 0, -0.6898006, 13.216647, 0.5565853, 31.468248)
+visible = false
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_u5lmb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/Agua4" unique_id=30796968]
+shape = SubResource("BoxShape3D_bhunq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ambiente/Agua4" unique_id=368267164]
+transform = Transform3D(1, 0, 0, 0, 0.05283642, 0, 0, 0, 1, 0, 0.54933167, -0.20341355)
+material_override = SubResource("StandardMaterial3D_tcipn")
+mesh = SubResource("CylinderMesh_0tywp")
+
+[node name="Damage timer" type="Timer" parent="Ambiente/Agua4" unique_id=331086875]
+
+[node name="Agua5" type="Area3D" parent="Ambiente" unique_id=1230980221]
+transform = Transform3D(16.016066, 0, 2.5438533, 0, 1.1327554, 0, -18.367233, 0, 2.2182171, 25.247437, 0.5565853, -1.9788151)
+visible = false
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_u5lmb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/Agua5" unique_id=1458423975]
+shape = SubResource("BoxShape3D_bhunq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ambiente/Agua5" unique_id=2030949785]
+transform = Transform3D(1, 0, 0, 0, 0.05283642, 0, 0, 0, 1, 0, 0.54933167, -0.20341355)
+material_override = SubResource("StandardMaterial3D_tcipn")
+mesh = SubResource("CylinderMesh_0tywp")
+
+[node name="Damage timer" type="Timer" parent="Ambiente/Agua5" unique_id=93531723]
+
+[node name="Agua6" type="Area3D" parent="Ambiente" unique_id=1089292463]
+transform = Transform3D(20.491661, 0, 1.8267322, 0, 1.1327553, 0, -13.1894455, 0, 2.838085, 40.506054, 0.5565853, -16.187733)
+visible = false
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_u5lmb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/Agua6" unique_id=2139313716]
+shape = SubResource("BoxShape3D_bhunq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ambiente/Agua6" unique_id=812406605]
+transform = Transform3D(1, 0, 0, 0, 0.05283642, 0, 0, 0, 1, 0, 0.54933167, -0.20341355)
+material_override = SubResource("StandardMaterial3D_tcipn")
+mesh = SubResource("CylinderMesh_0tywp")
+
+[node name="Damage timer" type="Timer" parent="Ambiente/Agua6" unique_id=242193343]
+
+[node name="Agua7" type="Area3D" parent="Ambiente" unique_id=138901267]
+transform = Transform3D(21.249395, 0, 1.6523458, 0, 1.1327553, 0, -11.930333, 0, 2.9430308, 61.025333, 0.5565853, -25.525564)
+visible = false
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_u5lmb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/Agua7" unique_id=2133343938]
+shape = SubResource("BoxShape3D_bhunq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ambiente/Agua7" unique_id=745889144]
+transform = Transform3D(1, 0, 0, 0, 0.05283642, 0, 0, 0, 1, 0, 0.54933167, -0.20341355)
+material_override = SubResource("StandardMaterial3D_tcipn")
+mesh = SubResource("CylinderMesh_0tywp")
+
+[node name="Damage timer" type="Timer" parent="Ambiente/Agua7" unique_id=619320213]
+
+[node name="Agua8" type="Area3D" parent="Ambiente" unique_id=1132860036]
+transform = Transform3D(13.914016, 0, 2.7709243, 0, 1.1327552, 0, -20.006739, 0, 1.9270838, 74.82654, 0.5565853, -38.586864)
+visible = false
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_u5lmb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/Agua8" unique_id=1300984274]
+shape = SubResource("BoxShape3D_bhunq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ambiente/Agua8" unique_id=722532782]
+transform = Transform3D(1, 0, 0, 0, 0.05283642, 0, 0, 0, 1, 0, 0.54933167, -0.20341355)
+material_override = SubResource("StandardMaterial3D_tcipn")
+mesh = SubResource("CylinderMesh_0tywp")
+
+[node name="Damage timer" type="Timer" parent="Ambiente/Agua8" unique_id=1172769071]
+
+[node name="Agua9" type="Area3D" parent="Ambiente" unique_id=664383142]
+transform = Transform3D(12.553965, 0, 2.892842, 0, 1.1327552, 0, -20.887014, 0, 1.7387176, 87.67942, 0.5565853, -59.62967)
+visible = false
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_u5lmb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/Agua9" unique_id=381808308]
+shape = SubResource("BoxShape3D_bhunq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ambiente/Agua9" unique_id=768398921]
+transform = Transform3D(1, 0, 0, 0, 0.05283642, 0, 0, 0, 1, 0, 0.54933167, -0.20341355)
+material_override = SubResource("StandardMaterial3D_tcipn")
+mesh = SubResource("CylinderMesh_0tywp")
+
+[node name="Damage timer" type="Timer" parent="Ambiente/Agua9" unique_id=1516629170]
+
+[node name="Agua10" type="Area3D" parent="Ambiente" unique_id=1045009980]
+transform = Transform3D(14.490177, 0, 2.7136872, 0, 1.1327552, 0, -19.593472, 0, 2.0068824, 101.87061, 0.5565853, -80.404686)
+visible = false
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_u5lmb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/Agua10" unique_id=1783116727]
+shape = SubResource("BoxShape3D_bhunq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ambiente/Agua10" unique_id=1498313287]
+transform = Transform3D(1, 0, 0, 0, 0.05283642, 0, 0, 0, 1, 0, 0.54933167, -0.20341355)
+material_override = SubResource("StandardMaterial3D_tcipn")
+mesh = SubResource("CylinderMesh_0tywp")
+
+[node name="Damage timer" type="Timer" parent="Ambiente/Agua10" unique_id=135323174]
+
+[node name="Agua11" type="Area3D" parent="Ambiente" unique_id=165358860]
+transform = Transform3D(17.228909, 0, 4.0822, 0, 1.132755, 0, -15.184485, 0, 4.6318207, 119.20423, 0.5565853, -99.891396)
+visible = false
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_u5lmb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/Agua11" unique_id=115699073]
+shape = SubResource("BoxShape3D_bhunq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ambiente/Agua11" unique_id=778971730]
+transform = Transform3D(1, 0, 0, 0, 0.05283642, 0, 0, 0, 1, 0, 0.54933167, -0.20341355)
+material_override = SubResource("StandardMaterial3D_tcipn")
+mesh = SubResource("CylinderMesh_0tywp")
+
+[node name="Damage timer" type="Timer" parent="Ambiente/Agua11" unique_id=1331276126]
+
+[node name="Agua12" type="Area3D" parent="Ambiente" unique_id=1672683514]
+transform = Transform3D(19.57987, 0, 3.226447, 0, 1.132755, 0, -12.001357, 0, 5.263854, 140.03026, 0.5565853, -115.286804)
+visible = false
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_u5lmb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/Agua12" unique_id=1572605889]
+shape = SubResource("BoxShape3D_bhunq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ambiente/Agua12" unique_id=1526414413]
+transform = Transform3D(1, 0, 0, 0, 0.05283642, 0, 0, 0, 1, 0, 0.54933167, -0.20341355)
+material_override = SubResource("StandardMaterial3D_tcipn")
+mesh = SubResource("CylinderMesh_0tywp")
+
+[node name="Damage timer" type="Timer" parent="Ambiente/Agua12" unique_id=865314705]
 
 [node name="Ground" type="MeshInstance3D" parent="Ambiente" unique_id=1161076651]
 transform = Transform3D(426.07892, 1.8189894e-12, 7.105449e-15, -6.6167515e-20, -1.8624503e-05, 1.0000031, -1.8189894e-12, -426.07898, -4.371152e-08, 0, 0, 0)

@@ -20,7 +20,7 @@ const CENA_JOIA_XP: PackedScene = preload("res://progressao/xp_joia.tscn")
 
 @export_group("Recuo ao receber dano")
 @export var textura_recuo: Texture2D = preload(
-    "res://Sprites/Knockback/aranha_knockback.png"
+	"res://Sprites/Knockback/aranha_knockback.png"
 )
 @export_range(0.1, 20.0, 0.1) var forca_recuo: float = 8.0
 @export_range(0.05, 1.0, 0.01) var duracao_recuo: float = 0.22
@@ -121,7 +121,6 @@ func _begin_attack(to_player: Vector3) -> void:
 	if sprite:
 		sprite.scale = Vector3.ONE
 		if sprite.sprite_frames and sprite.sprite_frames.has_animation(&"attack"):
-			# Acelera a animação de ataque para acompanhar a nova velocidade
 			sprite.speed_scale = 2.0 / maxf(attack_duration, 0.01) / sprite.sprite_frames.get_animation_speed(&"attack")
 			sprite.play(&"attack")
 	cabecada_iniciada.emit()
