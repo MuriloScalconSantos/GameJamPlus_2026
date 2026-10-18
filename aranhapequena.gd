@@ -204,10 +204,7 @@ func receber_dano(amount: float, _origin: Vector3, autor: Node = null) -> void:
 	if health <= 0.0:
 		_morto = true
 		_soltar_xp(autor)
-
-		var spawner = get_tree().get_first_node_in_group("spawner_ritmo")
-		if spawner and spawner.has_method("add_kill"):
-			spawner.call("add_kill")
+		EstadoJogo.registrar_abate()
 
 		get_tree().create_timer(duracao_recuo + 0.04).timeout.connect(queue_free)
 
