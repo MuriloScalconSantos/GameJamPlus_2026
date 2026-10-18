@@ -2,10 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://b16475ajm6rpp" path="res://player/Player2.tscn" id="1_ebs18"]
 [ext_resource type="Script" uid="uid://7onmr3kwnmi1" path="res://ritmo/spawner_ritmo_slime.gd" id="2_bmojv"]
-[ext_resource type="Script" uid="uid://cmfp7kfexhayy" path="res://ritmo/spawner_ritmo_aranha.gd" id="6_aranha_spawner"]
 [ext_resource type="Script" uid="uid://dqdf3frvxppds" path="res://fluid_agua.gd" id="2_u5lmb"]
 [ext_resource type="Texture2D" uid="uid://fuplaev56gx2" path="res://icon.svg" id="3_h5dsh"]
 [ext_resource type="PackedScene" uid="uid://dw23kos0nwqal" path="res://inimigo.tscn" id="3_puaij"]
+[ext_resource type="Script" uid="uid://cmfp7kfexhayy" path="res://ritmo/spawner_ritmo_aranha.gd" id="6_aranha_spawner"]
 [ext_resource type="PackedScene" uid="uid://d147prpew0y6c" path="res://aranha.tscn" id="6_h5dsh"]
 
 [sub_resource type="Environment" id="Environment_3fsuj"]
@@ -123,6 +123,5 @@ atraso_inicial = 3.0
 intervalos = Array[float]([3.0, 2.0, 1.5, 1.0, 0.75])
 limites = Array[int]([8, 15, 25, 35, 50])
 maximo_absoluto = 50
-aranha_scene = ExtResource("6_h5dsh")
 player = NodePath("../Player")
 enemy_scene = ExtResource("6_h5dsh")

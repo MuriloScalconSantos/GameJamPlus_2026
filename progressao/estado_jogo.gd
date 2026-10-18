@@ -34,7 +34,6 @@ func adicionar_xp(quantidade: int) -> void:
 	while xp_atual >= XP_POR_CARTA:
 		xp_atual -= XP_POR_CARTA
 		cartas_pendentes += 1
-	print("[XP] +%d | Total: %d | Próxima carta: %d/%d" % [quantidade, xp_total, xp_atual, XP_POR_CARTA])
 	status_alterado.emit()
 	# Abre a interface após terminar a resolução do golpe e da morte.
 	solicitar_carta.call_deferred()
@@ -60,7 +59,6 @@ func selecionar_carta(id: StringName) -> void:
 	cartas_selecionadas.append(id)
 	cartas_pendentes -= 1
 	escolhendo_carta = false
-	print("[CARTA] %s selecionada | Vida %.0f/%.0f | Dano %.0f" % [id, vida_atual, vida_maxima, dano_jogador])
 	status_alterado.emit()
 	carta_escolhida.emit(id)
 	solicitar_carta.call_deferred()
