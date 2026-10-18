@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://c68libqy6s458"]
 
 [ext_resource type="PackedScene" uid="uid://b16475ajm6rpp" path="res://player/Player2.tscn" id="1_ebs18"]
+[ext_resource type="Script" uid="uid://7onmr3kwnmi1" path="res://ritmo/spawner_ritmo.gd" id="2_bmojv"]
+[ext_resource type="PackedScene" uid="uid://dw23kos0nwqal" path="res://inimigo.tscn" id="3_puaij"]
 
 [sub_resource type="Environment" id="Environment_3fsuj"]
 background_mode = 1
@@ -10,8 +12,10 @@ background_color = Color(0.599367, 0.727131, 0.776669, 1)
 albedo_color = Color(0.192032, 0.199781, 0.200824, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_7uiq5"]
+size = Vector2(20, 20)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4r3th"]
+size = Vector3(20, 1, 20)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c6p0m"]
 albedo_color = Color(0.145266, 0.145266, 0.145266, 1)
@@ -39,7 +43,7 @@ shadow_enabled = true
 [node name="Ambiente" type="Node3D" parent="." unique_id=469963802]
 
 [node name="Chao" type="MeshInstance3D" parent="Ambiente" unique_id=1300483953]
-transform = Transform3D(17.5062, 0, 0, 0, 1, 0, 0, 0, 17.0793, -0.008792877, 0, 0.002380848)
+transform = Transform3D(17.5062, 0, 0, 0, 1, 0, 0, 0, 17.0793, -0.022179604, 0.031460285, 0.0037035942)
 material_override = SubResource("StandardMaterial3D_5wbua")
 mesh = SubResource("PlaneMesh_7uiq5")
 
@@ -87,3 +91,8 @@ mesh = SubResource("BoxMesh_sowaw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/bloco2/StaticBody3D" unique_id=1136265419]
 shape = SubResource("ConcavePolygonShape3D_ml3pm")
+
+[node name="EnemySpawn" type="Node3D" parent="." unique_id=1682406777 node_paths=PackedStringArray("player")]
+script = ExtResource("2_bmojv")
+player = NodePath("../Player")
+enemy_scene = ExtResource("3_puaij")

@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dw23kos0nwqal"]
+
+[ext_resource type="Script" path="res://progressao/inimigo_progressao.gd" id="1_a202f"]
+[ext_resource type="SpriteFrames" path="res://Sprites/Slime/SlimeAnimations.tres" id="2_slime"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bhunq"]
+size = Vector3(1.05, 1.15, 0.8)
+
+[node name="Inimigo" type="CharacterBody3D" unique_id=1116121820 groups=["inimigos"]]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_a202f")
+
+[node name="Sprite3D" type="AnimatedSprite3D" parent="." unique_id=856740404]
+position = Vector3(0, 0.63, 0)
+pixel_size = 0.0055
+billboard = 1
+sprite_frames = ExtResource("2_slime")
+animation = &"walk"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1976061144]
+position = Vector3(0, 0.575, 0)
+shape = SubResource("BoxShape3D_bhunq")

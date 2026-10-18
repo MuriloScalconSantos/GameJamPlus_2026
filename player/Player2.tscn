@@ -1,8 +1,11 @@
 [gd_scene format=3 uid="uid://b16475ajm6rpp"]
 
 [ext_resource type="Script" uid="uid://4nm0em0rtbqj" path="res://player/character_body_3d.gd" id="1_s7sam"]
-[ext_resource type="Texture2D" uid="uid://7vhsby5aj0rr" path="res://Sprites/Player.png" id="2_iflxx"]
+[ext_resource type="SpriteFrames" uid="uid://fsi5acaksxi7" path="res://Sprites/PlayerDirectionalAnimations.tres" id="2_iflxx"]
 [ext_resource type="Script" uid="uid://bl7bie1qhykdt" path="res://player/camera_3d.gd" id="3_iflxx"]
+[ext_resource type="Script" path="res://progressao/combat_progressao.gd" id="4_combat"]
+[ext_resource type="Script" path="res://progressao/health_progressao.gd" id="5_health"]
+[ext_resource type="Script" path="res://ritmo/interface_cartas_ritmo.gd" id="6_interface"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4r3th"]
 
@@ -12,9 +15,22 @@ script = ExtResource("1_s7sam")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=16179569]
 shape = SubResource("BoxShape3D_4r3th")
 
-[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1472032615]
-texture = ExtResource("2_iflxx")
+[node name="Sprite3D" type="AnimatedSprite3D" parent="." unique_id=1472032615]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+pixel_size = 0.003
+billboard = 1
+sprite_frames = ExtResource("2_iflxx")
+animation = &"idle_down"
 
-[node name="Camera3D" type="Camera3D" parent="Sprite3D" unique_id=1458957469]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, 12)
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1458957469]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.5, 12)
 script = ExtResource("3_iflxx")
+
+[node name="Combat" type="Node3D" parent="." unique_id=205527198]
+script = ExtResource("4_combat")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("5_health")
+
+[node name="InterfaceProgressao" type="CanvasLayer" parent="."]
+script = ExtResource("6_interface")

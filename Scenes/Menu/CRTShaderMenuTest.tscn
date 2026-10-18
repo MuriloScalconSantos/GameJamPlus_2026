@@ -3,6 +3,8 @@
 [ext_resource type="Shader" uid="uid://taxpmx75ue7d" path="res://Scenes/Menu/ScreenEffect/CRT.gdshader" id="1_fnivk"]
 [ext_resource type="Texture2D" uid="uid://c567rfy7eo0ww" path="res://Scenes/Menu/ImagemMenu.jpg" id="1_rgxf2"]
 
+[ext_resource type="Script" path="res://ritmo/menu_inicial.gd" id="90_fluxo"]
+
 [sub_resource type="GDScript" id="GDScript_25r0q"]
 script/source = "extends Control
 
@@ -56,7 +58,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = SubResource("GDScript_25r0q")
+script = ExtResource("90_fluxo")
 
 [node name="Menu" type="AudioStreamPlayer" parent="." unique_id=793328397]
 stream = SubResource("AudioStreamWAV_docdx")
