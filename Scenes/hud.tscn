@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://jmcfydgjg8wq"]
+
+[ext_resource type="Texture2D" uid="uid://ouy05aor8a26" path="res://Scenes/Menu/Barra.png" id="1_fccik"]
+[ext_resource type="Script" uid="uid://bveo64nesurtr" path="res://Scenes/progress_bar.gd" id="2_6fbih"]
+[ext_resource type="Texture2D" uid="uid://dvv7ep4cc6cfg" path="res://Scenes/Menu/losango.png" id="2_bjfho"]
+
+[node name="HUD" type="Node2D" unique_id=83938570]
+position = Vector2(20, 24)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=665244697]
+position = Vector2(235, 580)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("1_fccik")
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=909891679]
+offset_left = 87.0
+offset_top = 589.0
+offset_right = 421.0
+offset_bottom = 623.0
+size_flags_stretch_ratio = 0.0
+show_percentage = false
+script = ExtResource("2_6fbih")
+
+[node name="ProgressBar2" type="ProgressBar" parent="." unique_id=1866339293]
+offset_left = 78.0
+offset_top = 633.0
+offset_right = 371.0
+offset_bottom = 645.0
+theme_override_font_sizes/font_size = 6
+show_percentage = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1629406934]
+position = Vector2(235, 580)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_bjfho")

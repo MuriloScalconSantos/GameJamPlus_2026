@@ -7,20 +7,20 @@ signal cabecada_terminada(acertou: bool)
 const CENA_JOIA_XP: PackedScene = preload("res://progressao/xp_joia.tscn")
 
 @export_group("Movimento")
-@export var speed: float = 5.0 # Mais rápida para o estilo swarm
+@export var speed: float = 8.0 # Velocidade ajustada anteriormente para 8.0
 @export var max_health: float = 1.0 # Morre com um hit
 
-@export_group("Cabeçada")
+@export_group("Cabeçada (Super Rápida)")
 @export var attack_range: float = 1.45
 @export var hit_range: float = 1.75
 @export var attack_damage: float = 5.0
-@export var attack_duration: float = 1.0
-@export var attack_cooldown: float = 1.1
-@export var lunge_speed: float = 1.8
+@export var attack_duration: float = 0.3 # Bem mais rápido para concluir o bote num instante
+@export var attack_cooldown: float = 0.15 # Praticamente sem pausa entre um ataque e outro
+@export var lunge_speed: float = 1.5
 
 @export_group("Recuo ao receber dano")
 @export var textura_recuo: Texture2D = preload(
-	"res://Sprites/Knockback/aranha_knockback.png"
+    "res://Sprites/Knockback/aranha_knockback.png"
 )
 @export_range(0.1, 20.0, 0.1) var forca_recuo: float = 8.0
 @export_range(0.05, 1.0, 0.01) var duracao_recuo: float = 0.22
@@ -79,6 +79,9 @@ func _physics_process(delta: float) -> void:
 		_stop_horizontal()
 		_set_animation(&"idle")
 	elif _attacking:
+		var camera: Camera3D = get_viewport().get_camera_3d()
+		if camera != null and sprite:
+			sprite.flip_h = camera.global_basis.x.dot(_attack_direction) > 0.0
 		_update_attack(delta)
 	else:
 		var to_player: Vector3 = player.global_position - global_position
@@ -118,6 +121,7 @@ func _begin_attack(to_player: Vector3) -> void:
 	if sprite:
 		sprite.scale = Vector3.ONE
 		if sprite.sprite_frames and sprite.sprite_frames.has_animation(&"attack"):
+			# Acelera a animação de ataque para acompanhar a nova velocidade
 			sprite.speed_scale = 2.0 / maxf(attack_duration, 0.01) / sprite.sprite_frames.get_animation_speed(&"attack")
 			sprite.play(&"attack")
 	cabecada_iniciada.emit()
@@ -125,14 +129,14 @@ func _begin_attack(to_player: Vector3) -> void:
 
 func _update_attack(delta: float) -> void:
 	_attack_time += delta
-	var strike_start: float = attack_duration * 0.5
+	var strike_start: float = attack_duration * 0.3
 	var strike_end: float = attack_duration * 0.8
 	if _attack_time >= strike_start and _attack_time < strike_end:
 		velocity.x = _attack_direction.x * lunge_speed
 		velocity.z = _attack_direction.z * lunge_speed
 	else:
 		_stop_horizontal()
-	if not _hit_done and _attack_time >= attack_duration * 0.62:
+	if not _hit_done and _attack_time >= attack_duration * 0.5:
 		_hit_done = true
 		cabecada_terminada.emit(_hit_player())
 	if _attack_time >= attack_duration:
@@ -167,7 +171,7 @@ func _hit_player() -> bool:
 func _face_player(to_player: Vector3) -> void:
 	var camera: Camera3D = get_viewport().get_camera_3d()
 	if camera != null and to_player.length_squared() > 0.001 and sprite:
-		sprite.flip_h = camera.global_basis.x.dot(to_player) < 0.0
+		sprite.flip_h = camera.global_basis.x.dot(to_player) > 0.0
 
 
 func _set_animation(anim_name: StringName) -> void:

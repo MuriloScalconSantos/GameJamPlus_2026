@@ -227,7 +227,9 @@ func executar_ataque() -> void:
 		return
 
 	recarga = intervalo
-	_aplicar_golpe(dano, textura_fogo)
+	# O cone laranja é a hitbox do golpe corpo a corpo: atinge todos os
+	# inimigos dentro do setor, mesmo que exista um obstáculo entre eles.
+	_aplicar_golpe(dano, textura_fogo, true)
 
 
 # ---------------------------------------------------------------------------
@@ -252,7 +254,8 @@ func executar_especial() -> void:
 # ---------------------------------------------------------------------------
 func _aplicar_golpe(
 	dano_golpe: float,
-	textura_golpe: Texture2D
+	textura_golpe: Texture2D,
+	golpe_corpo_a_corpo: bool = false
 ) -> void:
 	var origem := portador.global_position + Vector3.UP * altura_ataque
 	var espaco := get_world_3d().direct_space_state
@@ -287,44 +290,58 @@ func _aplicar_golpe(
 			continue
 
 		deslocamento.y = 0.0
+		var distancia_alvo := deslocamento.length()
+		var raio_alvo := (
+			_raio_horizontal_colisor(inimigo)
+			if golpe_corpo_a_corpo
+			else 0.0
+		)
 
-		# Verifica alcance horizontal.
-		if deslocamento.length() > alcance:
+		# A hitbox encosta no alcance conforme o volume do collider, não apenas
+		# quando o ponto central do inimigo já cruzou o arco.
+		if distancia_alvo > alcance + raio_alvo:
 			continue
 
-		# Verifica se o alvo está dentro da abertura do ataque.
-		if deslocamento.length_squared() > 0.0001:
+		# Testa a abertura do cone. No melee, amplia o ângulo pelo raio do
+		# collider para atingir inimigos que encostam na borda visível.
+		if distancia_alvo > raio_alvo and distancia_alvo > 0.0001:
 			var alinhamento := direcao.dot(
 				deslocamento.normalized()
 			)
 
-			var limite_angular := cos(
-				deg_to_rad(abertura_graus * 0.5)
-			)
+			var meia_abertura := deg_to_rad(abertura_graus * 0.5)
+			if golpe_corpo_a_corpo:
+				meia_abertura += asin(
+					clampf(raio_alvo / distancia_alvo, 0.0, 1.0)
+				)
+
+			var limite_angular := cos(meia_abertura)
 
 			if alinhamento < limite_angular:
 				continue
 
-		# Verifica obstáculos entre jogador e alvo.
-		var raio := PhysicsRayQueryParameters3D.create(
-			origem,
-			destino,
-			mascara_paredes
-		)
-
-		var ignorados: Array[RID] = [
-			portador.get_rid()
-		]
-
-		if inimigo is CollisionObject3D:
-			ignorados.append(
-				(inimigo as CollisionObject3D).get_rid()
+		# O especial continua respeitando paredes. O golpe corpo a corpo usa
+		# o setor laranja como área de acerto.
+		if not golpe_corpo_a_corpo:
+			var raio := PhysicsRayQueryParameters3D.create(
+				origem,
+				destino,
+				mascara_paredes
 			)
 
-		raio.exclude = ignorados
+			var ignorados: Array[RID] = [
+				portador.get_rid()
+			]
 
-		if not espaco.intersect_ray(raio).is_empty():
-			continue
+			if inimigo is CollisionObject3D:
+				ignorados.append(
+					(inimigo as CollisionObject3D).get_rid()
+				)
+
+			raio.exclude = ignorados
+
+			if not espaco.intersect_ray(raio).is_empty():
+				continue
 
 		inimigo.call(
 			"receber_dano",
@@ -336,6 +353,34 @@ func _aplicar_golpe(
 
 	_exibir_fogo(origem, textura_golpe)
 	ataque_realizado.emit(direcao)
+
+
+func _raio_horizontal_colisor(alvo: Node3D) -> float:
+	var raio: float = 0.0
+	var colisores := alvo.find_children(
+		"*",
+		"CollisionShape3D",
+		true,
+		false
+	)
+	for no_colisor in colisores:
+		var colisor := no_colisor as CollisionShape3D
+		if colisor.disabled or colisor.shape == null:
+			continue
+
+		var malha: Mesh = colisor.shape.get_debug_mesh()
+		if malha == null:
+			continue
+		var limites: AABB = malha.get_aabb()
+		for x in [limites.position.x, limites.end.x]:
+			for y in [limites.position.y, limites.end.y]:
+				for z in [limites.position.z, limites.end.z]:
+					var canto_local := Vector3(x, y, z)
+					var canto_global := colisor.global_transform * canto_local
+					var deslocamento_horizontal := canto_global - alvo.global_position
+					deslocamento_horizontal.y = 0.0
+					raio = maxf(raio, deslocamento_horizontal.length())
+	return raio
 
 
 # ---------------------------------------------------------------------------
