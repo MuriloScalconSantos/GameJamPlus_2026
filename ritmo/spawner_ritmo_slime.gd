@@ -1,11 +1,15 @@
 extends "res://spawner.gd"
-## Progressão por tempo. Reutiliza a cena, o raio e a posição do spawner original (spawner.gd).
+## Progressão por tempo dedicada exclusivamente ao Slime.
+
 @export_group("Ritmo da partida")
 @export var atraso_inicial: float = 3.0
 @export var inicio_etapas: Array[float] = [0.0, 30.0, 60.0, 120.0, 180.0]
 @export var intervalos: Array[float] = [3.0, 2.0, 1.5, 1.0, 0.75]
-@export var limites: Array[int] = [8, 12, 18, 24, 30]
-@export_range(1, 200) var maximo_absoluto: int = 30
+@export var limites: Array[int] = [8, 15, 25, 35, 50]
+@export_range(1, 200) var maximo_absoluto: int = 50
+
+@export_group("Inimigo")
+@export var slime_scene: PackedScene
 
 var tempo_partida: float = 0.0
 var etapa: int = 0
@@ -19,13 +23,15 @@ func _ready() -> void:
 	_atualizar_etapa()
 
 func _process(delta: float) -> void:
-	if not is_instance_valid(player) or enemy_scene == null or EstadoJogo.vida_atual <= 0.0:
+	# Fallback para usar o enemy_scene da classe pai se a cena específica não for atribuída
+	var cena_alvo = slime_scene if slime_scene != null else enemy_scene
+	if not is_instance_valid(player) or cena_alvo == null or EstadoJogo.vida_atual <= 0.0:
 		return
+		
 	tempo_partida += delta
 	_atualizar_etapa()
 	_ate_spawn -= delta
 	if _ate_spawn <= 0.0:
-		# Nunca acumula uma fila de spawns ao atingir o limite ou após uma travada.
 		_ate_spawn = spawn_cooldown
 		spawn_enemy_in_radius()
 
@@ -44,7 +50,6 @@ func _atualizar_etapa() -> void:
 	limite_atual = clampi(limites[etapa], 1, maximo_absoluto)
 	if etapa != anterior:
 		_ate_spawn = minf(_ate_spawn, spawn_cooldown)
-		print("[RITMO] Etapa %d | Intervalo %.2f s | Limite %d" % [etapa + 1, spawn_cooldown, limite_atual])
 
 func inimigos_vivos() -> int:
 	var total: int = 0
@@ -57,6 +62,22 @@ func inimigos_vivos() -> int:
 	return total
 
 func spawn_enemy_in_radius() -> CharacterBody3D:
-	if EstadoJogo.vida_atual <= 0.0 or inimigos_vivos() >= limite_atual:
+	var cena_alvo = slime_scene if slime_scene != null else enemy_scene
+	if EstadoJogo.vida_atual <= 0.0 or inimigos_vivos() >= limite_atual or cena_alvo == null:
 		return null
-	return super.spawn_enemy_in_radius()
+
+	var angle: float = randf_range(0.0, TAU)
+	var radius: float = randf_range(min_radius, max_radius)
+	var offset := Vector3(cos(angle) * radius, 0.0, sin(angle) * radius)
+	var spawn_position: Vector3 = player.global_position + offset
+
+	var enemy: CharacterBody3D = cena_alvo.instantiate() as CharacterBody3D
+	if enemy == null:
+		return null
+
+	if "player" in enemy:
+		enemy.set("player", player)
+		
+	get_parent().add_child(enemy)
+	enemy.global_position = spawn_position
+	return enemy
