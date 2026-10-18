@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://fuplaev56gx2" path="res://icon.svg" id="3_h5dsh"]
 [ext_resource type="PackedScene" uid="uid://dw23kos0nwqal" path="res://inimigo.tscn" id="3_puaij"]
 [ext_resource type="Texture2D" uid="uid://bl7esoc7hyt0b" path="res://Scenes/BackGroundGround.png" id="4_tcipn"]
+[ext_resource type="Script" uid="uid://g3t2v4e30w6q" path="res://ritmo/spawner_ritmo_aranha_swarm.gd" id="6_0tywp"]
 [ext_resource type="Script" uid="uid://cmfp7kfexhayy" path="res://ritmo/spawner_ritmo_aranha.gd" id="6_aranha_spawner"]
 [ext_resource type="PackedScene" uid="uid://d147prpew0y6c" path="res://aranha.tscn" id="6_h5dsh"]
 [ext_resource type="Texture2D" uid="uid://d3bmurximvjt1" path="res://Sprites/Cenario/3madeira.png" id="9_i6rbu"]
@@ -52,6 +53,13 @@ script = ExtResource("6_aranha_spawner")
 atraso_inicial = 3.0
 intervalos = Array[float]([3.0, 2.0, 1.5, 1.0, 0.75])
 limites = Array[int]([8, 15, 25, 35, 50])
+maximo_absoluto = 50
+player = NodePath("../Player")
+enemy_scene = ExtResource("6_h5dsh")
+
+[node name="EnemySpawnAranhaSwarm" type="Node3D" parent="." unique_id=1224562708 node_paths=PackedStringArray("player")]
+script = ExtResource("6_0tywp")
+atraso_inicial = 3.0
 maximo_absoluto = 50
 player = NodePath("../Player")
 enemy_scene = ExtResource("6_h5dsh")
