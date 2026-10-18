@@ -48,7 +48,12 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if _morto or (EstadoJogo and EstadoJogo.partida_encerrada):
+	# Verificação segura para evitar crash caso a variável não exista no EstadoJogo
+	var encerrado: bool = false
+	if EstadoJogo and "partida_encerrada" in EstadoJogo:
+		encerrado = EstadoJogo.partida_encerrada
+
+	if _morto or encerrado:
 		return
 
 	if not is_on_floor():

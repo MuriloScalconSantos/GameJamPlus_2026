@@ -5,7 +5,6 @@
 [ext_resource type="Script" uid="uid://dqdf3frvxppds" path="res://fluid_agua.gd" id="2_u5lmb"]
 [ext_resource type="Texture2D" uid="uid://fuplaev56gx2" path="res://icon.svg" id="3_h5dsh"]
 [ext_resource type="PackedScene" uid="uid://dw23kos0nwqal" path="res://inimigo.tscn" id="3_puaij"]
-[ext_resource type="PackedScene" uid="uid://d147prpew0y6c" path="res://aranha.tscn" id="6_h5dsh"]
 
 [sub_resource type="Environment" id="Environment_3fsuj"]
 background_mode = 1
@@ -115,8 +114,3 @@ shape = SubResource("ConcavePolygonShape3D_ml3pm")
 script = ExtResource("2_bmojv")
 player = NodePath("../Player")
 enemy_scene = ExtResource("3_puaij")
-
-[node name="EnemySpawnAranha" type="Node3D" parent="." unique_id=799100969 node_paths=PackedStringArray("player")]
-script = ExtResource("2_bmojv")
-player = NodePath("../Player")
-enemy_scene = ExtResource("6_h5dsh")
