@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://ouy05aor8a26" path="res://Scenes/Menu/Barra.png" id="1_fccik"]
 [ext_resource type="Script" uid="uid://bveo64nesurtr" path="res://Scenes/progress_bar.gd" id="2_6fbih"]
 [ext_resource type="Texture2D" uid="uid://dvv7ep4cc6cfg" path="res://Scenes/Menu/losango.png" id="2_bjfho"]
+[ext_resource type="AudioStream" uid="uid://b7py5w4juoqk2" path="res://Sound/LVL1.ogg" id="4_6fbih"]
 
 [node name="HUD" type="Node2D" unique_id=83938570]
 position = Vector2(20, 24)
@@ -33,3 +34,7 @@ show_percentage = false
 position = Vector2(235, 580)
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("2_bjfho")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=100008806]
+stream = ExtResource("4_6fbih")
+autoplay = true
