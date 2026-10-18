@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dgh8dophgs8h0"]
+
+[ext_resource type="Script" uid="uid://dqdf3frvxppds" path="res://fluid_agua.gd" id="1_3dvar"]
+[ext_resource type="Texture2D" uid="uid://fuplaev56gx2" path="res://icon.svg" id="2_ubyfg"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_puaij"]
+height = 0.6973877
+radius = 0.41308594
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3r1sg"]
+albedo_texture = ExtResource("2_ubyfg")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_riqys"]
+height = 0.696
+
+[node name="lAVA" type="Node3D" unique_id=422756328]
+
+[node name="FluidDamage" type="Area3D" parent="." unique_id=2117420849]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_3dvar")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FluidDamage" unique_id=1422259846]
+transform = Transform3D(1.5349876, 0, 0, 0, 0.6765316, 0, 0, 0, 1, 0, 0.26141527, 0)
+shape = SubResource("CylinderShape3D_puaij")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FluidDamage" unique_id=2083751456]
+transform = Transform3D(1, 0, 0, 0, 0.05283642, 0, 0, 0, 1, 0, 0.032693997, 0)
+material_override = SubResource("StandardMaterial3D_3r1sg")
+mesh = SubResource("CylinderMesh_riqys")
+
+[node name="Damage timer" type="Timer" parent="FluidDamage" unique_id=2087881516]

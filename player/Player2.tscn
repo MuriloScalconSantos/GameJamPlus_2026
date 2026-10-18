@@ -1,8 +1,12 @@
 [gd_scene format=3 uid="uid://b16475ajm6rpp"]
 
 [ext_resource type="Script" uid="uid://4nm0em0rtbqj" path="res://player/character_body_3d.gd" id="1_s7sam"]
-[ext_resource type="Texture2D" uid="uid://7vhsby5aj0rr" path="res://Sprites/Player.png" id="2_iflxx"]
+[ext_resource type="SpriteFrames" uid="uid://fsi5acaksxi7" path="res://Sprites/PlayerDirectionalAnimations.tres" id="2_iflxx"]
 [ext_resource type="Script" uid="uid://bl7bie1qhykdt" path="res://player/camera_3d.gd" id="3_iflxx"]
+[ext_resource type="Script" uid="uid://cn8g2etujq8n6" path="res://player/combat.gd" id="4_combat"]
+[ext_resource type="Script" uid="uid://sof67wx0dkel" path="res://player/health.gd" id="5_health"]
+[ext_resource type="Script" uid="uid://ckbavfg3v4d7x" path="res://progressao/interface_progressao.gd" id="6_hud"]
+[ext_resource type="Texture2D" path="res://Sprites/Dano/PlayerDano.tres" id="7_dano"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4r3th"]
 
@@ -12,9 +16,29 @@ script = ExtResource("1_s7sam")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=16179569]
 shape = SubResource("BoxShape3D_4r3th")
 
-[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1472032615]
-texture = ExtResource("2_iflxx")
+[node name="Sprite3D" type="AnimatedSprite3D" parent="." unique_id=1472032615]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+pixel_size = 0.003
+billboard = 1
+sprite_frames = ExtResource("2_iflxx")
+animation = &"idle_down"
 
-[node name="Camera3D" type="Camera3D" parent="Sprite3D" unique_id=1458957469]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, 12)
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1458957469]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.5, 12)
 script = ExtResource("3_iflxx")
+
+[node name="Combat" type="Node3D" parent="." unique_id=205527198]
+script = ExtResource("4_combat")
+
+[node name="Health" type="Node" parent="." unique_id=1415449042]
+script = ExtResource("5_health")
+
+[node name="DanoVisual" type="Sprite3D" parent="." unique_id=1071448809]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+visible = false
+pixel_size = 0.003
+billboard = 1
+texture = ExtResource("7_dano")
+
+[node name="InterfaceProgressao" type="CanvasLayer" parent="." unique_id=674043423]
+script = ExtResource("6_hud")

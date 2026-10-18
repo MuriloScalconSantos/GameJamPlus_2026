@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://ch07wdvtl6612"]
+
+[ext_resource type="Script" uid="uid://75qaicjtvjvd" path="res://character_body_3d.gd" id="1_a202f"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xvofd"]
+size = Vector2(100, 100)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a202f"]
+radius = 0.39794922
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_riqys"]
+radius = 0.3
+
+[node name="Inimigo" type="CharacterBody3D" unique_id=1116121820]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_a202f")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=856740404]
+texture = SubResource("PlaceholderTexture2D_xvofd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1764381560]
+transform = Transform3D(0.88249147, 0, 0, 0, 0.5215744, 0, 0, 0, 0.88286585, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_a202f")
+
+[node name="Push Area" type="Area3D" parent="." unique_id=661415268]
+collision_layer = 2
+collision_mask = 2
+
+[node name="Push Area" type="CollisionShape3D" parent="Push Area" unique_id=1317520806]
+shape = SubResource("SphereShape3D_riqys")
