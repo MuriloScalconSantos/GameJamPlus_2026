@@ -1,7 +1,7 @@
 extends Area3D
 
-@export var velocidade_agua: float = 3.0    
-@export var fov_agua: float = 50.0 
+@export var velocidade_agua: float = 3.0
+@export var fov_agua: float = 50.0
 
 var corpos_na_agua: Dictionary = {}
 
