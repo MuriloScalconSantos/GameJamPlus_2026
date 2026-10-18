@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://g3t2v4e30w6q" path="res://ritmo/spawner_ritmo_aranha_swarm.gd" id="6_0tywp"]
 [ext_resource type="Script" uid="uid://cmfp7kfexhayy" path="res://ritmo/spawner_ritmo_aranha.gd" id="6_aranha_spawner"]
 [ext_resource type="PackedScene" uid="uid://d147prpew0y6c" path="res://aranha.tscn" id="6_h5dsh"]
+[ext_resource type="PackedScene" uid="uid://b8aq7dr31sgir" path="res://aranha_pequena.tscn" id="8_1fvpw"]
 [ext_resource type="Texture2D" uid="uid://d3bmurximvjt1" path="res://Sprites/Cenario/3madeira.png" id="9_i6rbu"]
 [ext_resource type="Texture2D" uid="uid://bgu80hiaytmob" path="res://Sprites/Cenario/4madeira.png" id="10_fpred"]
 
@@ -59,8 +60,10 @@ maximo_absoluto = 50
 player = NodePath("../Player")
 enemy_scene = ExtResource("6_h5dsh")
 
-[node name="EnemySpawnAranhaSwarm" type="Node3D" parent="." unique_id=1224562708]
+[node name="EnemySpawnAranhaSwarm" type="Node3D" parent="." unique_id=1224562708 node_paths=PackedStringArray("player")]
 script = ExtResource("6_0tywp")
+player = NodePath("../Player")
+enemy_scene = ExtResource("8_1fvpw")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=141037922]
 environment = SubResource("Environment_3fsuj")
