@@ -2,8 +2,8 @@ extends "res://spawner.gd"
 ## Progressão em ondas de Swarm (Estilo Vampire Survivors) para Aranhas.
 
 @export_group("Ritmo do Swarm")
-@export var atraso_inicial: float = 15.0 # Tempo de respiro antes do primeiro swarm
-@export var intervalo_ondas: float = 30.0 # Agora a cada 30 segundos
+@export var atraso_inicial: float = 30.0 # Primeira wave bate aos 30 segundos
+@export var intervalo_ondas: float = 10.0 # Depois repete a cada 10 segundos
 @export var tamanho_onda: int = 30 # 30 aranhas por onda
 @export var maximo_absoluto: int = 200 # Limite máximo global em campo
 
@@ -16,6 +16,7 @@ extends "res://spawner.gd"
 
 var tempo_partida: float = 0.0
 var _ate_proximo_swarm: float = 0.0
+var _primeira_onda_disparada: bool = false
 
 func _ready() -> void:
 	super._ready()
@@ -26,17 +27,20 @@ func _process(delta: float) -> void:
 	if not is_instance_valid(player) or cena_alvo == null or EstadoJogo.vida_atual <= 0.0:
 		return
 
-	# Só inicia a contagem e os spawns do Swarm se o player tiver acumulado mais de 15 de XP
-	if EstadoJogo.xp_atual <= 15:
-		return
-
+	# Avança o tempo de jogo local do spawner
 	tempo_partida += delta
 	_ate_proximo_swarm -= delta
 
-	# Dispara o swarm exatamente a cada 30 segundos
+	# Dispara a primeira onda exatos 30s e as próximas a cada 10s
 	if _ate_proximo_swarm <= 0.0:
-		_ate_proximo_swarm = intervalo_ondas
 		_disparar_swarm_de_aranhas(cena_alvo)
+		
+		# Se foi a primeira, muda o intervalo para o padrão menor de 10 segundos
+		if not _primeira_onda_disparada:
+			_primeira_onda_disparada = true
+			_ate_proximo_swarm = intervalo_ondas # 10 segundos agora
+		else:
+			_ate_proximo_swarm = intervalo_ondas
 
 func _disparar_swarm_de_aranhas(cena_alvo: PackedScene) -> void:
 	if EstadoJogo.vida_atual <= 0.0:
