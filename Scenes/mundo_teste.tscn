@@ -39,7 +39,6 @@ data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0
 albedo_color = Color(0.9, 0.12, 0.12, 1)
 
 [node name="MundoTeste" type="Node3D" unique_id=1545951197]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 37.99977, 0)
 
 [node name="Player" parent="." unique_id=725353514 instance=ExtResource("1_ebs18")]
 transform = Transform3D(1, 0, 0, 0, 0.8539098, 0.520421, 0, -0.520421, 0.8539098, 0, 8.851295, 191.43651)
@@ -81,14 +80,14 @@ mesh = SubResource("BoxMesh_sowaw")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/bloco/StaticBody3D" unique_id=190975314]
 shape = SubResource("ConcavePolygonShape3D_ml3pm")
 
-[node name="bloco3" type="MeshInstance3D" parent="Ambiente" unique_id=1161076651]
+[node name="Ground" type="MeshInstance3D" parent="Ambiente" unique_id=1161076651]
 transform = Transform3D(1350.9028, 0, 0, 0, 1.0188327, 0, 0, 0, 1066.6519, -4.02136, 6.628273, 192.04633)
 material_override = SubResource("StandardMaterial3D_c6p0m")
 mesh = SubResource("BoxMesh_sowaw")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Ambiente/bloco3" unique_id=2101594501]
+[node name="StaticBody3D" type="StaticBody3D" parent="Ambiente/Ground" unique_id=2101594501]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/bloco3/StaticBody3D" unique_id=1723018473]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/Ground/StaticBody3D" unique_id=1723018473]
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.1424079, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_ml3pm")
 
