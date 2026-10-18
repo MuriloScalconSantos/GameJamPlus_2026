@@ -4,9 +4,21 @@
 [ext_resource type="Script" uid="uid://7onmr3kwnmi1" path="res://ritmo/spawner_ritmo.gd" id="2_bmojv"]
 [ext_resource type="PackedScene" uid="uid://dw23kos0nwqal" path="res://inimigo.tscn" id="3_puaij"]
 
+[ext_resource type="Script" uid="uid://dqdf3frvxppds" path="res://fluid_agua.gd" id="2_u5lmb"]
+[ext_resource type="Texture2D" uid="uid://fuplaev56gx2" path="res://icon.svg" id="3_h5dsh"]
+
 [sub_resource type="Environment" id="Environment_3fsuj"]
 background_mode = 1
 background_color = Color(0.599367, 0.727131, 0.776669, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_rmxy5"]
+height = 0.6973877
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tcipn"]
+albedo_texture = ExtResource("3_h5dsh")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0tywp"]
+height = 0.696
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5wbua"]
 albedo_color = Color(0.192032, 0.199781, 0.200824, 1)
@@ -41,6 +53,24 @@ transform = Transform3D(0.841152, 0.0613796, 0.537304, -0.540798, 0.0954691, 0.8
 shadow_enabled = true
 
 [node name="Ambiente" type="Node3D" parent="." unique_id=469963802]
+
+[node name="Agua" type="Area3D" parent="Ambiente" unique_id=327809513]
+transform = Transform3D(5.8723955, 0, 0, 0, 1, 0, 0, 0, 6.1222377, 5.9413595, 0, 0)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_u5lmb")
+velocidade_agua = 2.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/Agua" unique_id=1086386979]
+transform = Transform3D(1, 0, 0, 0, 3.7040722, 0, 0, 0, 1, 0, 0.03348413, 0)
+shape = SubResource("CylinderShape3D_rmxy5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ambiente/Agua" unique_id=1607791770]
+transform = Transform3D(1, 0, 0, 0, 0.05283642, 0, 0, 0, 1, 0, 0.032693997, 0)
+material_override = SubResource("StandardMaterial3D_tcipn")
+mesh = SubResource("CylinderMesh_0tywp")
+
+[node name="Damage timer" type="Timer" parent="Ambiente/Agua" unique_id=1334349439]
 
 [node name="Chao" type="MeshInstance3D" parent="Ambiente" unique_id=1300483953]
 transform = Transform3D(17.5062, 0, 0, 0, 1, 0, 0, 0, 17.0793, -0.022179604, 0.031460285, 0.0037035942)

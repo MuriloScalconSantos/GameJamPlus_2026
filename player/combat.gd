@@ -17,7 +17,7 @@ signal especial_realizado(direcao: Vector3)
 @export var dano: float = 10.0
 
 @export_range(0.1, 20.0, 0.1)
-var alcance: float = 3.0
+var alcance: float = 7.0
 
 @export_range(1.0, 90.0, 1.0)
 var abertura_graus: float = 45.0
