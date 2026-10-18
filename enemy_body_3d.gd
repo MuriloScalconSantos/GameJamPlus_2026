@@ -22,16 +22,16 @@ func _on_body_entered(body: Node3D) -> void:
 
 	var dados = {}
 
-	if "walk_speed" in body:
+	if "velocidade_andar" in body:
 		dados["tipo"] = "player"
-		dados["speed_original"] = body.walk_speed
+		dados["speed_original"] = body.velocidade_andar
 
 		var cam: Camera3D = _find_camera(body)
 		if cam:
 			dados["camera"] = cam
 			dados["fov_original"] = cam.fov
 
-		body.walk_speed = velocidade_agua
+		body.velocidade_andar = velocidade_agua
 
 	elif "speed" in body:
 		dados["tipo"] = "enemy"
@@ -48,8 +48,8 @@ func _on_body_exited(body: Node3D) -> void:
 	var dados = corpos_na_agua[body]
 
 	if dados["tipo"] == "player":
-		if "walk_speed" in body and "speed_original" in dados:
-			body.walk_speed = dados["speed_original"]
+		if "velocidade_andar" in body and "speed_original" in dados:
+			body.velocidade_andar = dados["speed_original"]
 
 			var horizontal = Vector3(body.velocity.x, 0.0, body.velocity.z)
 			if horizontal.length_squared() > 0.0:

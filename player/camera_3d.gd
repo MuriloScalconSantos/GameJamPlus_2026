@@ -1,5 +1,5 @@
 extends Camera3D
-signal pull_out_changed(active: bool)
+signal afastamento_alterado(afastada: bool)
 ## Câmera com seguimento por mola (delay + momentum).
 ## Espelha o offset X quando o jogador vira para a esquerda.
 ## Se afasta do jogador depois de andar por um tempo contínuo.
@@ -75,7 +75,7 @@ signal pull_out_changed(active: bool)
 # IMPACTO
 # ---------------------------------------------------------------------------
 @export_group("Impacto")
-## Quanto a câmera afunda ao pousar. Precisa do sinal "landed".
+## Quanto a câmera afunda ao pousar. Precisa do sinal "pousou".
 @export var landing_kick: float = 0.6
 @export var landing_kick_max: float = 6.0
 
@@ -114,14 +114,14 @@ func _ready() -> void:
 
 	_base_fov = fov
 
-	if target.has_signal(&"landed"):
-		target.connect(&"landed", _on_target_landed)
+	if target.has_signal(&"pousou"):
+		target.connect(&"pousou", _ao_pousar)
 
-	if target.has_signal(&"facing_changed"):
-		target.connect(&"facing_changed", _on_target_facing_changed)
+	if target.has_signal(&"lado_alterado"):
+		target.connect(&"lado_alterado", _ao_mudar_lado)
 	else:
 		push_warning(
-			"CameraFollow: o alvo não tem o sinal 'facing_changed'; "
+			"CameraFollow: o alvo não tem o sinal 'lado_alterado'; "
 			+ "o espelhamento não vai funcionar."
 		)
 
@@ -151,7 +151,7 @@ func _process(delta: float) -> void:
 	var pull_out_active: bool = pull_target > 0.0
 	if pull_out_active != _pull_out_active:
 		_pull_out_active = pull_out_active
-		pull_out_changed.emit(_pull_out_active)
+		afastamento_alterado.emit(_pull_out_active)
 	var pull_smoothing: float = (
 		pull_out_smoothing if pull_target > _pull_amount
 		else pull_in_smoothing
@@ -233,16 +233,16 @@ func _get_mirrored_offset(side: float) -> Vector3:
 	return Vector3(x, _offset.y, _offset.z)
 
 
-func _on_target_landed(impact_speed: float) -> void:
+func _ao_pousar(velocidade_impacto: float) -> void:
 	_velocity.y -= clampf(
-		impact_speed * landing_kick,
+		velocidade_impacto * landing_kick,
 		0.0,
 		landing_kick_max
 	)
 
 
-func _on_target_facing_changed(facing_right: bool) -> void:
-	_facing_sign = 1.0 if facing_right else -1.0
+func _ao_mudar_lado(olhando_direita: bool) -> void:
+	_facing_sign = 1.0 if olhando_direita else -1.0
 
 
 ## Teleporta a câmera para a posição ideal sem mola.
@@ -253,7 +253,7 @@ func snap_to_target() -> void:
 	_pull_amount = 0.0
 	if _pull_out_active:
 		_pull_out_active = false
-		pull_out_changed.emit(false)
+		afastamento_alterado.emit(false)
 
 	global_position = (
 		target.global_position

@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://b866xuvtkv2fa" path="res://progressao/combat_progressao.gd" id="4_combat"]
 [ext_resource type="Script" uid="uid://q8472d2o32dl" path="res://progressao/health_progressao.gd" id="5_health"]
 [ext_resource type="Script" uid="uid://bfgjonlkwlc3j" path="res://ritmo/interface_cartas_ritmo.gd" id="6_interface"]
+[ext_resource type="Script" uid="uid://be3b6na6ssfxk" path="res://player/visual_jogador.gd" id="7_visual"]
+[ext_resource type="Script" uid="uid://c1x48cp6lmr3l" path="res://player/controles_jogador.gd" id="8_controles"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4r3th"]
 
@@ -15,12 +17,16 @@ script = ExtResource("1_s7sam")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=16179569]
 shape = SubResource("BoxShape3D_4r3th")
 
+[node name="Controles" type="Node" parent="." unique_id=1270970984]
+script = ExtResource("8_controles")
+
 [node name="Sprite3D" type="AnimatedSprite3D" parent="." unique_id=1472032615]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 pixel_size = 0.003
 billboard = 1
 sprite_frames = ExtResource("2_iflxx")
 animation = &"idle_down"
+script = ExtResource("7_visual")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1458957469]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.5, 12)
