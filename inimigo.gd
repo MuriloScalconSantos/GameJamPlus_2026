@@ -144,12 +144,12 @@ func _face_player(to_player: Vector3) -> void:
 		sprite.flip_h = camera.global_basis.x.dot(to_player) < 0.0
 
 
-func _set_animation(name: StringName) -> void:
+func _set_animation(anim_name: StringName) -> void:
 	if morto:
 		return
-	if sprite.animation != name or not sprite.is_playing():
+	if sprite.animation != anim_name or not sprite.is_playing():
 		sprite.scale = Vector3.ONE
-		sprite.play(name)
+		sprite.play(anim_name)
 
 
 func _stop_horizontal() -> void:

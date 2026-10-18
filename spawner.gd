@@ -81,11 +81,9 @@ func spawn_enemy_in_radius() -> CharacterBody3D:
 
 
 # Chamado automaticamente quando o player atinge um inimigo (ou você pode adaptar para quando o inimigo morrer)
-func _on_alvo_atingido(alvo: Node3D, quantidade: float) -> void:
-	# Aqui você pode filtrar se o inimigo morreu (ex: se o HP dele chegou a 0) 
-	# ou avançar a barra baseada na atividade de combate:
+# Substitua a função _on_alvo_atingido no seu spawner por esta:
+func _on_alvo_atingido(_alvo: Node3D, _quantidade: float) -> void:
 	progresso_kills += 1
 	
-	# Interpola suavemente o cooldown de 3.5 para 3.0 conforme a progressão avança
 	var fator = clampf(float(progresso_kills) / float(kills_for_max_tempo), 0.0, 1.0)
 	spawn_cooldown = lerp(3.5, target_spawn_cooldown, fator)
