@@ -297,7 +297,7 @@ texture = ExtResource("4_tcipn")
 region_rect = Rect2(0, 0, 2880, 1708)
 
 [node name="CenarioColisor" type="MeshInstance3D" parent="Ambiente" unique_id=1321297020]
-transform = Transform3D(7.069691, 0, 0, 0, 2.2277756, 0.19768423, 0, -1.2862071, 0.34239915, -34.79509, 1.3249526, 11.329922)
+transform = Transform3D(6.4837623, -0.02477174, 0.15755147, -2.8162572, 0.034547206, 0.36260507, -0.10027261, -2.572061, 0.003353056, -37.80686, 1.4078633, -5.944566)
 material_override = SubResource("StandardMaterial3D_c6p0m")
 mesh = SubResource("BoxMesh_sowaw")
 skeleton = NodePath("")
@@ -349,6 +349,17 @@ skeleton = NodePath("")
 [node name="StaticBody3D" type="StaticBody3D" parent="Ambiente/CenarioColisor5" unique_id=1236730739]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/CenarioColisor5/StaticBody3D" unique_id=219066997]
+shape = SubResource("BoxShape3D_puaij")
+
+[node name="CenarioColisor7" type="MeshInstance3D" parent="Ambiente" unique_id=994048591]
+transform = Transform3D(-39.030052, 7.2159607e-09, -1.0001961, -1.04972435e-20, 2.5724158, -6.227563e-07, 2.366909, 1.1899077e-07, -16.493118, -28.248247, 1.609098, -16.003355)
+material_override = SubResource("StandardMaterial3D_c6p0m")
+mesh = SubResource("BoxMesh_sowaw")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ambiente/CenarioColisor7" unique_id=727410952]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/CenarioColisor7/StaticBody3D" unique_id=2070264995]
 shape = SubResource("BoxShape3D_puaij")
 
 [node name="CenarioColisor6" type="MeshInstance3D" parent="Ambiente" unique_id=78813033]
