@@ -19,6 +19,9 @@ func em_partida() -> bool:
 	return is_instance_valid(cena) and cena.scene_file_path == MUNDO
 
 func _input(event: InputEvent) -> void:
+	var cartas_mapa := get_tree().get_first_node_in_group("selecao_cartas_mapa")
+	if cartas_mapa != null and cartas_mapa.aberto:
+		return # O Esc fecha apenas a seleção do quadrado.
 	if em_transicao or not em_partida():
 		return
 	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ESCAPE:

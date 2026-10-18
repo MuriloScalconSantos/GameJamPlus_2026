@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dw23kos0nwqal" path="res://inimigo.tscn" id="3_puaij"]
 [ext_resource type="Script" uid="uid://cmfp7kfexhayy" path="res://ritmo/spawner_ritmo_aranha.gd" id="6_aranha_spawner"]
 [ext_resource type="PackedScene" uid="uid://d147prpew0y6c" path="res://aranha.tscn" id="6_h5dsh"]
+[ext_resource type="Script" uid="uid://7fne02p4fgqg" path="res://quadrado_cartas.gd" id="quadrado_cartas"]
 
 [sub_resource type="Environment" id="Environment_3fsuj"]
 background_mode = 1
@@ -124,3 +125,6 @@ limites = Array[int]([8, 15, 25, 35, 50])
 maximo_absoluto = 50
 player = NodePath("../Player")
 enemy_scene = ExtResource("6_h5dsh")
+
+[node name="CartasDoMapa" type="Node3D" parent="." unique_id=477490257]
+script = ExtResource("quadrado_cartas")

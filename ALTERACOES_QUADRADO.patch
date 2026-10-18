@@ -1,0 +1,30 @@
+--- original/Scenes/mundo_teste.tscn
++++ atualizado/Scenes/mundo_teste.tscn
+@@ -7,6 +7,8 @@
+ [ext_resource type="PackedScene" uid="uid://dw23kos0nwqal" path="res://inimigo.tscn" id="3_puaij"]
+ [ext_resource type="Script" uid="uid://cmfp7kfexhayy" path="res://ritmo/spawner_ritmo_aranha.gd" id="6_aranha_spawner"]
+ [ext_resource type="PackedScene" uid="uid://d147prpew0y6c" path="res://aranha.tscn" id="6_h5dsh"]
++
++[ext_resource type="Script" path="res://interacoes/quadrado_cartas.gd" id="quadrado_cartas"]
+ 
+ [sub_resource type="Environment" id="Environment_3fsuj"]
+ background_mode = 1
+@@ -124,3 +126,6 @@
+ maximo_absoluto = 50
+ player = NodePath("../Player")
+ enemy_scene = ExtResource("6_h5dsh")
++
++[node name="CartasDoMapa" type="Node3D" parent="."]
++script = ExtResource("quadrado_cartas")
+--- original/ritmo/fluxo_jogo.gd
++++ atualizado/ritmo/fluxo_jogo.gd
+@@ -19,6 +19,9 @@
+ 	return is_instance_valid(cena) and cena.scene_file_path == MUNDO
+ 
+ func _input(event: InputEvent) -> void:
++	var cartas_mapa := get_tree().get_first_node_in_group("selecao_cartas_mapa")
++	if cartas_mapa != null and cartas_mapa.aberto:
++		return # O Esc fecha apenas a seleção do quadrado.
+ 	if em_transicao or not em_partida():
+ 		return
+ 	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ESCAPE:
