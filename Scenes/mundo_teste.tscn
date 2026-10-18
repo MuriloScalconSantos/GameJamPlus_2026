@@ -44,7 +44,7 @@ material = SubResource("ShaderMaterial_4r3th")
 [node name="HUD" parent="." unique_id=83938570 instance=ExtResource("1_e3en3")]
 
 [node name="Player" parent="." unique_id=725353514 instance=ExtResource("1_ebs18")]
-transform = Transform3D(1, 0, 0, 0, 0.7214106, 0.69250757, 0, -0.69250757, 0.7214106, 0, 2.062149, -1.2453461)
+transform = Transform3D(1, 0, 0, 0, 0.7214106, 0.69250757, 0, -0.69250757, 0.7214106, -22.122616, 2.062149, -34.350323)
 top_level = true
 
 [node name="EnemySpawn" type="Node3D" parent="." unique_id=1682406777 node_paths=PackedStringArray("player")]
@@ -112,7 +112,7 @@ texture = ExtResource("4_tcipn")
 region_rect = Rect2(0, 0, 2880, 1708)
 
 [node name="CenarioColisor" type="MeshInstance3D" parent="Ambiente" unique_id=1321297020]
-transform = Transform3D(4.1571846, 0, 0, 0, 1.0866932, 0.1976842, 0, -0.6274026, 0.34239906, 0, 0.9613848, 9.721053)
+transform = Transform3D(7.069691, 0, 0, 0, 2.2277756, 0.19768423, 0, -1.2862071, 0.34239915, -34.79509, 1.3249526, 11.329922)
 material_override = SubResource("StandardMaterial3D_c6p0m")
 mesh = SubResource("BoxMesh_sowaw")
 skeleton = NodePath("")
@@ -120,6 +120,61 @@ skeleton = NodePath("")
 [node name="StaticBody3D" type="StaticBody3D" parent="Ambiente/CenarioColisor" unique_id=570302175]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/CenarioColisor/StaticBody3D" unique_id=1404818438]
+shape = SubResource("BoxShape3D_puaij")
+
+[node name="CenarioColisor4" type="MeshInstance3D" parent="Ambiente" unique_id=1590966559]
+transform = Transform3D(7.069691, 0, 0, 0, 2.2277756, 0.19768423, 0, -1.2862071, 0.34239915, -34.79509, 1.3249526, -44.165215)
+material_override = SubResource("StandardMaterial3D_c6p0m")
+mesh = SubResource("BoxMesh_sowaw")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ambiente/CenarioColisor4" unique_id=1933105182]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/CenarioColisor4/StaticBody3D" unique_id=943962387]
+shape = SubResource("BoxShape3D_puaij")
+
+[node name="CenarioColisor2" type="MeshInstance3D" parent="Ambiente" unique_id=305988368]
+transform = Transform3D(7.069691, 0, 0, 0, 2.2277756, 0.19768423, 0, -1.2862071, 0.34239915, -61.366756, 1.3249526, -44.165215)
+material_override = SubResource("StandardMaterial3D_c6p0m")
+mesh = SubResource("BoxMesh_sowaw")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ambiente/CenarioColisor2" unique_id=1944580055]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/CenarioColisor2/StaticBody3D" unique_id=1122286265]
+shape = SubResource("BoxShape3D_puaij")
+
+[node name="CenarioColisor3" type="MeshInstance3D" parent="Ambiente" unique_id=890502295]
+transform = Transform3D(1.1920929e-07, -1.1920928e-07, 0.39536843, 0, 2.5724137, -1.4901163e-08, -7.069691, -1.0658141e-14, 1.4901161e-08, -65.586716, 1.609098, -51.855038)
+material_override = SubResource("StandardMaterial3D_c6p0m")
+mesh = SubResource("BoxMesh_sowaw")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ambiente/CenarioColisor3" unique_id=576204855]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/CenarioColisor3/StaticBody3D" unique_id=1154904304]
+shape = SubResource("BoxShape3D_puaij")
+
+[node name="CenarioColisor5" type="MeshInstance3D" parent="Ambiente" unique_id=1719542054]
+transform = Transform3D(6.593348e-07, -1.1920939e-07, 16.52342, 0, 2.572416, -6.227563e-07, -39.101757, -1.0658151e-14, 6.227562e-07, -49.0299, 1.609098, -4.0693417)
+material_override = SubResource("StandardMaterial3D_c6p0m")
+mesh = SubResource("BoxMesh_sowaw")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ambiente/CenarioColisor5" unique_id=1236730739]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/CenarioColisor5/StaticBody3D" unique_id=219066997]
+shape = SubResource("BoxShape3D_puaij")
+
+[node name="CenarioColisor6" type="MeshInstance3D" parent="Ambiente" unique_id=78813033]
+transform = Transform3D(6.593348e-07, -2.6229537e-07, 16.52342, 0, 5.660064, -6.227563e-07, -39.101757, -2.3451035e-14, 6.227562e-07, -69.50502, 3.2464328, -4.0693417)
+material_override = SubResource("StandardMaterial3D_c6p0m")
+mesh = SubResource("BoxMesh_sowaw")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ambiente/CenarioColisor6" unique_id=943208398]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/CenarioColisor6/StaticBody3D" unique_id=412763594]
 shape = SubResource("BoxShape3D_puaij")
 
 [node name="CenarioPT" type="Sprite3D" parent="." unique_id=2025598978]
