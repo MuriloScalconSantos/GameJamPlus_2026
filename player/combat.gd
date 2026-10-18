@@ -7,7 +7,6 @@ extends Node3D
 # ---------------------------------------------------------------------------
 signal ataque_realizado(direcao: Vector3)
 signal alvo_atingido(alvo: Node3D, quantidade: float)
-signal especial_realizado(direcao: Vector3)
 
 # ------# ---------------------------------------------------------------------------
 # ATAQUE BÁSICO — CLIQUE ESQUERDO
@@ -21,14 +20,6 @@ signal especial_realizado(direcao: Vector3)
 @export_flags_3d_physics var mascara_paredes: int = 1
 
 var _tempo_recarga: float = 0.0
-
-# ---------------------------------------------------------------------------
-# ESPECIAL AZUL — AUTOMÁTICO
-# ---------------------------------------------------------------------------
-@export_group("Especial")
-@export_range(0.05, 10.0, 0.05) var intervalo_especial: float = 3.0
-@export var dano_especial: float = 10.0
-@export var textura_especial: Texture2D = preload( "res://Sprites/fogo_azul.png" )
 
 func _process(delta: float) -> void:
 	# Atualiza o tempo de recarga do ataque básico diminuindo com o delta
@@ -75,7 +66,6 @@ func tentar_atacar(direcao: Vector3) -> void:
 var direcao: Vector3 = Vector3.FORWARD
 
 var recarga: float = 0.0
-var recarga_especial: float = 0.0
 
 # Usado somente pelo ataque básico.
 var clique_pendente: bool = false
@@ -105,9 +95,6 @@ func _inicializar_combate() -> void:
 	# Básico disponível imediatamente para clicar.
 	recarga = 0.0
 
-	# Primeiro especial automático após 3 segundos.
-	recarga_especial = intervalo_especial
-
 	clique_pendente = false
 
 	guia = MeshInstance3D.new()
@@ -136,7 +123,7 @@ func _notification(what: int) -> void:
 
 
 # ---------------------------------------------------------------------------
-# BÁSICO MANUAL E ESPECIAL AUTOMÁTICO
+# BÁSICO MANUAL
 # ---------------------------------------------------------------------------
 func _processar_combate(delta: float) -> void:
 	_atualizar_mira()
@@ -151,14 +138,8 @@ func _processar_combate(delta: float) -> void:
 	# Recarga do básico: termina e espera um novo clique.
 	recarga = maxf(0.0, recarga - delta)
 
-	# Recarga do especial: termina e dispara automaticamente.
-	recarga_especial -= delta
-
 	if solicitar_basico and recarga <= 0.0:
 		executar_ataque()
-
-	if recarga_especial <= 0.0:
-		executar_especial()
 
 
 # ---------------------------------------------------------------------------
@@ -238,24 +219,7 @@ func executar_ataque() -> void:
 
 
 # ---------------------------------------------------------------------------
-# ESPECIAL AZUL — AUTOMÁTICO
-# ---------------------------------------------------------------------------
-func executar_especial() -> void:
-	if not habilitado or recarga_especial > 0.0:
-		return
-
-	# Preserva a fração do passo de física para evitar acumular atraso.
-	recarga_especial = maxf(
-		0.0,
-		recarga_especial + intervalo_especial
-	)
-
-	_aplicar_golpe(dano_especial, textura_especial)
-	especial_realizado.emit(direcao)
-
-
-# ---------------------------------------------------------------------------
-# DANO COMPARTILHADO PELOS DOIS ATAQUES
+# DANO DO ATAQUE BÁSICO
 # ---------------------------------------------------------------------------
 func _aplicar_golpe(
 	dano_golpe: float,
@@ -325,8 +289,7 @@ func _aplicar_golpe(
 			if alinhamento < limite_angular:
 				continue
 
-		# O especial continua respeitando paredes. O golpe corpo a corpo usa
-		# o setor laranja como área de acerto.
+		# O golpe corpo a corpo usa o setor laranja como área de acerto.
 		if not golpe_corpo_a_corpo:
 			var raio := PhysicsRayQueryParameters3D.create(
 				origem,

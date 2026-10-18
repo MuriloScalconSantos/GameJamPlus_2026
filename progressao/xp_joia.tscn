@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cwswv3nr1yyox"]
 
 [ext_resource type="Script" uid="uid://dvte4yiem1201" path="res://progressao/xp_joia.gd" id="1_script"]
-[ext_resource type="Texture2D" uid="uid://dqgfm31u545f" path="res://Sprites/XP/XPDrop.tres" id="2_drop"]
+[ext_resource type="Texture2D" uid="uid://blmocpx5kgjuv" path="res://Sprites/XP/XPDrop.tres" id="2_drop"]
 
 [node name="JoiaXP" type="Node3D" unique_id=1491751044 groups=["joias_xp"]]
 top_level = true
