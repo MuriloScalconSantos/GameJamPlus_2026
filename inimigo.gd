@@ -5,7 +5,7 @@ signal cabecada_iniciada
 signal cabecada_terminada(acertou: bool)
 
 @export_group("Movimento")
-@export var speed: float = 3.0
+@export var speed: float = 2.0
 @export var max_health: float = 10.0
 
 @export_group("Cabeçada")
