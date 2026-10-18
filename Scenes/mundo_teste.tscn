@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://dqdf3frvxppds" path="res://fluid_agua.gd" id="2_u5lmb"]
 [ext_resource type="Texture2D" uid="uid://fuplaev56gx2" path="res://icon.svg" id="3_h5dsh"]
 [ext_resource type="PackedScene" uid="uid://dw23kos0nwqal" path="res://inimigo.tscn" id="3_puaij"]
+[ext_resource type="Texture2D" uid="uid://bl7esoc7hyt0b" path="res://Scenes/BackGroundGround.png" id="4_tcipn"]
 [ext_resource type="Script" uid="uid://cmfp7kfexhayy" path="res://ritmo/spawner_ritmo_aranha.gd" id="6_aranha_spawner"]
 [ext_resource type="PackedScene" uid="uid://d147prpew0y6c" path="res://aranha.tscn" id="6_h5dsh"]
 
@@ -28,7 +29,6 @@ albedo_color = Color(0.145266, 0.145266, 0.145266, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_sowaw"]
 material = SubResource("ShaderMaterial_4r3th")
-size = Vector3(1, 1, 1.1425781)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ml3pm"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
@@ -41,75 +41,8 @@ albedo_color = Color(0.9, 0.12, 0.12, 1)
 [node name="MundoTeste" type="Node3D" unique_id=1545951197]
 
 [node name="Player" parent="." unique_id=725353514 instance=ExtResource("1_ebs18")]
-transform = Transform3D(1, 0, 0, 0, 0.8539098, 0.520421, 0, -0.520421, 0.8539098, 0, 8.851295, 191.43651)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=141037922]
-environment = SubResource("Environment_3fsuj")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=2057586747]
-transform = Transform3D(0.84115237, 0.06137955, 0.53730375, -0.54079825, 0.095469154, 0.835717, 0, -0.9935382, 0.11349806, 8.65189, 13.019234, 191.43651)
-shadow_enabled = true
-
-[node name="Ambiente" type="Node3D" parent="." unique_id=469963802]
-
-[node name="Agua" type="Area3D" parent="Ambiente" unique_id=327809513]
-transform = Transform3D(5.8723955, 0, 0, 0, 1, 0, 0, 0, 6.1222377, 5.9413595, 0, 0)
-collision_layer = 3
-collision_mask = 3
-script = ExtResource("2_u5lmb")
-velocidade_agua = 2.0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/Agua" unique_id=1086386979]
-transform = Transform3D(1, 0, 0, 0, 3.7040722, 0, 0, 0, 1, 0, 7.3392677, 31.269043)
-shape = SubResource("CylinderShape3D_rmxy5")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ambiente/Agua" unique_id=1607791770]
-transform = Transform3D(1, 0, 0, 0, 0.05283642, 0, 0, 0, 1, 0, 7.338478, 31.269043)
-material_override = SubResource("StandardMaterial3D_tcipn")
-mesh = SubResource("CylinderMesh_0tywp")
-
-[node name="Damage timer" type="Timer" parent="Ambiente/Agua" unique_id=1334349439]
-
-[node name="bloco" type="MeshInstance3D" parent="Ambiente" unique_id=1171161046]
-transform = Transform3D(0.84637, 0, 0, 0, 3.61975, 0, 0, 0, 8.50668, -4.02136, 8.524361, 190.5101)
-material_override = SubResource("StandardMaterial3D_c6p0m")
-mesh = SubResource("BoxMesh_sowaw")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Ambiente/bloco" unique_id=275831818]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/bloco/StaticBody3D" unique_id=190975314]
-shape = SubResource("ConcavePolygonShape3D_ml3pm")
-
-[node name="Ground" type="MeshInstance3D" parent="Ambiente" unique_id=1161076651]
-transform = Transform3D(1350.9028, 0, 0, 0, 1.0188327, 0, 0, 0, 1066.6519, -4.02136, 6.628273, 192.04633)
-material_override = SubResource("StandardMaterial3D_c6p0m")
-mesh = SubResource("BoxMesh_sowaw")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Ambiente/Ground" unique_id=2101594501]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/Ground/StaticBody3D" unique_id=1723018473]
-transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.1424079, 0, 0, 0)
-shape = SubResource("ConcavePolygonShape3D_ml3pm")
-
-[node name="bloco4" type="MeshInstance3D" parent="Ambiente" unique_id=175043236]
-transform = Transform3D(0.0340321, 0, -7.15903, 0, 1.87119, 0, 0.851029, 0, 0.286285, -0.919801, 8.163933, 185.98587)
-material_override = SubResource("StandardMaterial3D_c6p0m")
-mesh = SubResource("BoxMesh_sowaw")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Ambiente/bloco4" unique_id=843823183]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/bloco4/StaticBody3D" unique_id=2019978264]
-shape = SubResource("BoxShape3D_puaij")
-
-[node name="bloco2" type="MeshInstance3D" parent="Ambiente" unique_id=1602796481]
-transform = Transform3D(1.01126, 0, 0, 0, 2.80936, 0, 0, 0, 1.0028, -0.75112, 8.240452, 195.98447)
-material_override = SubResource("Material_mortal")
-mesh = SubResource("BoxMesh_sowaw")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Ambiente/bloco2" unique_id=893500623 groups=["mortal"]]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/bloco2/StaticBody3D" unique_id=1136265419]
-shape = SubResource("ConcavePolygonShape3D_ml3pm")
+transform = Transform3D(1, 0, 0, 0, 0.8539098, 0.520421, 0, -0.520421, 0.8539098, 0, 2.062149, -1.2453461)
+top_level = true
 
 [node name="EnemySpawn" type="Node3D" parent="." unique_id=1682406777 node_paths=PackedStringArray("player")]
 script = ExtResource("2_bmojv")
@@ -124,3 +57,75 @@ limites = Array[int]([8, 15, 25, 35, 50])
 maximo_absoluto = 50
 player = NodePath("../Player")
 enemy_scene = ExtResource("6_h5dsh")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=141037922]
+environment = SubResource("Environment_3fsuj")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=2057586747]
+transform = Transform3D(0.84115237, 0.06137955, 0.53730375, -0.54079825, 0.095469154, 0.835717, 0, -0.9935382, 0.11349806, 8.65189, 6.2300873, -1.2453461)
+shadow_enabled = true
+
+[node name="Ambiente" type="Node3D" parent="." unique_id=469963802]
+
+[node name="Agua" type="Area3D" parent="Ambiente" unique_id=327809513]
+transform = Transform3D(5.8723955, 0, 0, 0, 1, 0, 0, 0, 6.1222377, 5.9413595, 0, 0)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_u5lmb")
+velocidade_agua = 2.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/Agua" unique_id=1086386979]
+transform = Transform3D(1, 0, 0, 0, 3.7040722, 0, 0, 0, 1, 0, 1.6777363, -0.20341355)
+shape = SubResource("CylinderShape3D_rmxy5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ambiente/Agua" unique_id=1607791770]
+transform = Transform3D(1, 0, 0, 0, 0.05283642, 0, 0, 0, 1, 0, 0.54933167, -0.20341355)
+material_override = SubResource("StandardMaterial3D_tcipn")
+mesh = SubResource("CylinderMesh_0tywp")
+
+[node name="Damage timer" type="Timer" parent="Ambiente/Agua" unique_id=1334349439]
+
+[node name="bloco" type="MeshInstance3D" parent="Ambiente" unique_id=1171161046]
+transform = Transform3D(0.84637, 0, 0, 0, 3.61975, 0, 0, 0, 8.50668, -4.02136, 1.7352142, -2.171753)
+material_override = SubResource("StandardMaterial3D_c6p0m")
+mesh = SubResource("BoxMesh_sowaw")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ambiente/bloco" unique_id=275831818]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/bloco/StaticBody3D" unique_id=190975314]
+shape = SubResource("ConcavePolygonShape3D_ml3pm")
+
+[node name="Ground" type="MeshInstance3D" parent="Ambiente" unique_id=1161076651]
+transform = Transform3D(426.07892, 1.8189894e-12, 7.105449e-15, -6.6167515e-20, -1.8624503e-05, 1.0000031, -1.8189894e-12, -426.07898, -4.371152e-08, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_c6p0m")
+mesh = SubResource("BoxMesh_sowaw")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ambiente/Ground" unique_id=2101594501]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/Ground/StaticBody3D" unique_id=1723018473]
+shape = SubResource("ConcavePolygonShape3D_ml3pm")
+
+[node name="Sprite3D" type="Sprite3D" parent="Ambiente/Ground" unique_id=1590858205]
+transform = Transform3D(0.033358444, -4.440892e-16, -3.7223128e-24, 4.440892e-16, 0.033358265, -6.938894e-17, -8.4703295e-21, 1.1870689e-21, 1, -8.271806e-25, -1.10355614e-10, 0.53050464)
+texture = ExtResource("4_tcipn")
+region_rect = Rect2(0, 0, 2880, 1708)
+
+[node name="bloco4" type="MeshInstance3D" parent="Ambiente" unique_id=175043236]
+transform = Transform3D(0.0340321, 0, -7.15903, 0, 1.87119, 0, 0.851029, 0, 0.286285, -0.919801, 1.3747864, -6.695984)
+material_override = SubResource("StandardMaterial3D_c6p0m")
+mesh = SubResource("BoxMesh_sowaw")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ambiente/bloco4" unique_id=843823183]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/bloco4/StaticBody3D" unique_id=2019978264]
+shape = SubResource("BoxShape3D_puaij")
+
+[node name="bloco2" type="MeshInstance3D" parent="Ambiente" unique_id=1602796481]
+transform = Transform3D(1.01126, 0, 0, 0, 2.80936, 0, 0, 0, 1.0028, -0.75112, 1.4513054, 3.3026123)
+material_override = SubResource("Material_mortal")
+mesh = SubResource("BoxMesh_sowaw")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ambiente/bloco2" unique_id=893500623 groups=["mortal"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/bloco2/StaticBody3D" unique_id=1136265419]
+shape = SubResource("ConcavePolygonShape3D_ml3pm")
