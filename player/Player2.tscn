@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://4nm0em0rtbqj" path="res://player/character_body_3d.gd" id="1_s7sam"]
 [ext_resource type="SpriteFrames" uid="uid://fsi5acaksxi7" path="res://Sprites/PlayerDirectionalAnimations.tres" id="2_iflxx"]
 [ext_resource type="Script" uid="uid://bl7bie1qhykdt" path="res://player/camera_3d.gd" id="3_iflxx"]
-[ext_resource type="Script" path="res://progressao/combat_progressao.gd" id="4_combat"]
-[ext_resource type="Script" path="res://progressao/health_progressao.gd" id="5_health"]
-[ext_resource type="Script" path="res://ritmo/interface_cartas_ritmo.gd" id="6_interface"]
+[ext_resource type="Script" uid="uid://b866xuvtkv2fa" path="res://progressao/combat_progressao.gd" id="4_combat"]
+[ext_resource type="Script" uid="uid://q8472d2o32dl" path="res://progressao/health_progressao.gd" id="5_health"]
+[ext_resource type="Script" uid="uid://bfgjonlkwlc3j" path="res://ritmo/interface_cartas_ritmo.gd" id="6_interface"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4r3th"]
 
@@ -29,8 +29,8 @@ script = ExtResource("3_iflxx")
 [node name="Combat" type="Node3D" parent="." unique_id=205527198]
 script = ExtResource("4_combat")
 
-[node name="Health" type="Node" parent="."]
+[node name="Health" type="Node" parent="." unique_id=2049999941]
 script = ExtResource("5_health")
 
-[node name="InterfaceProgressao" type="CanvasLayer" parent="."]
+[node name="InterfaceProgressao" type="CanvasLayer" parent="." unique_id=736707776]
 script = ExtResource("6_interface")

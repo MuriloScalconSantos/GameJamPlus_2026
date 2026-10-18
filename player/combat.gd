@@ -61,6 +61,7 @@ var intervalo_especial: float = 3.0
 @export var altura_guia: float = 0.35
 @export var duracao_efeito: float = 0.18
 @export var mostrar_alcance: bool = true
+@export var tamanho_imagem: float = 20.0
 
 
 # ---------------------------------------------------------------------------
@@ -363,7 +364,7 @@ func _exibir_fogo(
 
 	var fogo := Sprite3D.new()
 	fogo.texture = textura
-	fogo.pixel_size = 0.0018
+	fogo.pixel_size = 0.0055
 	fogo.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	fogo.no_depth_test = false
 
@@ -386,7 +387,7 @@ func _exibir_fogo(
 
 		fogo.global_basis = camera.global_basis * Basis(
 			Vector3.BACK,
-			-vetor_tela.angle() - PI / 2.0
+			-vetor_tela.angle() - PI / 0.5
 		)
 
 	var tween := create_tween().set_parallel(true)
