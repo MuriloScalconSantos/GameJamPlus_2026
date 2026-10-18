@@ -1,14 +1,16 @@
 extends Node3D
 ## Cada joia vale 1 XP: salta, espera o jogador e voa até ele para ser coletada.
 
-@export var raio_de_atracao: float = 3.0
+@export var raio_de_atracao: float = 6.0
 @export var velocidade_inicial: float = 4.0
 @export var aceleracao: float = 24.0
 @export var velocidade_maxima: float = 18.0
 
 const TEMPO_DO_SALTO: float = 0.3
 const ALTURA_DO_SALTO: float = 0.45
-const TEMPO_DO_BRILHO: float = 0.12
+const TEMPO_DO_BRILHO: float = 0.28
+const ENERGIA_DO_BRILHO: float = 2.4
+const ALCANCE_DO_BRILHO: float = 2.0
 const TEXTURA_DROP: Texture2D = preload("res://Sprites/XP/XPDrop.tres")
 const TEXTURA_VOO: Texture2D = preload("res://Sprites/XP/XPVoo.tres")
 
@@ -23,6 +25,7 @@ var posicao_inicial: Vector3
 var posicao_no_chao: Vector3
 
 @onready var sprite: Sprite3D = $Sprite3D
+@onready var brilho: OmniLight3D = $Brilho
 
 
 func preparar(jogador_alvo: Node3D, deslocamento: Vector3) -> void:
@@ -107,6 +110,10 @@ func _coletar() -> void:
 	remove_from_group("joias_xp")
 	sprite.texture = TEXTURA_DROP
 	sprite.scale = Vector3.ONE * 1.2
+	sprite.modulate = Color(1.55, 1.3, 1.8, 1.0)
+	brilho.visible = true
+	brilho.light_energy = ENERGIA_DO_BRILHO
+	brilho.omni_range = ALCANCE_DO_BRILHO
 	EstadoJogo.adicionar_xp(1)
 
 
@@ -114,9 +121,14 @@ func _animar_coleta(delta: float) -> void:
 	# Um brilho curto no jogador encerra a coleta.
 	tempo_da_coleta += delta
 	var progresso: float = minf(tempo_da_coleta / TEMPO_DO_BRILHO, 1.0)
+	var restante: float = 1.0 - progresso
 	if is_instance_valid(jogador):
 		global_position = jogador.global_position + Vector3.UP * 0.6
-	sprite.scale = Vector3.ONE * lerpf(1.2, 1.6, progresso)
-	sprite.modulate.a = 1.0 - progresso
+	var estouro: float = sin(progresso * PI) * 0.3
+	var tamanho: float = lerpf(1.2, 1.7, progresso) + estouro
+	sprite.scale = Vector3.ONE * tamanho
+	sprite.modulate = Color(1.55, 1.3, 1.8, restante)
+	brilho.light_energy = ENERGIA_DO_BRILHO * restante
+	brilho.omni_range = lerpf(ALCANCE_DO_BRILHO, 3.2, progresso)
 	if progresso >= 1.0:
 		queue_free()
