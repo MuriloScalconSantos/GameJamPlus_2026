@@ -1,19 +1,18 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cwswv3nr1yyox"]
 
-[ext_resource type="Script" path="res://progressao/xp_joia.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://Sprites/XP/XPDrop.tres" id="2_drop"]
+[ext_resource type="Script" uid="uid://dvte4yiem1201" path="res://progressao/xp_joia.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://dqgfm31u545f" path="res://Sprites/XP/XPDrop.tres" id="2_drop"]
 
-[node name="JoiaXP" type="Node3D" groups=["joias_xp"]]
+[node name="JoiaXP" type="Node3D" unique_id=1491751044 groups=["joias_xp"]]
 top_level = true
 script = ExtResource("1_script")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=26329590]
 pixel_size = 0.0102
 billboard = 1
-shaded = false
 texture = ExtResource("2_drop")
 
-[node name="Brilho" type="OmniLight3D" parent="."]
+[node name="Brilho" type="OmniLight3D" parent="." unique_id=201193334]
 visible = false
 light_color = Color(0.93, 0.65, 1, 1)
 light_energy = 2.4
