@@ -3,9 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://b16475ajm6rpp" path="res://player/Player2.tscn" id="1_ebs18"]
 [ext_resource type="Script" uid="uid://bomer04lukyeq" path="res://spawner.gd" id="2_bmojv"]
 [ext_resource type="Script" uid="uid://dqdf3frvxppds" path="res://fluid_agua.gd" id="2_u5lmb"]
-[ext_resource type="PackedScene" uid="uid://ch07wdvtl6612" path="res://enemy.tscn" id="3_bmojv"]
-[ext_resource type="PackedScene" uid="uid://dw23kos0nwqal" path="res://inimigo.tscn" id="3_puaij"]
 [ext_resource type="Texture2D" uid="uid://fuplaev56gx2" path="res://icon.svg" id="3_h5dsh"]
+[ext_resource type="PackedScene" uid="uid://dw23kos0nwqal" path="res://inimigo.tscn" id="3_puaij"]
 
 [sub_resource type="Environment" id="Environment_3fsuj"]
 background_mode = 1

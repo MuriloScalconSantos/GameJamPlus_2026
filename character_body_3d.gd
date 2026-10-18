@@ -4,6 +4,13 @@ extends CharacterBody3D
 @export var detection_distance: float = 1.2
 @export_flags_3d_physics var obstacle_collision_mask: int = 1
 
+# Limite de distância ajustado para 30 metros
+@export var max_despawn_distance: float = 30.0
+
+# Sistema de Vida do Inimigo
+@export var vida_maxima: float = 4.0
+var vida_atual: float = 4.0
+
 var player: Node3D = null
 var is_initialized: bool = false
 var spawn_safe_timer: float = 0.5
@@ -17,8 +24,11 @@ var individual_speed: float = 6.0
 
 func _ready() -> void:
 	add_to_group("enemy")
+	add_to_group("inimigos") # Compatível com o sistema de mira do player
 	collision_layer = 0
 	collision_mask = 0
+	
+	vida_atual = vida_maxima
 	
 	# Variação sutil na velocidade para evitar simetria e travamentos mecânicos
 	individual_speed = speed * randf_range(0.9, 1.1)
@@ -35,6 +45,13 @@ func _physics_process(delta: float) -> void:
 			collision_mask = 1 | 2 | 4
 			is_initialized = true
 		return
+
+	# --- LIMPEZA AUTOMÁTICA POR DISTÂNCIA (30m) ---
+	if player != null:
+		var current_distance = global_position.distance_to(player.global_position)
+		if current_distance > max_despawn_distance:
+			queue_free()
+			return
 
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -102,12 +119,32 @@ func _physics_process(delta: float) -> void:
 		
 		velocity.x = final_move_dir.x * individual_speed
 		velocity.z = final_move_dir.z * individual_speed
+		
+		# Rotação suave na direção do movimento
+		if final_move_dir.length_squared() > 0.0001:
+			var target_rotation = atan2(-final_move_dir.x, -final_move_dir.z)
+			rotation.y = lerp_angle(rotation.y, target_rotation, delta * 10.0)
 	else:
 		velocity.x = move_toward(velocity.x, 0, individual_speed)
 		velocity.z = move_toward(velocity.z, 0, individual_speed)
 
 	move_and_slide()
 
+# --- SISTEMA DE DANO E MORTE ---
+func receber_dano(quantidade: float, _origem: Vector3, _atacante: Node3D) -> void:
+	vida_atual -= quantidade
+	
+	if vida_atual <= 0.0:
+		morrer()
+
+func morrer() -> void:
+	var spawner = get_tree().current_scene.find_child("Spawner", true, false)
+	if spawner and spawner.has_method("add_kill"):
+		spawner.call("add_kill")
+		
+	queue_free()
+
+# --- FUNÇÕES DE RADAR E DETECÇÃO ---
 func is_path_blocked(space_state: PhysicsDirectSpaceState3D, origin: Vector3, direction: Vector3, dist: float) -> bool:
 	var target_pos = origin + (direction * dist)
 	
