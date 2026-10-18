@@ -1,9 +1,9 @@
-[gd_resource type="SpriteFrames" format=3 uid="uid://cwgawcnsutp8r"]
+[gd_resource type="SpriteFrames" format=3]
 
-[ext_resource type="Texture2D" uid="uid://cvt0phgcl1i4u" path="res://Sprites/Slime/walk_1.png" id="1_walk1"]
-[ext_resource type="Texture2D" uid="uid://db0584wkqbnw0" path="res://Sprites/Slime/walk_2.png" id="2_walk2"]
-[ext_resource type="Texture2D" uid="uid://cqcuuop3pmjkx" path="res://Sprites/Slime/attack_1.png" id="3_attack1"]
-[ext_resource type="Texture2D" uid="uid://bmdxclr8iuct5" path="res://Sprites/Slime/attack_2.png" id="4_attack2"]
+[ext_resource type="Texture2D" path="res://Sprites/Slime/walk_1.png" id="1_walk1"]
+[ext_resource type="Texture2D" path="res://Sprites/Slime/walk_2.png" id="2_walk2"]
+[ext_resource type="Texture2D" path="res://Sprites/Slime/attack_1.png" id="3_attack1"]
+[ext_resource type="Texture2D" path="res://Sprites/Slime/attack_2.png" id="4_attack2"]
 
 [resource]
 animations = [{
@@ -14,7 +14,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("4_attack2")
 }],
-"loop": 0,
+"loop": false,
 "name": &"attack",
 "speed": 1.666667
 }, {
@@ -22,7 +22,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("1_walk1")
 }],
-"loop": 1,
+"loop": true,
 "name": &"idle",
 "speed": 1.0
 }, {
@@ -33,7 +33,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("2_walk2")
 }],
-"loop": 1,
+"loop": true,
 "name": &"walk",
 "speed": 1.8
 }]

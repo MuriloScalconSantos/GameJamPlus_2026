@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://cepvtn8ek5vbp"]
+[gd_scene format=3 uid="uid://bokx2hc2q1j02"]
 
-[ext_resource type="Script" uid="uid://eriwec7ura2d" path="res://inimigo.gd" id="1_7k104"]
+[ext_resource type="Script" uid="uid://75qaicjtvjvd" path="res://character_body_3d.gd" id="1_a202f"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xvofd"]
 size = Vector2(100, 100)
@@ -14,7 +14,7 @@ radius = 0.3
 [node name="Inimigo" type="CharacterBody3D" unique_id=1116121820]
 collision_layer = 2
 collision_mask = 3
-script = ExtResource("1_7k104")
+script = ExtResource("1_a202f")
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=856740404]
 texture = SubResource("PlaceholderTexture2D_xvofd")

@@ -1,4 +1,5 @@
 extends Camera3D
+signal pull_out_changed(active: bool)
 ## Câmera com seguimento por mola (delay + momentum).
 ## Espelha o offset X quando o jogador vira para a esquerda.
 ## Se afasta do jogador depois de andar por um tempo contínuo.
@@ -88,6 +89,7 @@ var _facing_sign: float = 1.0
 var _facing_current: float = 1.0
 var _move_time: float = 0.0
 var _pull_amount: float = 0.0
+var _pull_out_active: bool = false
 var _back_direction: Vector3 = Vector3.BACK
 
 
@@ -146,6 +148,10 @@ func _process(delta: float) -> void:
 
 	# Só se afasta depois de pull_delay segundos andando.
 	var pull_target: float = 1.0 if _move_time >= pull_delay else 0.0
+	var pull_out_active: bool = pull_target > 0.0
+	if pull_out_active != _pull_out_active:
+		_pull_out_active = pull_out_active
+		pull_out_changed.emit(_pull_out_active)
 	var pull_smoothing: float = (
 		pull_out_smoothing if pull_target > _pull_amount
 		else pull_in_smoothing
@@ -245,6 +251,9 @@ func snap_to_target() -> void:
 	_facing_current = _facing_sign
 	_move_time = 0.0
 	_pull_amount = 0.0
+	if _pull_out_active:
+		_pull_out_active = false
+		pull_out_changed.emit(false)
 
 	global_position = (
 		target.global_position

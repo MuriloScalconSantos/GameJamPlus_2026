@@ -19,18 +19,18 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node3D) -> void:
 	if not (body is CharacterBody3D) or corpos_na_agua.has(body):
 		return
-		
+
 	var dados = {}
 
 	if "walk_speed" in body:
 		dados["tipo"] = "player"
 		dados["speed_original"] = body.walk_speed
-		
+
 		var cam: Camera3D = _find_camera(body)
 		if cam:
 			dados["camera"] = cam
 			dados["fov_original"] = cam.fov
-		
+
 		body.walk_speed = velocidade_agua
 
 	elif "speed" in body:
@@ -44,13 +44,13 @@ func _on_body_entered(body: Node3D) -> void:
 func _on_body_exited(body: Node3D) -> void:
 	if not corpos_na_agua.has(body):
 		return
-		
+
 	var dados = corpos_na_agua[body]
-	
+
 	if dados["tipo"] == "player":
 		if "walk_speed" in body and "speed_original" in dados:
 			body.walk_speed = dados["speed_original"]
-			
+
 			var horizontal = Vector3(body.velocity.x, 0.0, body.velocity.z)
 			if horizontal.length_squared() > 0.0:
 				horizontal = horizontal.normalized() * dados["speed_original"]
@@ -62,7 +62,7 @@ func _on_body_exited(body: Node3D) -> void:
 
 	elif dados["tipo"] == "enemy" and "speed" in body:
 		body.speed = dados["speed_original"]
-		
+
 	corpos_na_agua.erase(body)
 
 func _find_camera(node: Node) -> Camera3D:

@@ -50,6 +50,15 @@ extends CharacterBody3D
 @export var hold_facing_while_skidding: bool = true
 ## Zona morta do direcional para trocar de lado.
 @export_range(0.0, 1.0) var facing_deadzone: float = 0.1
+## Tempo em que o quadro de dano aparece antes de voltar à animação normal.
+@export var hit_visual_duration: float = 0.25
+
+@export_group("Reação ao dano")
+## Recuo curto para longe da origem do golpe; não altera walk_speed.
+@export var hit_knockback_speed: float = 2.5
+@export var hit_knockback_duration: float = 0.12
+## Pequeno afundamento visual ao receber um golpe vindo de cima.
+@export var hit_up_recoil: float = 0.05
 
 # --- JUICINESS --------------------------------------------------------------
 @export_group("Juice")
@@ -87,6 +96,10 @@ var _facing_right: bool = true
 var _use_scale_flip: bool = false
 var _directional_sprite: AnimatedSprite3D
 var _last_animation_direction: String = "down"
+var _run_visual_active: bool = false
+var _hit_visual_time: float = 0.0
+var _hit_animation_direction: String = "down"
+var _knockback_time: float = 0.0
 
 # Mola do squash: positivo = achatado, negativo = esticado.
 var _squash: float = 0.0
@@ -99,6 +112,39 @@ var _visual_base_position: Vector3 = Vector3.ZERO
 func _ready() -> void:
 	_resolve_visuals()
 	_resolve_inputs()
+	var camera: Camera3D = get_node_or_null("Camera3D") as Camera3D
+	if camera and camera.has_signal(&"pull_out_changed"):
+		camera.connect(&"pull_out_changed", _on_pull_out_changed)
+	var health_node: Node = get_node_or_null("Health")
+	if health_node and health_node.has_signal(&"hit_received"):
+		health_node.connect(&"hit_received", _on_hit_received)
+
+
+func _on_pull_out_changed(active: bool) -> void:
+	_run_visual_active = active
+
+
+func _on_hit_received(origin: Vector3) -> void:
+	var from_hit: Vector3 = origin - global_position
+	from_hit.y = 0.0
+	if Vector2(from_hit.x, from_hit.z).length_squared() > 0.0001:
+		if absf(from_hit.x) >= absf(from_hit.z):
+			_hit_animation_direction = "right" if from_hit.x > 0.0 else "left"
+		else:
+			_hit_animation_direction = "down" if from_hit.z > 0.0 else "up"
+	else:
+		_hit_animation_direction = _last_animation_direction
+	_hit_visual_time = maxf(hit_visual_duration, 0.0)
+	_knockback_time = 0.0
+	if (
+		from_hit.length_squared() > 0.0001
+		and hit_knockback_speed > 0.0
+		and hit_knockback_duration > 0.0
+	):
+		var away: Vector3 = -from_hit.normalized()
+		velocity.x = away.x * hit_knockback_speed
+		velocity.z = away.z * hit_knockback_speed
+		_knockback_time = maxf(hit_knockback_duration, 0.0)
 
 
 # ---------------------------------------------------------------------------
@@ -241,7 +287,12 @@ func _physics_process(delta: float) -> void:
 	var control: float = 1.0 if on_floor else air_control
 	var accel: float = walk_acceleration * control
 
-	if has_input:
+	if _knockback_time > 0.0:
+		var recoil_deceleration: float = hit_knockback_speed / maxf(hit_knockback_duration, 0.001)
+		horizontal = horizontal.move_toward(Vector3.ZERO, recoil_deceleration * delta)
+		_knockback_time = maxf(_knockback_time - delta, 0.0)
+		_is_skidding = false
+	elif has_input:
 		var speed: float = horizontal.length()
 		var skidding_now: bool = false
 
@@ -285,6 +336,7 @@ func _physics_process(delta: float) -> void:
 		_squash_velocity = 0.0
 
 	_update_juice(delta)
+	_hit_visual_time = maxf(_hit_visual_time - delta, 0.0)
 	_update_directional_animation(input_dir, has_input)
 
 
@@ -300,6 +352,13 @@ func _set_facing(facing_right: bool) -> void:
 func _update_directional_animation(input_dir: Vector2, has_input: bool) -> void:
 	if not _directional_sprite:
 		return
+	if _hit_visual_time > 0.0:
+		var hit_name: StringName = StringName("hit_" + _hit_animation_direction)
+		if _directional_sprite.sprite_frames.has_animation(hit_name):
+			_directional_sprite.flip_h = hit_name == &"hit_right"
+			if _directional_sprite.animation != hit_name:
+				_directional_sprite.play(hit_name)
+			return
 
 	var movement: Vector2 = Vector2(velocity.x, velocity.z)
 	var moving: bool = has_input or movement.length_squared() > 0.04
@@ -313,7 +372,13 @@ func _update_directional_animation(input_dir: Vector2, has_input: bool) -> void:
 			else:
 				_last_animation_direction = "down" if facing_input.y > 0.0 else "up"
 
-	var animation_name: StringName = StringName(("walk_" if moving else "idle_") + _last_animation_direction)
+	var animation_prefix: String = "idle_"
+	if moving:
+		animation_prefix = "run_" if _run_visual_active else "walk_"
+	var animation_name: StringName = StringName(animation_prefix + _last_animation_direction)
+	if not _directional_sprite.sprite_frames.has_animation(animation_name):
+		animation_name = StringName("walk_" + _last_animation_direction)
+	_directional_sprite.flip_h = animation_name == &"run_left"
 	if _directional_sprite.animation != animation_name or not _directional_sprite.is_playing():
 		_directional_sprite.play(animation_name)
 
@@ -345,4 +410,8 @@ func _update_juice(delta: float) -> void:
 		_bob_time += delta * horizontal_speed * bob_frequency
 		bob = absf(sin(_bob_time)) * bob_height * speed_ratio
 
-	visual.position = _visual_base_position + Vector3(0.0, bob, 0.0)
+	var hit_offset: float = 0.0
+	if _hit_visual_time > 0.0 and _hit_animation_direction == "up":
+		var hit_progress: float = 1.0 - _hit_visual_time / maxf(hit_visual_duration, 0.001)
+		hit_offset = -hit_up_recoil * sin(hit_progress * PI)
+	visual.position = _visual_base_position + Vector3(0.0, bob + hit_offset, 0.0)
