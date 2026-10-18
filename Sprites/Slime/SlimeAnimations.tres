@@ -1,9 +1,24 @@
 [gd_resource type="SpriteFrames" format=3]
 
+[ext_resource type="Texture2D" path="res://Sprites/Slime/death_1.png" id="death_1"]
+[ext_resource type="Texture2D" path="res://Sprites/Slime/death_2.png" id="death_2"]
+
 [ext_resource type="Texture2D" path="res://Sprites/Slime/walk_1.png" id="1_walk1"]
 [ext_resource type="Texture2D" path="res://Sprites/Slime/walk_2.png" id="2_walk2"]
 [ext_resource type="Texture2D" path="res://Sprites/Slime/attack_1.png" id="3_attack1"]
 [ext_resource type="Texture2D" path="res://Sprites/Slime/attack_2.png" id="4_attack2"]
+
+[sub_resource type="AtlasTexture" id="Atlas_death_1"]
+atlas = ExtResource("death_1")
+region = Rect2(1745, 433, 447, 442)
+margin = Rect2(107, 87, 214, 97)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_death_2"]
+atlas = ExtResource("death_2")
+region = Rect2(1745, 433, 447, 442)
+margin = Rect2(107, 87, 214, 97)
+filter_clip = true
 
 [resource]
 animations = [{
@@ -36,4 +51,7 @@ animations = [{
 "loop": true,
 "name": &"walk",
 "speed": 1.8
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_death_1")}, {"duration": 1.0, "texture": SubResource("Atlas_death_2")}],
+"loop": false, "name": &"death", "speed": 10.0
 }]

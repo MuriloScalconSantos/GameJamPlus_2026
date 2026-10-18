@@ -14,7 +14,8 @@ signal especial_realizado(direcao: Vector3)
 # ATAQUE BÁSICO — CLIQUE ESQUERDO
 # ---------------------------------------------------------------------------
 @export_group("Ataque")
-@export var dano: float = 10.0
+# A força vem de EstadoJogo, incluindo as cartas escolhidas.
+var dano: float = 2.0
 
 @export_range(0.1, 20.0, 0.1)
 var alcance: float = 3.0
@@ -39,7 +40,7 @@ var mascara_paredes: int = 1
 @export_range(0.05, 10.0, 0.05)
 var intervalo_especial: float = 3.0
 
-@export var dano_especial: float = 10.0
+var dano_especial: float = 2.0
 
 @export var textura_especial: Texture2D = preload(
 	"res://Sprites/fogo_azul.png"
@@ -83,6 +84,16 @@ func _ready() -> void:
 		set_process_unhandled_input(false)
 		return
 	_inicializar_combate()
+	_sincronizar_dano()
+	EstadoJogo.status_alterado.connect(_sincronizar_dano)
+
+
+func _sincronizar_dano() -> void:
+	dano = EstadoJogo.dano_jogador
+	dano_especial = EstadoJogo.dano_jogador
+	if EstadoJogo.partida_encerrada:
+		habilitado = false
+		clique_pendente = false
 
 
 func _physics_process(delta: float) -> void:
@@ -116,6 +127,8 @@ func _inicializar_combate() -> void:
 # ENTRADA — APENAS O BÁSICO USA CLIQUE
 # ---------------------------------------------------------------------------
 func _unhandled_input(event: InputEvent) -> void:
+	if EstadoJogo.partida_encerrada or get_tree().paused:
+		return
 	if event.is_action_pressed("atacar"):
 		clique_pendente = true
 
@@ -129,6 +142,8 @@ func _notification(what: int) -> void:
 # BÁSICO MANUAL E ESPECIAL AUTOMÁTICO
 # ---------------------------------------------------------------------------
 func _processar_combate(delta: float) -> void:
+	if EstadoJogo.partida_encerrada:
+		return
 	_atualizar_mira()
 	_atualizar_guia()
 
@@ -324,7 +339,8 @@ func _aplicar_golpe(
 		inimigo.call(
 			"receber_dano",
 			dano_golpe,
-			origem
+			origem,
+			portador
 		)
 
 		alvo_atingido.emit(inimigo, dano_golpe)
