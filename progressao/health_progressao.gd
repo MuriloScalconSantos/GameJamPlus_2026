@@ -1,6 +1,6 @@
 extends "res://player/health.gd"
 ## Liga a vida do jogador (player/health.gd) ao Autoload EstadoJogo.
-## Não altera health.gd: só sincroniza vida atual/máxima e avisa o EstadoJogo quando há dano.
+## Sincroniza vida atual/máxima e avisa o EstadoJogo quando há dano.
 
 func _ready() -> void:
 	# Ao reabrir a cena depois de morrer, inicia uma nova partida.
