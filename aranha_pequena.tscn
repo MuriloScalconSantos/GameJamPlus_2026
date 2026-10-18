@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://b8aq7dr31sgir"]
+
+[ext_resource type="SpriteFrames" uid="uid://cng2mmkpfyx6u" path="res://Sprites/Aranha/AranhaAnimations.tres" id="2_7w5gt"]
+[ext_resource type="Script" uid="uid://darpw0p1h0xpi" path="res://aranhapequena.gd" id="3_7w5gt"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_7w5gt"]
+
+[node name="Aranha" type="CharacterBody3D" unique_id=1116121820 groups=["inimigos"]]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("3_7w5gt")
+speed = 3.0
+attack_damage = 1.0
+attack_duration = 1.2
+attack_cooldown = 1.3
+
+[node name="Sprite3D" type="AnimatedSprite3D" parent="." unique_id=856740404]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.63, 0)
+pixel_size = 0.0021637056
+billboard = 1
+sprite_frames = ExtResource("2_7w5gt")
+animation = &"walk"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1976061144]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.575, 0)
+shape = SubResource("SphereShape3D_7w5gt")

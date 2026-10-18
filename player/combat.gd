@@ -9,41 +9,46 @@ signal ataque_realizado(direcao: Vector3)
 signal alvo_atingido(alvo: Node3D, quantidade: float)
 signal especial_realizado(direcao: Vector3)
 
-
-# ---------------------------------------------------------------------------
+# ------# ---------------------------------------------------------------------------
 # ATAQUE BÁSICO — CLIQUE ESQUERDO
 # ---------------------------------------------------------------------------
 @export_group("Ataque")
 @export var dano: float = 10.0
-
-@export_range(0.1, 20.0, 0.1)
-var alcance: float = 7.0
-
-@export_range(1.0, 90.0, 1.0)
-var abertura_graus: float = 45.0
-
-@export_range(0.05, 5.0, 0.05)
-var intervalo: float = 1.6
-
+@export_range(0.1, 20.0, 0.1) var alcance: float = 7.0
+@export_range(1.0, 90.0, 1.0) var abertura_graus: float = 45.0
+@export_range(0.05, 5.0, 0.05) var intervalo: float = 1.6 # <--- Mantém o nome original 'intervalo'
 @export var habilitado: bool = true
+@export_flags_3d_physics var mascara_paredes: int = 1
 
-@export_flags_3d_physics
-var mascara_paredes: int = 1
-
+var _tempo_recarga: float = 0.0
 
 # ---------------------------------------------------------------------------
 # ESPECIAL AZUL — AUTOMÁTICO
 # ---------------------------------------------------------------------------
 @export_group("Especial")
-
-@export_range(0.05, 10.0, 0.05)
-var intervalo_especial: float = 3.0
-
+@export_range(0.05, 10.0, 0.05) var intervalo_especial: float = 3.0
 @export var dano_especial: float = 10.0
+@export var textura_especial: Texture2D = preload( "res://Sprites/fogo_azul.png" )
 
-@export var textura_especial: Texture2D = preload(
-	"res://Sprites/fogo_azul.png"
-)
+func _process(delta: float) -> void:
+	# Atualiza o tempo de recarga do ataque básico diminuindo com o delta
+	if _tempo_recarga > 0.0:
+		_tempo_recarga -= delta
+
+# Função que executa o ataque ao receber o clique/input
+func tentar_atacar(direcao: Vector3) -> void:
+	if not habilitado:
+		return
+	
+	# Calcula o intervalo real baseado na velocidade de ataque do EstadoJogo (Destreza)
+	var vel_ataque = max(EstadoJogo.velocidade_ataque, 0.1)
+	var intervalo_real = intervalo / vel_ataque
+	
+	if _tempo_recarga <= 0.0:
+		_tempo_recarga = intervalo_real
+		
+		ataque_realizado.emit(direcao)
+		# Insira aqui a sua lógica existente de deteção de alvos com o 'dano_total' e 'alcance'
 
 
 # ---------------------------------------------------------------------------
