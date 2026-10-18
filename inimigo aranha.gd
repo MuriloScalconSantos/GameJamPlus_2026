@@ -18,6 +18,13 @@ const CENA_JOIA_XP: PackedScene = preload("res://progressao/xp_joia.tscn")
 @export var attack_cooldown: float = 1.1
 @export var lunge_speed: float = 1.8
 
+@export_group("Recuo ao receber dano")
+@export var textura_recuo: Texture2D = preload(
+	"res://Sprites/Knockback/aranha_knockback.png"
+)
+@export_range(0.1, 20.0, 0.1) var forca_recuo: float = 8.0
+@export_range(0.05, 1.0, 0.01) var duracao_recuo: float = 0.22
+
 var player: CharacterBody3D
 var health: float
 var _attacking := false
@@ -28,6 +35,9 @@ var _attack_direction := Vector3.ZERO
 var _walk_time := 0.0
 var _morto: bool = false
 var _xp_dropado: bool = false
+var _recuo_restante: float = 0.0
+var _sprite_recuo: Sprite3D
+var _tween_recuo: Tween
 
 @onready var sprite: AnimatedSprite3D = $Sprite3D
 
@@ -43,17 +53,27 @@ func _ready() -> void:
 	if player == null and get_parent():
 		player = get_parent().get_node_or_null("Player") as CharacterBody3D
 
+	_preparar_sprite_recuo()
 	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(&"walk"):
 		sprite.play(&"walk")
 
 
 func _physics_process(delta: float) -> void:
-	if _morto or EstadoJogo.vida_atual <= 0.0:
+	if _morto:
+		if not is_on_floor():
+			velocity += get_gravity() * delta
+		_atualizar_recuo(delta)
+		move_and_slide()
+		return
+	if EstadoJogo.vida_atual <= 0.0:
 		return
 
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	_cooldown_left = maxf(0.0, _cooldown_left - delta)
+	if _atualizar_recuo(delta):
+		move_and_slide()
+		return
 
 	if not is_instance_valid(player):
 		_stop_horizontal()
@@ -168,6 +188,7 @@ func receber_dano(amount: float, _origin: Vector3, autor: Node = null) -> void:
 	if _morto or amount <= 0.0:
 		return
 	health -= amount
+	_iniciar_recuo(_origin)
 	if health <= 0.0:
 		_morto = true
 		_soltar_xp(autor)
@@ -176,7 +197,71 @@ func receber_dano(amount: float, _origin: Vector3, autor: Node = null) -> void:
 		if spawner and spawner.has_method("add_kill"):
 			spawner.call("add_kill")
 
-		queue_free()
+		get_tree().create_timer(duracao_recuo + 0.04).timeout.connect(queue_free)
+
+
+func _preparar_sprite_recuo() -> void:
+	if textura_recuo == null or sprite == null:
+		return
+	_sprite_recuo = Sprite3D.new()
+	_sprite_recuo.name = "SpriteRecuo"
+	_sprite_recuo.texture = textura_recuo
+	_sprite_recuo.position = sprite.position
+	_sprite_recuo.pixel_size = sprite.pixel_size
+	_sprite_recuo.billboard = sprite.billboard
+	_sprite_recuo.no_depth_test = sprite.no_depth_test
+	_sprite_recuo.visible = false
+	add_child(_sprite_recuo)
+
+
+func _iniciar_recuo(origem: Vector3) -> void:
+	_attacking = false
+	_attack_time = 0.0
+	_cooldown_left = maxf(_cooldown_left, 0.18)
+	var direcao := global_position - origem
+	direcao.y = 0.0
+	if direcao.length_squared() < 0.0001 and is_instance_valid(player):
+		direcao = global_position - player.global_position
+		direcao.y = 0.0
+	if direcao.length_squared() < 0.0001:
+		direcao = Vector3.BACK
+	direcao = direcao.normalized()
+	velocity.x = direcao.x * forca_recuo
+	velocity.z = direcao.z * forca_recuo
+	_recuo_restante = duracao_recuo
+	if _sprite_recuo == null:
+		return
+	_sprite_recuo.flip_h = sprite.flip_h
+	_sprite_recuo.scale = sprite.scale * Vector3(1.12, 0.9, 1.0)
+	sprite.visible = false
+	_sprite_recuo.visible = true
+	if _tween_recuo and _tween_recuo.is_running():
+		_tween_recuo.kill()
+	_tween_recuo = create_tween()
+	_tween_recuo.tween_property(
+		_sprite_recuo,
+		"scale",
+		sprite.scale,
+		0.12
+	).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+
+func _atualizar_recuo(delta: float) -> bool:
+	if _recuo_restante <= 0.0:
+		return false
+	_recuo_restante = maxf(0.0, _recuo_restante - delta)
+	var horizontal := Vector2(velocity.x, velocity.z).move_toward(
+		Vector2.ZERO,
+		forca_recuo / maxf(duracao_recuo, 0.01) * delta
+	)
+	velocity.x = horizontal.x
+	velocity.z = horizontal.y
+	if _recuo_restante <= 0.0 and not _morto:
+		sprite.visible = true
+		if _sprite_recuo:
+			_sprite_recuo.visible = false
+		sprite.scale = Vector3.ONE
+	return true
 
 
 func _soltar_xp(_autor: Node = null) -> void:

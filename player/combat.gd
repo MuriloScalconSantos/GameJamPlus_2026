@@ -52,7 +52,7 @@ var intervalo_especial: float = 3.0
 @export_group("Visual")
 
 @export var textura_fogo: Texture2D = preload(
-	"res://Sprites/fogo.png"
+	"res://Sprites/ataque_basico.png"
 )
 
 @export var altura_ataque: float = 0.65
