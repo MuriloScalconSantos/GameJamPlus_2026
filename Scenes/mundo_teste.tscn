@@ -28,11 +28,15 @@ albedo_color = Color(0.145266, 0.145266, 0.145266, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_sowaw"]
 material = SubResource("ShaderMaterial_4r3th")
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ml3pm"]
-data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+[sub_resource type="BoxShape3D" id="BoxShape3D_bmojv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_puaij"]
 
 [sub_resource type="StandardMaterial3D" id="Material_mortal"]
 albedo_color = Color(0.9, 0.12, 0.12, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ml3pm"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [node name="MundoTeste" type="Node3D" unique_id=1545951197]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 37.99977, 0)
@@ -87,7 +91,7 @@ mesh = SubResource("BoxMesh_sowaw")
 [node name="StaticBody3D" type="StaticBody3D" parent="Ambiente/bloco4" unique_id=843823183]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ambiente/bloco4/StaticBody3D" unique_id=2019978264]
-shape = SubResource("ConcavePolygonShape3D_ml3pm")
+shape = SubResource("BoxShape3D_puaij")
 
 [node name="bloco2" type="MeshInstance3D" parent="Ambiente" unique_id=1602796481]
 transform = Transform3D(1.01126, 0, 0, 0, 2.80936, 0, 0, 0, 1.0028, -0.75112, 8.240452, 195.98447)
