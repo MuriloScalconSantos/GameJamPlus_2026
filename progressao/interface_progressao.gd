@@ -108,17 +108,12 @@ func _estilo(cor: Color) -> StyleBoxFlat:
 	return estilo
 
 func _atualizar_hud() -> void:
-	_hud.text = "VIDA %.0f/%.0f  |  DANO BÁSICO/ESPECIAL %.0f\nXP %d/%d  |  TOTAL %d" % [
+	_hud.text = "VIDA %.0f/%.0f  |  DANO %.0f\nXP %d/%d  |  TOTAL %d" % [
 		EstadoJogo.vida_atual, EstadoJogo.vida_maxima, EstadoJogo.dano_jogador,
 		EstadoJogo.xp_atual, EstadoJogo.XP_POR_CARTA, EstadoJogo.xp_total]
 	_barra.value = EstadoJogo.xp_atual
-	if EstadoJogo.partida_encerrada:
-		_overlay.hide()
-		_aberto = false
 
 func _abrir_cartas() -> void:
-	if EstadoJogo.partida_encerrada:
-		return
 	if not _aberto:
 		_pausa_anterior = get_tree().paused
 		_aberto = true
@@ -129,15 +124,13 @@ func _abrir_cartas() -> void:
 	_botoes[0].grab_focus()
 
 func _selecionar(id: StringName) -> void:
-	if not _aberto or not EstadoJogo.escolhendo_carta or EstadoJogo.partida_encerrada:
+	if not _aberto or not EstadoJogo.escolhendo_carta:
 		return
 	for botao: Button in _botoes:
 		botao.disabled = true
 	EstadoJogo.selecionar_carta(id)
 
 func _apos_escolha(_id: StringName) -> void:
-	if EstadoJogo.partida_encerrada:
-		return
 	if EstadoJogo.cartas_pendentes > 0:
 		return # Continua pausado para a próxima escolha pendente.
 	_overlay.hide()
@@ -145,6 +138,6 @@ func _apos_escolha(_id: StringName) -> void:
 	get_tree().paused = _pausa_anterior
 
 func _exit_tree() -> void:
-	if _aberto and not EstadoJogo.partida_encerrada:
+	if _aberto:
 		get_tree().paused = _pausa_anterior
 		EstadoJogo.escolhendo_carta = false

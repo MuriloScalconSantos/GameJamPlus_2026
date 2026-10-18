@@ -35,7 +35,7 @@ func preparar(jogador_alvo: Node3D, deslocamento: Vector3) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if not preparada or EstadoJogo.partida_encerrada or get_tree().paused:
+	if not preparada or EstadoJogo.vida_atual <= 0.0 or get_tree().paused:
 		return
 
 	if coletada:
@@ -100,7 +100,7 @@ func _voar_ate_jogador(delta: float) -> void:
 
 
 func _coletar() -> void:
-	if coletada or EstadoJogo.partida_encerrada or get_tree().paused:
+	if coletada or EstadoJogo.vida_atual <= 0.0 or get_tree().paused:
 		return
 	# Marca antes de somar, para a mesma joia nunca entregar XP duas vezes.
 	coletada = true

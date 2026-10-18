@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dw23kos0nwqal"]
 
-[ext_resource type="Script" uid="uid://eriwec7ura2d" path="res://inimigo.gd" id="1_a202f"]
+[ext_resource type="Script" path="res://progressao/inimigo_progressao.gd" id="1_a202f"]
 [ext_resource type="SpriteFrames" path="res://Sprites/Slime/SlimeAnimations.tres" id="2_slime"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bhunq"]

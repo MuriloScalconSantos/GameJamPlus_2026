@@ -15,13 +15,14 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Prototipo_Kuromi"
-run/main_scene="res://Scenes/mundo_teste.tscn"
+run/main_scene="res://Scenes/Menu/CRTShaderMenuTest.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 EstadoJogo="*res://progressao/estado_jogo.gd"
+FluxoJogo="*res://ritmo/fluxo_jogo.gd"
 
 [display]
 

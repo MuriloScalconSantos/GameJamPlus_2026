@@ -1,24 +1,26 @@
-[gd_scene format=3 uid="uid://d147prpew0y6c"]
+[gd_scene format=3]
 
 [ext_resource type="Script" uid="uid://eriwec7ura2d" path="res://inimigo.gd" id="1_a202f"]
-[ext_resource type="SpriteFrames" uid="uid://cng2mmkpfyx6u" path="res://Sprites/Aranha/AranhaAnimations.tres" id="2_slime"]
+[ext_resource type="SpriteFrames" path="res://Sprites/Aranha/AranhaAnimations.tres" id="2_slime"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bhunq"]
-radius = 0.7
-height = 1.7
+[sub_resource type="BoxShape3D" id="BoxShape3D_bhunq"]
+size = Vector3(1.05, 1.15, 0.8)
 
 [node name="Aranha" type="CharacterBody3D" unique_id=1116121820 groups=["inimigos"]]
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_a202f")
+tipo_inimigo = "aranha"
+max_health = 1.0
+attack_damage = 1.0
 
 [node name="Sprite3D" type="AnimatedSprite3D" parent="." unique_id=856740404]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.63, 0)
+position = Vector3(0, 0.63, 0)
 pixel_size = 0.0021637056
 billboard = 1
 sprite_frames = ExtResource("2_slime")
 animation = &"walk"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1976061144]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.575, 0)
-shape = SubResource("CapsuleShape3D_bhunq")
+position = Vector3(0, 0.575, 0)
+shape = SubResource("BoxShape3D_bhunq")

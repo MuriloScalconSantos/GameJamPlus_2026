@@ -14,11 +14,10 @@ signal especial_realizado(direcao: Vector3)
 # ATAQUE BÁSICO — CLIQUE ESQUERDO
 # ---------------------------------------------------------------------------
 @export_group("Ataque")
-# A força vem de EstadoJogo, incluindo as cartas escolhidas.
-var dano: float = 2.0
+@export var dano: float = 10.0
 
 @export_range(0.1, 20.0, 0.1)
-var alcance: float = 3.0
+var alcance: float = 7.0
 
 @export_range(1.0, 90.0, 1.0)
 var abertura_graus: float = 45.0
@@ -40,7 +39,7 @@ var mascara_paredes: int = 1
 @export_range(0.05, 10.0, 0.05)
 var intervalo_especial: float = 3.0
 
-var dano_especial: float = 2.0
+@export var dano_especial: float = 10.0
 
 @export var textura_especial: Texture2D = preload(
 	"res://Sprites/fogo_azul.png"
@@ -57,6 +56,9 @@ var dano_especial: float = 2.0
 )
 
 @export var altura_ataque: float = 0.65
+## Altura do guia de mira (setor laranja) acima do centro do personagem.
+## Aumente para subir a mira, diminua para descer. O guia fica sempre paralelo ao chão.
+@export var altura_guia: float = 0.35
 @export var duracao_efeito: float = 0.18
 @export var mostrar_alcance: bool = true
 
@@ -84,16 +86,6 @@ func _ready() -> void:
 		set_process_unhandled_input(false)
 		return
 	_inicializar_combate()
-	_sincronizar_dano()
-	EstadoJogo.status_alterado.connect(_sincronizar_dano)
-
-
-func _sincronizar_dano() -> void:
-	dano = EstadoJogo.dano_jogador
-	dano_especial = EstadoJogo.dano_jogador
-	if EstadoJogo.partida_encerrada:
-		habilitado = false
-		clique_pendente = false
 
 
 func _physics_process(delta: float) -> void:
@@ -120,6 +112,7 @@ func _inicializar_combate() -> void:
 	material.albedo_color = Color(1.0, 0.65, 0.12)
 
 	guia.material_override = material
+	guia.top_level = true
 	add_child(guia)
 
 
@@ -127,8 +120,6 @@ func _inicializar_combate() -> void:
 # ENTRADA — APENAS O BÁSICO USA CLIQUE
 # ---------------------------------------------------------------------------
 func _unhandled_input(event: InputEvent) -> void:
-	if EstadoJogo.partida_encerrada or get_tree().paused:
-		return
 	if event.is_action_pressed("atacar"):
 		clique_pendente = true
 
@@ -142,8 +133,6 @@ func _notification(what: int) -> void:
 # BÁSICO MANUAL E ESPECIAL AUTOMÁTICO
 # ---------------------------------------------------------------------------
 func _processar_combate(delta: float) -> void:
-	if EstadoJogo.partida_encerrada:
-		return
 	_atualizar_mira()
 	_atualizar_guia()
 
@@ -339,8 +328,7 @@ func _aplicar_golpe(
 		inimigo.call(
 			"receber_dano",
 			dano_golpe,
-			origem,
-			portador
+			origem
 		)
 
 		alvo_atingido.emit(inimigo, dano_golpe)
@@ -430,7 +418,10 @@ func _atualizar_guia() -> void:
 	if not guia.visible:
 		return
 
-	var centro := Vector3(0.0, 0.035, 0.0)
+	# O guia ignora a rotação do jogador/câmera: fica sempre paralelo ao chão.
+	guia.global_transform = Transform3D(Basis.IDENTITY, portador.global_position)
+
+	var centro := Vector3(0.0, altura_guia, 0.0)
 	var metade := deg_to_rad(abertura_graus * 0.5)
 
 	linhas.surface_begin(Mesh.PRIMITIVE_LINES)
