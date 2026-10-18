@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://dw23kos0nwqal"]
+[gd_scene format=3 uid="uid://b5blg1l1pxymj"]
 
 [ext_resource type="Script" uid="uid://ba3pvo7e1h2gy" path="res://progressao/inimigo_progressao.gd" id="1_a202f"]
 [ext_resource type="SpriteFrames" uid="uid://bx48sox7o4l4m" path="res://Sprites/Slime/SlimeAnimations.tres" id="2_slime"]
