@@ -181,14 +181,10 @@ func _resolve_visuals() -> void:
 		if _directional_sprite:
 			_directional_sprite.flip_h = false
 			_directional_sprite.play(&"idle_down")
-			print("[Player] animações direcionais: ", sprite.name)
+		
 		else:
 			sprite.flip_h = not _facing_right
-			print("[Player] sprite espelhado: ", sprite.name)
-	elif visual:
-		print("[Player] nenhum Sprite3D encontrado; espelhando pela escala de: ", visual.name)
-	else:
-		push_warning("Player: nenhum nó visual/sprite encontrado. Atribua 'visual' no Inspector.")
+		
 
 
 # ---------------------------------------------------------------------------
@@ -199,13 +195,6 @@ func _resolve_inputs() -> void:
 	_act_right = _resolve_action(input_right, KEY_D, PackedStringArray(["right", "direita"]))
 	_act_up = _resolve_action(input_up, KEY_W, PackedStringArray(["up", "forward", "front", "frente", "cima"]))
 	_act_down = _resolve_action(input_down, KEY_S, PackedStringArray(["down", "back", "tras", "baixo"]))
-
-	print("[Player] input -> esquerda: %s | direita: %s | cima: %s | baixo: %s" % [
-		_describe(_act_left, "A"),
-		_describe(_act_right, "D"),
-		_describe(_act_up, "W"),
-		_describe(_act_down, "S"),
-	])
 
 
 func _resolve_action(manual: StringName, key: Key, hints: PackedStringArray) -> StringName:
