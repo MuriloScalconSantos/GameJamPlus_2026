@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://c68libqy6s458"]
 
+[ext_resource type="PackedScene" uid="uid://jmcfydgjg8wq" path="res://Scenes/hud.tscn" id="1_e3en3"]
 [ext_resource type="PackedScene" uid="uid://b16475ajm6rpp" path="res://player/Player2.tscn" id="1_ebs18"]
 [ext_resource type="Script" uid="uid://7onmr3kwnmi1" path="res://ritmo/spawner_ritmo_slime.gd" id="2_bmojv"]
 [ext_resource type="Script" uid="uid://dqdf3frvxppds" path="res://fluid_agua.gd" id="2_u5lmb"]
@@ -38,6 +39,8 @@ material = SubResource("ShaderMaterial_4r3th")
 [sub_resource type="BoxShape3D" id="BoxShape3D_puaij"]
 
 [node name="MundoTeste" type="Node3D" unique_id=1545951197]
+
+[node name="HUD" parent="." unique_id=83938570 instance=ExtResource("1_e3en3")]
 
 [node name="Player" parent="." unique_id=725353514 instance=ExtResource("1_ebs18")]
 transform = Transform3D(1, 0, 0, 0, 0.7214106, 0.69250757, 0, -0.69250757, 0.7214106, 0, 2.062149, -1.2453461)
@@ -108,7 +111,7 @@ texture = ExtResource("4_tcipn")
 region_rect = Rect2(0, 0, 2880, 1708)
 
 [node name="CenarioColisor" type="MeshInstance3D" parent="Ambiente" unique_id=1321297020]
-transform = Transform3D(4.157185, 0, 0, 0, 1.086693, 0.19768415, 0, -0.62740254, 0.342399, 0, 0.9613848, 9.721053)
+transform = Transform3D(4.1571846, 0, 0, 0, 1.0866932, 0.1976842, 0, -0.6274026, 0.34239906, 0, 0.9613848, 9.721053)
 material_override = SubResource("StandardMaterial3D_c6p0m")
 mesh = SubResource("BoxMesh_sowaw")
 skeleton = NodePath("")
