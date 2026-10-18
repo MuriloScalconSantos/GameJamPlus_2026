@@ -22,18 +22,18 @@ size_flags_stretch_ratio = 0.0
 show_percentage = false
 script = ExtResource("2_6fbih")
 
-[node name="ProgressBar2" type="ProgressBar" parent="." unique_id=1866339293]
-offset_left = 78.0
-offset_top = 633.0
-offset_right = 371.0
-offset_bottom = 645.0
-theme_override_font_sizes/font_size = 6
-show_percentage = false
-
 [node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1629406934]
 position = Vector2(235, 580)
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("2_bjfho")
+
+[node name="ProgressBar2" type="ProgressBar" parent="Sprite2D2" unique_id=1866339293]
+offset_left = -261.6667
+offset_top = 88.333374
+offset_right = 31.333313
+offset_bottom = 100.333374
+theme_override_font_sizes/font_size = 6
+show_percentage = false
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=100008806]
 stream = ExtResource("4_6fbih")

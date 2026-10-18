@@ -38,7 +38,7 @@ func _process(_delta: float) -> void:
 	if spawner != null:
 		var segundos: int = int(spawner.tempo_partida)
 		_tempo.text = "%02d:%02d  |  ETAPA %d\nINIMIGOS %d/%d  |  ESC: PAUSA" % [
-			segundos / 60, segundos % 60, spawner.etapa + 1,
+			int(segundos / 60.0), segundos % 60, spawner.etapa + 1,
 			spawner.inimigos_vivos(), spawner.limite_atual]
 
 func abrir_pausa() -> void:

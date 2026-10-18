@@ -26,6 +26,10 @@ func _process(delta: float) -> void:
 	if not is_instance_valid(player) or cena_alvo == null or EstadoJogo.vida_atual <= 0.0:
 		return
 
+	# Só inicia a contagem e os spawns do Swarm se o player tiver acumulado mais de 15 de XP
+	if EstadoJogo.xp_atual <= 15:
+		return
+
 	tempo_partida += delta
 	_ate_proximo_swarm -= delta
 
