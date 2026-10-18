@@ -1,77 +1,55 @@
 extends Node3D
+extends Node3D
 
+@export var player: CharacterBody3D
+@export var enemy_scene: PackedScene
+@export var tipos_inimigos: Array[PackedScene] = []
+@export_range(0.1, 60.0, 0.1) var spawn_cooldown: float = 1.0
+@export var min_radius: float = 15.0
+@export var max_radius: float = 30.0
 
-@export var player : CharacterBody3D
-@export var enemy_scene : PackedScene 
+var _spawn_counter: float = 0.0
 
-
-var min_radius : float = 15.0
-var max_radius : float = 30.0
-
-
-var minutes : int = 0
-var seconds : int = 0
-
-var time_counter : float = 0.0
-var spawn_cooldown : float = 1.0 
-var spawn_counter : float = 0.0
 
 func _ready() -> void:
-	
-	if player == null:
-		player = get_tree().current_scene.find_child("Player2", true, false) as CharacterBody3D
+    if player == null:
+        player = get_tree().current_scene.find_child("Player2", true, false) as CharacterBody3D
+    if player == null:
+        player = get_parent().get_node_or_null("Player") as CharacterBody3D
+    if player == null or (enemy_scene == null and tipos_inimigos.is_empty()):
+        push_warning("Spawner: configure o Player e a cena do inimigo.")
+
 
 func _process(delta: float) -> void:
-	
-	if not is_inside_tree():
-		return
+    if not is_instance_valid(player) or (enemy_scene == null and tipos_inimigos.is_empty()):
+        return
+    _spawn_counter += delta
+    if _spawn_counter >= spawn_cooldown:
+        _spawn_counter -= spawn_cooldown
+        spawn_enemy_in_radius()
 
 
-	time_counter += delta
-	if time_counter >= 1.0:
-		time_counter -= 1.0
-		seconds += 1
-		if seconds >= 60:
-			seconds = 0
-			minutes += 1
-		
-		var time_string = "%02d:%02d" % [minutes, seconds]
-		print(time_string)
+func spawn_enemy_in_radius() -> CharacterBody3D:
+    if not is_inside_tree() or not is_instance_valid(player) or (enemy_scene == null and tipos_inimigos.is_empty()):
+        return null
 
-	
-	if player == null:
-		return
-		
-	spawn_counter += delta
-	if spawn_counter >= spawn_cooldown:
-		spawn_counter = 0.0
-		spawn_enemy_in_radius()
+    var angle: float = randf_range(0.0, TAU)
+    var radius: float = randf_range(min_radius, max_radius)
+    var offset := Vector3(cos(angle) * radius, 0.0, sin(angle) * radius)
+    var spawn_position: Vector3 = player.global_position + offset
 
-func spawn_enemy_in_radius() -> void:
-	if not is_inside_tree() or player == null or not player.is_inside_tree() or enemy_scene == null:
-		return
+    var cena: PackedScene = enemy_scene
+    if not tipos_inimigos.is_empty():
+        cena = tipos_inimigos.pick_random()
+    if cena == null:
+        return null
+    var enemy: CharacterBody3D = cena.instantiate() as CharacterBody3D
+    if enemy == null:
+        push_error("Spawner: a cena do inimigo precisa ter CharacterBody3D na raiz.")
+        return null
 
-
-	var angle = randf_range(0.0, 2 * PI)
-	var dist = randf_range(min_radius, max_radius)
-	
-	var offset_x = cos(angle) * dist
-	var offset_z = sin(angle) * dist
-	var spawn_offset = Vector3(offset_x, 0.0, offset_z)
-	
-
-	var target_position = player.global_position + spawn_offset
-	target_position.y = player.global_position.y 
-
-	
-	var enemy_instance = enemy_scene.instantiate()
-	
-
-	get_tree().current_scene.add_child(enemy_instance)
-	
-	
-	enemy_instance.global_position = target_position
-	
-	
-	if "player" in enemy_instance:
-		enemy_instance.player = player
+    if "player" in enemy:
+        enemy.set("player", player)
+    get_parent().add_child(enemy)
+    enemy.global_position = spawn_position
+    return enemy
