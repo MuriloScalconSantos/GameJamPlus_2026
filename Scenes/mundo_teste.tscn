@@ -319,7 +319,7 @@ texture = ExtResource("4_tcipn")
 region_rect = Rect2(0, 0, 2880, 1708)
 
 [node name="CenarioColisor" type="MeshInstance3D" parent="Ambiente" unique_id=1321297020]
-transform = Transform3D(6.4837623, -0.02477174, 0.15755147, -2.8162572, 0.034547206, 0.36260507, -0.10027261, -2.572061, 0.003353056, -37.80686, 1.4078633, -5.944566)
+transform = Transform3D(6.9498634, -0.2252993, 0.1582629, -3.0193517, 0.16088673, 0.3642567, -0.087694466, -23.394487, 0.0009809327, -37.473125, 1.2545608, 3.7434816)
 material_override = SubResource("StandardMaterial3D_c6p0m")
 mesh = SubResource("BoxMesh_sowaw")
 skeleton = NodePath("")
@@ -400,7 +400,7 @@ transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.866
 texture = ExtResource("11_dhb28")
 
 [node name="CenarioPT2" type="Sprite3D" parent="." unique_id=433412327]
-transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.8660253, -26.874126, 3.9445086, 18.981596)
+transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.8660253, -26.874126, 1.4195762, 18.981596)
 texture = ExtResource("12_02ypm")
 
 [node name="CenarioPT3" type="Sprite3D" parent="." unique_id=102811881]
@@ -452,7 +452,7 @@ transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.866
 texture = ExtResource("23_pft7j")
 
 [node name="CenarioPT14" type="Sprite3D" parent="." unique_id=1173297373]
-transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.8660253, -36.610252, 3.9445086, 10.996763)
+transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.8660253, -28.30319, 3.9445086, 7.272603)
 texture = ExtResource("24_6ad21")
 
 [node name="CenarioPT15" type="Sprite3D" parent="." unique_id=756029014]
