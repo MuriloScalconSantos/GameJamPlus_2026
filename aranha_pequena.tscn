@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://darpw0p1h0xpi" path="res://aranhapequena.gd" id="3_7w5gt"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_7w5gt"]
+radius = 0.45057622
 
 [node name="Aranha" type="CharacterBody3D" unique_id=1116121820 groups=["inimigos"]]
 collision_layer = 3
@@ -22,5 +23,5 @@ sprite_frames = ExtResource("2_7w5gt")
 animation = &"walk"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1976061144]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.575, 0)
+transform = Transform3D(0.7493308, 0, 0, 0, 0.70651376, 0, 0, 0, 0.63864535, 0, 0.4544378, 0)
 shape = SubResource("SphereShape3D_7w5gt")

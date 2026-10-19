@@ -4,7 +4,7 @@ extends Node
 const VELOCIDADE_INICIAL: float = 100.0
 const ATTACK_SPEED_INICIAL: float = 1.0
 
-const VIDA_INICIAL: float = 20.0
+const VIDA_INICIAL: float = 6.0
 const DANO_INICIAL: float = 2.0
 const VIDA_ARANHA: float = 1.0
 const VIDA_SLIME: float = 4.0
@@ -106,7 +106,7 @@ func selecionar_carta(id: StringName) -> void:
 		&"cura":
 			vida_atual = vida_maxima
 		&"acelerar":
-			velocidade_movimento += 0.1
+			velocidade_movimento += 0.2
 		&"destreza":
 			velocidade_ataque += 0.2
 		&"machado_dano":

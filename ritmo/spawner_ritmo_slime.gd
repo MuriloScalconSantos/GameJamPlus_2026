@@ -2,19 +2,19 @@ extends "res://spawner.gd"
 ## Progressão por tempo dedicada exclusivamente ao Slime.
 
 @export_group("Ritmo da partida")
-@export var atraso_inicial: float = 3.0
+@export var atraso_inicial: float = 1.0 # Começa quase instantâneo (1 segundo)
 @export var inicio_etapas: Array[float] = [0.0, 30.0, 60.0, 120.0, 180.0]
-@export var intervalos: Array[float] = [3.0, 2.0, 1.5, 1.0, 0.75]
-@export var limites: Array[int] = [8, 15, 25, 35, 50]
-@export_range(1, 200) var maximo_absoluto: int = 50
+@export var intervalos: Array[float] = [1.0, 0.6, 0.4, 0.25, 0.15] # Intervalos muito mais curtos e frequentes!
+@export var limites: Array[int] = [15, 30, 50, 80, 120] # Aumentei os limites para aguentar mais slimes
+@export_range(1, 200) var maximo_absoluto: int = 120
 
 @export_group("Inimigo")
 @export var slime_scene: PackedScene
 
 var tempo_partida: float = 0.0
 var etapa: int = 0
-var limite_atual: int = 8
-var _ate_spawn: float = 3.0
+var limite_atual: int = 15
+var _ate_spawn: float = 1.0
 
 func _ready() -> void:
 	super._ready()
@@ -23,7 +23,6 @@ func _ready() -> void:
 	_atualizar_etapa()
 
 func _process(delta: float) -> void:
-	# Fallback para usar o enemy_scene da classe pai se a cena específica não for atribuída
 	var cena_alvo = slime_scene if slime_scene != null else enemy_scene
 	if not is_instance_valid(player) or cena_alvo == null or EstadoJogo.vida_atual <= 0.0:
 		return
@@ -38,15 +37,15 @@ func _process(delta: float) -> void:
 func _atualizar_etapa() -> void:
 	var quantidade: int = mini(inicio_etapas.size(), mini(intervalos.size(), limites.size()))
 	if quantidade == 0:
-		spawn_cooldown = 3.0
-		limite_atual = mini(8, maximo_absoluto)
+		spawn_cooldown = 1.0
+		limite_atual = mini(15, maximo_absoluto)
 		return
 	var anterior: int = etapa
 	etapa = 0
 	for i in range(quantidade):
 		if tempo_partida >= inicio_etapas[i]:
 			etapa = i
-	spawn_cooldown = maxf(0.1, intervalos[etapa])
+	spawn_cooldown = maxf(0.05, intervalos[etapa])
 	limite_atual = clampi(limites[etapa], 1, maximo_absoluto)
 	if etapa != anterior:
 		_ate_spawn = minf(_ate_spawn, spawn_cooldown)
