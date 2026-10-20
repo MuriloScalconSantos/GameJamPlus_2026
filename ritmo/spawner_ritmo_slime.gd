@@ -10,6 +10,10 @@ extends "res://spawner.gd"
 
 @export_group("Inimigo")
 @export var slime_scene: PackedScene
+## Grupo usado para contar os inimigos deste spawner. Contar so os inimigos do
+## proprio tipo evita que um spawner consuma o budget do outro (a aranha parava
+## de spawnar assim que os slimes passavam do limite deles).
+@export var grupo_contagem: StringName = &"slimes"
 
 var tempo_partida: float = 0.0
 var etapa: int = 0
@@ -52,7 +56,7 @@ func _atualizar_etapa() -> void:
 
 func inimigos_vivos() -> int:
 	var total: int = 0
-	for inimigo: Node in get_tree().get_nodes_in_group("inimigos"):
+	for inimigo: Node in get_tree().get_nodes_in_group(grupo_contagem):
 		if not is_instance_valid(inimigo) or inimigo.is_queued_for_deletion():
 			continue
 		var vida: Variant = inimigo.get("health")

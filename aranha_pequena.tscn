@@ -6,14 +6,14 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_7w5gt"]
 radius = 0.45057622
 
-[node name="Aranha" type="CharacterBody3D" unique_id=1116121820 groups=["inimigos"]]
+[node name="Aranha" type="CharacterBody3D" unique_id=1116121820 groups=["inimigos", "aranhas_pequenas"]]
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("3_7w5gt")
-speed = 3.0
+speed = 5.0
 attack_damage = 1.0
-attack_duration = 1.2
-attack_cooldown = 1.3
+attack_duration = 0.25
+attack_cooldown = 0.25
 
 [node name="Sprite3D" type="AnimatedSprite3D" parent="." unique_id=856740404]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.63, 0)

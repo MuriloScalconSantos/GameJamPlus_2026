@@ -14,14 +14,14 @@ func _ready() -> void:
 		attack_damage = EstadoJogo.DANO_SLIME
 	super._ready()
 
-func receber_dano(amount: float, origin: Vector3) -> void:
+func receber_dano(amount: float, origin: Vector3, autor: Node = null) -> void:
 	var estava_vivo: bool = health > 0.0
-	super.receber_dano(amount, origin)
+	super.receber_dano(amount, origin, autor)
 	# Só o jogador causa dano aos inimigos; estava_vivo evita XP duplicado no mesmo frame.
 	if estava_vivo and health <= 0.0:
-		_recompensar_morte()
+		_recompensar_morte(autor)
 
-func _recompensar_morte() -> void:
+func _recompensar_morte(_autor: Node = null) -> void:
 	# Mantém a recompensa existente, mas entrega XP somente ao coletar as joias.
 	var quantidade: int = 0
 	if tipo_inimigo == "aranha":

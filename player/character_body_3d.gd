@@ -64,7 +64,7 @@ func _physics_process(delta: float) -> void:
 				visual_jogador.reagir_derrapagem()
 		else:
 			var controle: float = 1.0 if no_chao else controle_no_ar
-			var velocidade_desejada: Vector3 = direcao * velocidade_andar
+			var velocidade_desejada: Vector3 = direcao * velocidade_efetiva()
 			horizontal = horizontal.move_toward(velocidade_desejada, aceleracao * controle * delta)
 
 		_derrapando = derrapando_agora
@@ -85,7 +85,13 @@ func _physics_process(delta: float) -> void:
 		visual_jogador.reagir_pouso(velocidade_queda)
 
 	var usar_velocidade: bool = _derrapando and manter_lado_na_derrapagem
-	visual_jogador.atualizar(delta, entrada, usar_velocidade, velocidade_andar)
+	visual_jogador.atualizar(delta, entrada, usar_velocidade, velocidade_efetiva())
+
+
+## Velocidade de caminhada efetiva. A camada de progressão sobrescreve
+## este hook para aplicar o multiplicador das cartas de Acelerar.
+func velocidade_efetiva() -> float:
+	return velocidade_andar
 
 
 func _definir_lado(olhando_direita: bool) -> void:

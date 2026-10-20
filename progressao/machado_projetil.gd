@@ -11,6 +11,7 @@ var distancia_maxima: float = 12.0
 var distancia_percorrida: float = 0.0
 var iniciado: bool = false
 var alvos_atingidos: Dictionary = {}
+var autor: Node = null
 
 @onready var hitbox: Area3D = $Hitbox
 @onready var sprite: AnimatedSprite3D = $Sprite3D
@@ -19,13 +20,14 @@ func _ready() -> void:
 	hitbox.body_entered.connect(_ao_entrar_corpo)
 	sprite.play(&"girar")
 
-func iniciar(direcao_inicial: Vector3, dano_inicial: float, velocidade_inicial: float, alcance: float) -> void:
+func iniciar(direcao_inicial: Vector3, dano_inicial: float, velocidade_inicial: float, alcance: float, autor_inicial: Node = null) -> void:
 	direcao = direcao_inicial
 	direcao.y = 0.0
 	direcao = direcao.normalized()
 	dano = dano_inicial
 	velocidade = maxf(0.1, velocidade_inicial)
 	distancia_maxima = maxf(1.0, alcance)
+	autor = autor_inicial
 	iniciado = direcao.length_squared() > 0.0
 
 func _physics_process(delta: float) -> void:
@@ -52,7 +54,7 @@ func _ao_entrar_corpo(corpo: Node3D) -> void:
 	if alvos_atingidos.has(id):
 		return
 	alvos_atingidos[id] = true
-	corpo.call("receber_dano", dano, global_position)
+	corpo.call("receber_dano", dano, global_position, autor)
 	if not is_instance_valid(corpo) or corpo.is_queued_for_deletion():
 		return
 	var vida_depois: Variant = corpo.get("health")

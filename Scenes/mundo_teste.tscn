@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://7onmr3kwnmi1" path="res://ritmo/spawner_ritmo_slime.gd" id="2_bmojv"]
 [ext_resource type="Script" uid="uid://dqdf3frvxppds" path="res://fluid_agua.gd" id="2_u5lmb"]
 [ext_resource type="Texture2D" uid="uid://fuplaev56gx2" path="res://icon.svg" id="3_h5dsh"]
-[ext_resource type="PackedScene" uid="uid://c7k0f7r081uln" path="res://inimigo.tscn" id="3_puaij"]
+[ext_resource type="PackedScene" uid="uid://b5blg1l1pxymj" path="res://slime.tscn" id="4_dnaho"]
 [ext_resource type="Texture2D" uid="uid://bl7esoc7hyt0b" path="res://Scenes/BackGroundGround.png" id="4_tcipn"]
 [ext_resource type="Script" uid="uid://g3t2v4e30w6q" path="res://ritmo/spawner_ritmo_aranha_swarm.gd" id="6_0tywp"]
 [ext_resource type="Script" uid="uid://cmfp7kfexhayy" path="res://ritmo/spawner_ritmo_aranha.gd" id="6_aranha_spawner"]
@@ -73,14 +73,14 @@ top_level = true
 [node name="EnemySpawn" type="Node3D" parent="." unique_id=1682406777 node_paths=PackedStringArray("player")]
 script = ExtResource("2_bmojv")
 player = NodePath("../Player")
-enemy_scene = ExtResource("3_puaij")
+enemy_scene = ExtResource("4_dnaho")
 
 [node name="EnemySpawnAranha" type="Node3D" parent="." unique_id=799100969 node_paths=PackedStringArray("player")]
 script = ExtResource("6_aranha_spawner")
 atraso_inicial = 3.0
 intervalos = Array[float]([3.0, 2.0, 1.5, 1.0, 0.75])
-limites = Array[int]([8, 15, 25, 35, 50])
-maximo_absoluto = 50
+limites = Array[int]([5, 10, 15, 20, 30])
+maximo_absoluto = 30
 player = NodePath("../Player")
 enemy_scene = ExtResource("6_h5dsh")
 

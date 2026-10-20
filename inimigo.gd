@@ -156,7 +156,7 @@ func _stop_horizontal() -> void:
 	velocity.z = 0.0
 
 
-func receber_dano(amount: float, origem: Vector3) -> void:
+func receber_dano(amount: float, origem: Vector3, _autor: Node = null) -> void:
 	if _morto or amount <= 0.0:
 		return
 	health -= amount

@@ -49,7 +49,7 @@ func _lancar() -> void:
 		projetil.global_position = posicao_inicial
 		projetil.set("forca_recuo", forca_recuo)
 		projetil.set("desvio_lateral", desvio_lateral)
-		projetil.call("iniciar", direcao, EstadoJogo.dano_machado_atual(), EstadoJogo.velocidade_machado, distancia_alvo + alcance_apos_alvo)
+		projetil.call("iniciar", direcao, EstadoJogo.dano_machado_atual(), EstadoJogo.velocidade_machado, distancia_alvo + alcance_apos_alvo, jogador)
 	temporizador.start(intervalo_atual)
 
 func _alvo_mais_proximo() -> Node3D:

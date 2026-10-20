@@ -2,12 +2,6 @@ extends Node3D
 ## Ataques da branch murilo/movimentacao-combate, separados da movimentação.
 ## Este nó deve ser filho direto do CharacterBody3D do jogador.
 
-# ---------------------------------------------------------------------------
-# SINAIS DE COMBATE
-# ---------------------------------------------------------------------------
-signal ataque_realizado(direcao: Vector3)
-signal alvo_atingido(alvo: Node3D, quantidade: float)
-
 # ------# ---------------------------------------------------------------------------
 # ATAQUE BÁSICO — CLIQUE ESQUERDO
 # ---------------------------------------------------------------------------
@@ -309,13 +303,11 @@ func _aplicar_golpe(
 		inimigo.call(
 			"receber_dano",
 			dano_golpe,
-			origem
+			origem,
+			portador
 		)
 
-		alvo_atingido.emit(inimigo, dano_golpe)
-
 	_exibir_fogo(origem, textura_golpe)
-	ataque_realizado.emit(direcao)
 
 
 func _raio_horizontal_colisor(alvo: Node3D) -> float:

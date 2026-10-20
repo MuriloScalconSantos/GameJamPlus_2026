@@ -7,7 +7,7 @@ signal cabecada_terminada(acertou: bool)
 const CENA_JOIA_XP: PackedScene = preload("res://progressao/xp_joia.tscn")
 
 @export_group("Movimento")
-@export var speed: float = 8.0 # Velocidade ajustada anteriormente para 8.0
+@export var speed: float = 5.0 # Mais rapido que o slime (2.0)
 @export var max_health: float = 1.0 # Morre com um hit
 
 @export_group("Aparência")
@@ -18,9 +18,9 @@ const CENA_JOIA_XP: PackedScene = preload("res://progressao/xp_joia.tscn")
 @export var attack_range: float = 1.45
 @export var hit_range: float = 1.75
 @export var attack_damage: float = 5.0
-@export var attack_duration: float = 0.3 # Bem mais rápido para concluir o bote num instante
-@export var attack_cooldown: float = 0.15 # Praticamente sem pausa entre um ataque e outro
-@export var lunge_speed: float = 1.5
+@export var attack_duration: float = 0.25 # Duracao do bote
+@export var attack_cooldown: float = 0.25 # Espera entre botes (total de 0.5s entre hits)
+@export var lunge_speed: float = 6.0 # Investida mais veloz que a caminhada (5.0)
 
 @export_group("Recuo ao receber dano")
 @export var textura_recuo: Texture2D = preload(

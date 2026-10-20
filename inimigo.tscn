@@ -6,7 +6,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_bhunq"]
 size = Vector3(1.05, 1.15, 0.8)
 
-[node name="Inimigo" type="CharacterBody3D" unique_id=1116121820 groups=["inimigos"]]
+[node name="Inimigo" type="CharacterBody3D" unique_id=1116121820 groups=["inimigos", "slimes"]]
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_a202f")
