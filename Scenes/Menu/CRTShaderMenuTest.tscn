@@ -43,8 +43,8 @@ offset_bottom = 821.0
 color = Color(0.0823529, 0.0784314, 0.0941176, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="ColorRect" unique_id=1760965388]
-position = Vector2(718.5, 458.50003)
-scale = Vector2(1.7983762, 1.8048192)
+position = Vector2(1031, 635)
+scale = Vector2(0.67222226, 0.64637005)
 texture = ExtResource("1_rgxf2")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=91690885]
@@ -79,8 +79,8 @@ text = "Exit Game"
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="CanvasLayer" unique_id=630519791]
 material = SubResource("ShaderMaterial_aotu0")
-position = Vector2(638.49994, 366.99997)
-scale = Vector2(1343, 794.00006)
+position = Vector2(-2808, 1806)
+scale = Vector2(2253.5, 1668.0001)
 mesh = SubResource("QuadMesh_ctw5b")
 
 [connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]

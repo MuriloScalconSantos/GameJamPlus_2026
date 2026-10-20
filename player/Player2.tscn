@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://bfgjonlkwlc3j" path="res://ritmo/interface_cartas_ritmo.gd" id="6_interface"]
 [ext_resource type="Script" uid="uid://be3b6na6ssfxk" path="res://player/visual_jogador.gd" id="7_visual"]
 [ext_resource type="Script" uid="uid://c1x48cp6lmr3l" path="res://player/controles_jogador.gd" id="8_controles"]
-[ext_resource type="Script" path="res://progressao/machado_automatico.gd" id="9_machado"]
+[ext_resource type="Script" uid="uid://drpqwnpnaqyrd" path="res://progressao/machado_automatico.gd" id="9_machado"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4r3th"]
 
@@ -39,10 +39,10 @@ root_node = NodePath("../..")
 [node name="Combat" type="Node3D" parent="." unique_id=205527198]
 script = ExtResource("4_combat")
 
-[node name="MachadoAutomatico" type="Node3D" parent="."]
+[node name="MachadoAutomatico" type="Node3D" parent="." unique_id=790316230]
 script = ExtResource("9_machado")
 
-[node name="Temporizador" type="Timer" parent="MachadoAutomatico"]
+[node name="Temporizador" type="Timer" parent="MachadoAutomatico" unique_id=75861827]
 one_shot = true
 
 [node name="Health" type="Node" parent="." unique_id=2049999941]
