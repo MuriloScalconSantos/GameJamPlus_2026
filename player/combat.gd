@@ -19,27 +19,12 @@ signal alvo_atingido(alvo: Node3D, quantidade: float)
 @export var habilitado: bool = true
 @export_flags_3d_physics var mascara_paredes: int = 1
 
-var _tempo_recarga: float = 0.0
-
-func _process(delta: float) -> void:
-	# Atualiza o tempo de recarga do ataque básico diminuindo com o delta
-	if _tempo_recarga > 0.0:
-		_tempo_recarga -= delta
-
-# Função que executa o ataque ao receber o clique/input
-func tentar_atacar(direcao: Vector3) -> void:
-	if not habilitado:
-		return
-	
-	# Calcula o intervalo real baseado na velocidade de ataque do EstadoJogo (Destreza)
-	var vel_ataque = max(EstadoJogo.velocidade_ataque, 0.1)
-	var intervalo_real = intervalo / vel_ataque
-	
-	if _tempo_recarga <= 0.0:
-		_tempo_recarga = intervalo_real
-		
-		ataque_realizado.emit(direcao)
-		# Insira aqui a sua lógica existente de deteção de alvos com o 'dano_total' e 'alcance'
+# A recarga do ataque básico é controlada por `recarga`, decrementada em
+# _processar_combate(). O antigo par `intervalo`/`_tempo_recarga` +
+# tentar_atacar() foi removido por nunca ser chamado: ele era o único ponto
+# que consultava a velocidade de ataque do EstadoJogo (Destreza), e por isso
+# a carta não tinha efeito. A velocidade de ataque entra agora por
+# intervalo_efetivo(), sobrescrito em progressao/combat_progressao.gd.
 
 
 # ---------------------------------------------------------------------------
@@ -212,10 +197,20 @@ func executar_ataque() -> void:
 	if not habilitado or recarga > 0.0:
 		return
 
-	recarga = intervalo
+	recarga = intervalo_efetivo()
 	# O cone laranja é a hitbox do golpe corpo a corpo: atinge todos os
 	# inimigos dentro do setor, mesmo que exista um obstáculo entre eles.
 	_aplicar_golpe(dano, textura_fogo, true)
+
+
+# ---------------------------------------------------------------------------
+# INTERVALO EFETIVO DO ATAQUE
+# ---------------------------------------------------------------------------
+## Intervalo real entre um ataque e o próximo. A camada de progressão
+## sobrescreve este método para aplicar as cartas de velocidade de ataque
+## (Destreza). O base não conhece EstadoJogo: devolve o export puro.
+func intervalo_efetivo() -> float:
+	return intervalo
 
 
 # ---------------------------------------------------------------------------

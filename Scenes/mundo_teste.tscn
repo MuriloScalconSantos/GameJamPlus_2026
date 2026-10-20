@@ -396,7 +396,7 @@ skeleton = NodePath("")
 shape = SubResource("BoxShape3D_puaij")
 
 [node name="CenarioPT" type="Sprite3D" parent="." unique_id=2025598978]
-transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.8660253, 1.208828, 0.8656068, 8.531813)
+transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.8660253, 1.208828, 1.2828307, 8.531813)
 texture = ExtResource("11_dhb28")
 
 [node name="CenarioPT2" type="Sprite3D" parent="." unique_id=433412327]
@@ -432,7 +432,7 @@ transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.866
 texture = ExtResource("19_hdtvt")
 
 [node name="CenarioPT10" type="Sprite3D" parent="." unique_id=156421710]
-transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.8660253, -5.9414663, 3.9445086, 10.996763)
+transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.8660253, -5.9414663, 1.1981065, 10.996763)
 texture = ExtResource("20_dnaho")
 
 [node name="CenarioPT11" type="Sprite3D" parent="." unique_id=1905186905]
@@ -527,6 +527,326 @@ texture = ExtResource("27_g7hiw")
 transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.8660253, -52.725067, 1.097064, 39.319557)
 texture = ExtResource("28_htlxo")
 
+[node name="CenarioPT" type="Sprite3D" parent="CenarioPT38" unique_id=1923138328]
+transform = Transform3D(1, 0, 0, 0, 0.9999281, 0.011957109, 0, -0.011957109, 0.9999281, 62.060223, -5.617653, 9.448132)
+texture = ExtResource("11_dhb28")
+
+[node name="CenarioPT2" type="Sprite3D" parent="CenarioPT38" unique_id=679912925]
+transform = Transform3D(1, 0, 0, 0, 0.9999281, 0.011957109, 0, -0.011957109, 0.9999281, 33.977264, -10.614729, 18.62669)
+texture = ExtResource("12_02ypm")
+
+[node name="CenarioPT3" type="Sprite3D" parent="CenarioPT38" unique_id=1797882460]
+transform = Transform3D(1, 0, 0, 0, 0.9999281, 0.011957109, 0, -0.011957109, 0.9999281, 141.29143, -9.200005, 20.508793)
+texture = ExtResource("13_5urpn")
+
+[node name="CenarioPT4" type="Sprite3D" parent="CenarioPT38" unique_id=333240843]
+transform = Transform3D(1, 0, 0, 0, 0.9999281, 0.011957109, 0, -0.011957109, 0.9999281, 89.53005, -7.2272205, 11.935188)
+texture = ExtResource("14_4u50x")
+
+[node name="CenarioPT5" type="Sprite3D" parent="CenarioPT38" unique_id=738513545]
+transform = Transform3D(1, 0, 0, 0, 0.9999281, 0.011957109, 0, -0.011957109, 0.9999281, 97.90971, -2.365591, 9.092892)
+texture = ExtResource("9_i6rbu")
+
+[node name="CenarioPT6" type="Sprite3D" parent="CenarioPT38" unique_id=1386811102]
+transform = Transform3D(1, 0, 0, 0, 0.9999281, 0.011957109, 0, -0.011957109, 0.9999281, 83.70589, -8.940725, 14.986767)
+texture = ExtResource("16_tptsm")
+
+[node name="CenarioPT10" type="Sprite3D" parent="CenarioPT38" unique_id=664223219]
+transform = Transform3D(1, 0, 0, 0, 0.9999281, 0.011957109, 0, -0.011957109, 0.9999281, 54.909927, -6.898388, 11.555939)
+texture = ExtResource("20_dnaho")
+
+[node name="CenarioPT11" type="Sprite3D" parent="CenarioPT38" unique_id=1841294811]
+transform = Transform3D(1, 0, 0, 0, 0.9999281, 0.011957109, 0, -0.011957109, 0.9999281, 63.795265, -6.546507, 16.53865)
+texture = ExtResource("21_qqa8o")
+
+[node name="CenarioPT12" type="Sprite3D" parent="CenarioPT38" unique_id=1759587299]
+transform = Transform3D(1, 0, 0, 0, 0.9999281, 0.011957109, 0, -0.011957109, 0.9999281, 46.531586, -7.518471, 18.269611)
+texture = ExtResource("22_rm74e")
+
+[node name="CenarioPT48" type="Sprite3D" parent="CenarioPT38" unique_id=1671003476]
+transform = Transform3D(1, 0, 0, 0, 0.9999281, 0.011957109, 0, -0.011957109, 0.9999281, 46.531586, -7.518471, 18.269611)
+texture = ExtResource("22_rm74e")
+
+[node name="CenarioPT14" type="Sprite3D" parent="CenarioPT38" unique_id=907088058]
+transform = Transform3D(1, 0, 0, 0, 0.9999281, 0.011957109, 0, -0.011957109, 0.9999281, 32.548203, -2.6803055, 9.653355)
+texture = ExtResource("24_6ad21")
+
+[node name="CenarioPT16" type="Sprite3D" parent="CenarioPT38" unique_id=1829550583]
+transform = Transform3D(0.99999785, 0.0010852163, -0.0018796498, -0.0010626633, 0.9999277, 0.011958152, 0.001892491, -0.011956036, 0.99992657, 53.21786, 1.5537148, 2.1130219)
+texture = ExtResource("26_04xc5")
+
+[node name="CenarioPT25" type="Sprite3D" parent="CenarioPT38" unique_id=1688896596]
+transform = Transform3D(1, 0, 0, 0, 0.9999281, 0.011957109, 0, -0.011957109, 0.9999281, 40.56819, -14.202644, 24.357674)
+texture = ExtResource("14_4u50x")
+
+[node name="CenarioPT27" type="Sprite3D" parent="CenarioPT38" unique_id=1334643243]
+transform = Transform3D(1, 0, 0, 0, 0.9999281, 0.011957109, 0, -0.011957109, 0.9999281, 42.0157, -23.224735, 40.42506)
+texture = ExtResource("18_pl8r0")
+
+[node name="CenarioPT28" type="Sprite3D" parent="CenarioPT38" unique_id=501982213]
+transform = Transform3D(1, 0, 0, 0, 0.9999281, 0.011957109, 0, -0.011957109, 0.9999281, 22.715805, -15.103527, 25.962055)
+texture = ExtResource("23_pft7j")
+
+[node name="CenarioPT29" type="Sprite3D" parent="CenarioPT38" unique_id=805365697]
+transform = Transform3D(1, 0, 0, 0, 0.9999281, 0.011957109, 0, -0.011957109, 0.9999281, 46.23104, -17.997574, 31.116032)
+texture = ExtResource("25_xyorm")
+
+[node name="CenarioPT30" type="Sprite3D" parent="CenarioPT38" unique_id=691501608]
+transform = Transform3D(1, 0, 0, 0, 0.9999281, 0.011957109, 0, -0.011957109, 0.9999281, 33.127388, -22.04734, 38.32826)
+texture = ExtResource("27_g7hiw")
+
+[node name="CenarioPT32" type="Sprite3D" parent="CenarioPT38" unique_id=1118338694]
+transform = Transform3D(1, 0, 0, 0, 0.9999281, 0.011957109, 0, -0.011957109, 0.9999281, 11.157837, -16.661747, 28.737087)
+texture = ExtResource("14_4u50x")
+
+[node name="CenarioPT33" type="Sprite3D" parent="CenarioPT38" unique_id=196855843]
+transform = Transform3D(1, 0, 0, 0, 0.9999281, 0.011957109, 0, -0.011957109, 0.9999281, 5.333679, -18.375256, 31.788662)
+texture = ExtResource("16_tptsm")
+
+[node name="CenarioPT38" type="Sprite3D" parent="CenarioPT38" unique_id=1181999756]
+transform = Transform3D(1, 0, 0, 0, 0.9999281, 0.011957109, 0, -0.011957109, 0.9999281, 8.1263275, -20.853596, 36.202305)
+texture = ExtResource("28_htlxo")
+
+[node name="CenarioPT" type="Sprite3D" parent="CenarioPT38/CenarioPT38" unique_id=2007418995]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011957139, 0, -0.011957139, 0.999928, 14.040382, 6.909836, -11.663033)
+texture = ExtResource("11_dhb28")
+
+[node name="CenarioPT2" type="Sprite3D" parent="CenarioPT38/CenarioPT38" unique_id=1691066057]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011957139, 0, -0.011957139, 0.999928, -14.04258, 1.9127502, -2.4844894)
+texture = ExtResource("12_02ypm")
+
+[node name="CenarioPT3" type="Sprite3D" parent="CenarioPT38/CenarioPT38" unique_id=1216660825]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011957139, 0, -0.011957139, 0.999928, 93.27158, 3.3274765, -0.60237885)
+texture = ExtResource("13_5urpn")
+
+[node name="CenarioPT4" type="Sprite3D" parent="CenarioPT38/CenarioPT38" unique_id=133893159]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011957139, 0, -0.011957139, 0.999928, 41.51021, 5.300247, -9.175983)
+texture = ExtResource("14_4u50x")
+
+[node name="CenarioPT5" type="Sprite3D" parent="CenarioPT38/CenarioPT38" unique_id=507928063]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011957139, 0, -0.011957139, 0.999928, 49.88987, 10.161892, -12.018276)
+texture = ExtResource("9_i6rbu")
+
+[node name="CenarioPT6" type="Sprite3D" parent="CenarioPT38/CenarioPT38" unique_id=1172248010]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011957139, 0, -0.011957139, 0.999928, 35.686043, 3.5867653, -6.1243973)
+texture = ExtResource("16_tptsm")
+
+[node name="CenarioPT10" type="Sprite3D" parent="CenarioPT38/CenarioPT38" unique_id=1148917834]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011957139, 0, -0.011957139, 0.999928, 6.8900833, 5.629093, -9.555218)
+texture = ExtResource("20_dnaho")
+
+[node name="CenarioPT11" type="Sprite3D" parent="CenarioPT38/CenarioPT38" unique_id=1576714799]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011957139, 0, -0.011957139, 0.999928, 15.775421, 5.9809723, -4.5725174)
+texture = ExtResource("21_qqa8o")
+
+[node name="CenarioPT12" type="Sprite3D" parent="CenarioPT38/CenarioPT38" unique_id=826688213]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011957139, 0, -0.011957139, 0.999928, -1.4882584, 5.0090065, -2.841568)
+texture = ExtResource("22_rm74e")
+
+[node name="CenarioPT48" type="Sprite3D" parent="CenarioPT38/CenarioPT38" unique_id=1109025180]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011957139, 0, -0.011957139, 0.999928, -1.4882584, 5.0090065, -2.841568)
+texture = ExtResource("22_rm74e")
+
+[node name="CenarioPT14" type="Sprite3D" parent="CenarioPT38/CenarioPT38" unique_id=1694216252]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011957139, 0, -0.011957139, 0.999928, -15.471642, 9.847172, -11.457817)
+texture = ExtResource("24_6ad21")
+
+[node name="CenarioPT16" type="Sprite3D" parent="CenarioPT38/CenarioPT38" unique_id=745456846]
+transform = Transform3D(0.99999785, 0.0010852163, -0.0018796498, -0.001062663, 0.9999277, 0.011958182, 0.0018924908, -0.011956006, 0.9999261, 5.198021, 14.08119, -18.998146)
+texture = ExtResource("26_04xc5")
+
+[node name="CenarioPT25" type="Sprite3D" parent="CenarioPT38/CenarioPT38" unique_id=52063961]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011957139, 0, -0.011957139, 0.999928, -7.4516525, -1.6751785, 3.2465286)
+texture = ExtResource("14_4u50x")
+
+[node name="CenarioPT27" type="Sprite3D" parent="CenarioPT38/CenarioPT38" unique_id=1501772784]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011957139, 0, -0.011957139, 0.999928, -6.0041428, -10.697258, 19.313889)
+texture = ExtResource("18_pl8r0")
+
+[node name="CenarioPT28" type="Sprite3D" parent="CenarioPT38/CenarioPT38" unique_id=2086606753]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011957139, 0, -0.011957139, 0.999928, -25.304039, -2.5760536, 4.8508987)
+texture = ExtResource("23_pft7j")
+
+[node name="CenarioPT29" type="Sprite3D" parent="CenarioPT38/CenarioPT38" unique_id=243361888]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011957139, 0, -0.011957139, 0.999928, -1.7888031, -5.470093, 10.004868)
+texture = ExtResource("25_xyorm")
+
+[node name="CenarioPT30" type="Sprite3D" parent="CenarioPT38/CenarioPT38" unique_id=2053894464]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011957139, 0, -0.011957139, 0.999928, -14.892456, -9.519859, 17.21708)
+texture = ExtResource("27_g7hiw")
+
+[node name="CenarioPT32" type="Sprite3D" parent="CenarioPT38/CenarioPT38" unique_id=2070699597]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011957139, 0, -0.011957139, 0.999928, -36.862007, -4.134262, 7.6259155)
+texture = ExtResource("14_4u50x")
+
+[node name="CenarioPT33" type="Sprite3D" parent="CenarioPT38/CenarioPT38" unique_id=1343819444]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011957139, 0, -0.011957139, 0.999928, -42.686165, -5.8477745, 10.677483)
+texture = ExtResource("16_tptsm")
+
+[node name="CenarioPT38" type="Sprite3D" parent="CenarioPT38/CenarioPT38" unique_id=1817198536]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011957139, 0, -0.011957139, 0.999928, -39.893517, -8.326115, 15.091141)
+texture = ExtResource("28_htlxo")
+
+[node name="CenarioPT" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1352105428]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.01195696, 0, -0.01195696, 0.999928, 177.58337, 26.719767, -44.15487)
+texture = ExtResource("11_dhb28")
+
+[node name="CenarioPT2" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1510900504]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.01195696, 0, -0.01195696, 0.999928, 149.50043, 21.722681, -34.976322)
+texture = ExtResource("12_02ypm")
+
+[node name="CenarioPT3" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1964873527]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.01195696, 0, -0.01195696, 0.999928, 256.81458, 23.137405, -33.094215)
+texture = ExtResource("13_5urpn")
+
+[node name="CenarioPT4" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1955175890]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.01195696, 0, -0.01195696, 0.999928, 205.05319, 25.110174, -41.667816)
+texture = ExtResource("14_4u50x")
+
+[node name="CenarioPT5" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1010395695]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.01195696, 0, -0.01195696, 0.999928, 213.43286, 29.971825, -44.510113)
+texture = ExtResource("9_i6rbu")
+
+[node name="CenarioPT6" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1645014318]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.01195696, 0, -0.01195696, 0.999928, 199.22903, 23.396696, -38.61623)
+texture = ExtResource("16_tptsm")
+
+[node name="CenarioPT10" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38" unique_id=2022146250]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.01195696, 0, -0.01195696, 0.999928, 170.43307, 25.439026, -42.04706)
+texture = ExtResource("20_dnaho")
+
+[node name="CenarioPT11" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38" unique_id=958170444]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.01195696, 0, -0.01195696, 0.999928, 179.31842, 25.790903, -37.06435)
+texture = ExtResource("21_qqa8o")
+
+[node name="CenarioPT12" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1872233028]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.01195696, 0, -0.01195696, 0.999928, 162.05475, 24.81894, -35.33341)
+texture = ExtResource("22_rm74e")
+
+[node name="CenarioPT48" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38" unique_id=709419621]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.01195696, 0, -0.01195696, 0.999928, 162.05475, 24.81894, -35.33341)
+texture = ExtResource("22_rm74e")
+
+[node name="CenarioPT14" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38" unique_id=657999993]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.01195696, 0, -0.01195696, 0.999928, 148.07135, 29.657103, -43.949654)
+texture = ExtResource("24_6ad21")
+
+[node name="CenarioPT16" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1180613130]
+transform = Transform3D(0.99999785, 0.0010852163, -0.0018796498, -0.001062663, 0.9999277, 0.011958033, 0.0018924909, -0.011956006, 0.99992603, 168.74103, 33.89112, -51.489983)
+texture = ExtResource("26_04xc5")
+
+[node name="CenarioPT25" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38" unique_id=988722257]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.01195696, 0, -0.01195696, 0.999928, 156.09134, 18.134745, -29.245296)
+texture = ExtResource("14_4u50x")
+
+[node name="CenarioPT27" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1723832310]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.01195696, 0, -0.01195696, 0.999928, 157.53885, 9.112671, -13.177948)
+texture = ExtResource("18_pl8r0")
+
+[node name="CenarioPT28" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1730086472]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.01195696, 0, -0.01195696, 0.999928, 138.23895, 17.233871, -27.640938)
+texture = ExtResource("23_pft7j")
+
+[node name="CenarioPT29" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38" unique_id=305414744]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.01195696, 0, -0.01195696, 0.999928, 161.75418, 14.3398285, -22.486969)
+texture = ExtResource("25_xyorm")
+
+[node name="CenarioPT30" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38" unique_id=972940523]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.01195696, 0, -0.01195696, 0.999928, 148.65054, 10.290073, -15.274757)
+texture = ExtResource("27_g7hiw")
+
+[node name="CenarioPT32" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1015536959]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.01195696, 0, -0.01195696, 0.999928, 126.680984, 15.675663, -24.865925)
+texture = ExtResource("14_4u50x")
+
+[node name="CenarioPT33" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38" unique_id=422390296]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.01195696, 0, -0.01195696, 0.999928, 120.85683, 13.962154, -21.814354)
+texture = ExtResource("16_tptsm")
+
+[node name="CenarioPT38" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1164320936]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.01195696, 0, -0.01195696, 0.999928, 123.649475, 11.483814, -17.400711)
+texture = ExtResource("28_htlxo")
+
+[node name="CenarioPT" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1537665708]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011956781, 0, -0.011956781, 0.999928, 1.658268, 71.60217, -115.82759)
+texture = ExtResource("11_dhb28")
+
+[node name="CenarioPT2" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38/CenarioPT38" unique_id=738265145]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011956781, 0, -0.011956781, 0.999928, -26.424679, 66.6051, -106.64906)
+texture = ExtResource("12_02ypm")
+
+[node name="CenarioPT3" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1857078624]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011956781, 0, -0.011956781, 0.999928, 80.88947, 68.01983, -104.76695)
+texture = ExtResource("13_5urpn")
+
+[node name="CenarioPT4" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1277721909]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011956781, 0, -0.011956781, 0.999928, 29.12809, 69.99257, -113.34056)
+texture = ExtResource("14_4u50x")
+
+[node name="CenarioPT5" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1987351598]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011956781, 0, -0.011956781, 0.999928, 37.50776, 74.85422, -116.182846)
+texture = ExtResource("9_i6rbu")
+
+[node name="CenarioPT6" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38/CenarioPT38" unique_id=226997933]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011956781, 0, -0.011956781, 0.999928, 23.303928, 68.2791, -110.28897)
+texture = ExtResource("16_tptsm")
+
+[node name="CenarioPT10" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38/CenarioPT38" unique_id=889126907]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011956781, 0, -0.011956781, 0.999928, -5.492031, 70.32143, -113.71977)
+texture = ExtResource("20_dnaho")
+
+[node name="CenarioPT11" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38/CenarioPT38" unique_id=82471912]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011956781, 0, -0.011956781, 0.999928, 3.3933144, 70.67331, -108.737076)
+texture = ExtResource("21_qqa8o")
+
+[node name="CenarioPT12" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38/CenarioPT38" unique_id=682883556]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011956781, 0, -0.011956781, 0.999928, -13.8703575, 69.70136, -107.00616)
+texture = ExtResource("22_rm74e")
+
+[node name="CenarioPT48" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1848348212]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011956781, 0, -0.011956781, 0.999928, -13.8703575, 69.70136, -107.00616)
+texture = ExtResource("22_rm74e")
+
+[node name="CenarioPT14" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1951633721]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011956781, 0, -0.011956781, 0.999928, -27.853756, 74.53952, -115.62239)
+texture = ExtResource("24_6ad21")
+
+[node name="CenarioPT16" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38/CenarioPT38" unique_id=750841225]
+transform = Transform3D(0.99999785, 0.0010852163, -0.0018796498, -0.001062663, 0.99992764, 0.011958033, 0.0018924908, -0.011955857, 0.99992603, -7.184078, 78.77354, -123.16272)
+texture = ExtResource("26_04xc5")
+
+[node name="CenarioPT25" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1749793479]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011956781, 0, -0.011956781, 0.999928, -19.833767, 63.017143, -100.918015)
+texture = ExtResource("14_4u50x")
+
+[node name="CenarioPT27" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38/CenarioPT38" unique_id=646057011]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011956781, 0, -0.011956781, 0.999928, -18.386257, 53.995075, -84.85069)
+texture = ExtResource("18_pl8r0")
+
+[node name="CenarioPT28" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1038180703]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011956781, 0, -0.011956781, 0.999928, -37.686153, 62.1163, -99.313675)
+texture = ExtResource("23_pft7j")
+
+[node name="CenarioPT29" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38/CenarioPT38" unique_id=695834250]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011956781, 0, -0.011956781, 0.999928, -14.170925, 59.222244, -94.1597)
+texture = ExtResource("25_xyorm")
+
+[node name="CenarioPT30" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38/CenarioPT38" unique_id=299150748]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011956781, 0, -0.011956781, 0.999928, -27.274563, 55.172478, -86.94748)
+texture = ExtResource("27_g7hiw")
+
+[node name="CenarioPT32" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38/CenarioPT38" unique_id=697667651]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011956781, 0, -0.011956781, 0.999928, -49.244137, 60.55806, -96.538635)
+texture = ExtResource("14_4u50x")
+
+[node name="CenarioPT33" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1297193319]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011956781, 0, -0.011956781, 0.999928, -55.068295, 58.84456, -93.48709)
+texture = ExtResource("16_tptsm")
+
+[node name="CenarioPT38" type="Sprite3D" parent="CenarioPT38/CenarioPT38/CenarioPT38/CenarioPT38" unique_id=1399585588]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.011956781, 0, -0.011956781, 0.999928, -52.27563, 56.366207, -89.073456)
+texture = ExtResource("28_htlxo")
+
 [node name="CenarioPT39" type="Sprite3D" parent="." unique_id=284758120]
 transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.8660253, 41.395775, 1.0970659, 37.677727)
 texture = ExtResource("14_4u50x")
@@ -556,7 +876,7 @@ transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.866
 texture = ExtResource("28_htlxo")
 
 [node name="CenarioPT19" type="Sprite3D" parent="." unique_id=725980922]
-transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.8660253, 5.5282607, 3.9445086, 10.996763)
+transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.49999997, 0, -0.49999997, 0.8660253, 5.5282607, 1.1109414, 10.996763)
 texture = ExtResource("29_hdtvt")
 
 [node name="CenarioPT20" type="Sprite3D" parent="." unique_id=1010429740]
