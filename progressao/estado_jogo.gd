@@ -9,8 +9,18 @@ const DANO_INICIAL: float = 2.0
 const VIDA_ARANHA: float = 1.0
 const VIDA_SLIME: float = 4.0
 const DANO_SLIME: float = 2.0
+const DANO_MACHADO_INICIAL: float = 1.0
+const QUANTIDADE_MACHADO_INICIAL: int = 1
+const QUANTIDADE_MACHADO_MAXIMA: int = 3
+## Cartas que so ficam disponiveis depois que a skill do machado e comprada.
+const REQUER_MACHADO: Array[StringName] = [
+	&"machado_dano",
+	&"machado_velocidade",
+	&"machado_intervalo",
+	&"machado_quantidade",
+]
 const XP_ARANHA: int = 1
-const XP_SLIME: int = 2
+const XP_SLIME: int = 3
 
 # XP base inicial e o acréscimo progressivo por nível
 const XP_BASE_INICIAL: int = 10
@@ -22,14 +32,16 @@ const INTERVALO_MACHADO_MINIMO: float = 2.0
 
 # Pré-carrega as cartas uma única vez para otimizar desempenho e memória
 const TODAS_AS_CARTAS: Array[Dictionary] = [
-	{"id": &"forca", "titulo": "FORÇA", "texto": "+1 de dano\npara todos os seus ataques.", "imagem": preload("res://progressao/imagens/forca.svg")},
+	{"id": &"forca", "titulo": "FORÇA", "texto": "+1 de dano\nno seu ataque corpo a corpo.", "imagem": preload("res://progressao/imagens/forca.svg")},
 	{"id": &"vitalidade", "titulo": "VITALIDADE", "texto": "+2 de vida máxima\ne recupera 2 de vida.", "imagem": preload("res://progressao/imagens/vitalidade.svg")},
 	{"id": &"cura", "titulo": "RECUPERAÇÃO", "texto": "Recupera toda\na sua vida atual.", "imagem": preload("res://progressao/imagens/cura.svg")},
 	{"id": &"acelerar", "titulo": "ACELERAR", "texto": "Aumenta a velocidade\nde movimento em 10%.", "imagem": preload("res://progressao/imagens/acelerar.png")},
 	{"id": &"destreza", "titulo": "DESTREZA", "texto": "Aumenta a velocidade\nde ataque em 20%.", "imagem": preload("res://progressao/imagens/destreza.png")},
-	{"id": &"machado_dano", "titulo": "LÂMINA FORTE", "texto": "+1 de dano\npara o machado.", "imagem": preload("res://progressao/imagens/machado_animacao/machado_1.png")},
+	{"id": &"machado", "titulo": "MACHADO", "texto": "Libera o machado:\nele voa sozinho no inimigo mais próximo.", "imagem": preload("res://progressao/imagens/machado.svg")},
+	{"id": &"machado_dano", "titulo": "LÂMINA FORTE", "texto": "+1 de dano\nsó no machado.", "imagem": preload("res://progressao/imagens/machado_animacao/machado_1.png")},
 	{"id": &"machado_velocidade", "titulo": "LÂMINA VELOZ", "texto": "Machado voa 20%\nmais rápido.", "imagem": preload("res://progressao/imagens/machado_animacao/machado_2.png")},
-	{"id": &"machado_intervalo", "titulo": "ARREMESSO RÁPIDO", "texto": "Machado sai 2 s\nmais cedo (mín. 2 s).", "imagem": preload("res://progressao/imagens/machado_animacao/machado_3.png")}
+	{"id": &"machado_intervalo", "titulo": "ARREMESSO RÁPIDO", "texto": "Machado sai 2 s\nmais cedo (mín. 2 s).", "imagem": preload("res://progressao/imagens/machado_animacao/machado_3.png")},
+	{"id": &"machado_quantidade", "titulo": "MACHADOS DUPLOS", "texto": "Lança mais um machado\nem outro inimigo.", "imagem": preload("res://progressao/imagens/machado_quantidade.svg")}
 ]
 
 var velocidade_movimento: float = VELOCIDADE_INICIAL
@@ -44,9 +56,12 @@ signal abates_alterados(total: int)
 var vida_maxima: float = VIDA_INICIAL
 var vida_atual: float = VIDA_INICIAL
 var dano_jogador: float = DANO_INICIAL
+var dano_machado: float = DANO_MACHADO_INICIAL
 var dano_extra_machado: float = 0.0
 var velocidade_machado: float = VELOCIDADE_MACHADO_INICIAL
 var intervalo_machado: float = INTERVALO_MACHADO_INICIAL
+var quantidade_machados: int = QUANTIDADE_MACHADO_INICIAL
+var machado_desbloqueado: bool = false
 var xp_total: int = 0
 var xp_atual: int = 0
 var cartas_pendentes: int = 0
@@ -67,7 +82,7 @@ func atualizar_vida(valor: float) -> void:
 	status_alterado.emit()
 
 func dano_machado_atual() -> float:
-	return dano_jogador + dano_extra_machado
+	return dano_machado + dano_extra_machado
 
 func adicionar_xp(quantidade: int) -> void:
 	if quantidade <= 0 or vida_atual <= 0.0:
@@ -90,9 +105,26 @@ func solicitar_carta() -> void:
 		escolha_solicitada.emit()
 
 func sortear_cartas_aleatorias() -> void:
-	var copia_cartas := TODAS_AS_CARTAS.duplicate()
-	copia_cartas.shuffle()
-	cartas_disponiveis_atuais = copia_cartas.slice(0, 3)
+	var elegiveis: Array[Dictionary] = []
+	for carta: Dictionary in TODAS_AS_CARTAS:
+		if _carta_disponivel(carta):
+			elegiveis.append(carta)
+	elegiveis.shuffle()
+	cartas_disponiveis_atuais = elegiveis.slice(0, 3)
+
+## Uma carta de upgrade de skill só aparece depois que a skill foi comprada.
+## Sem isso o machado viraria upgrades que o jogador nunca pode usar.
+func _carta_disponivel(carta: Dictionary) -> bool:
+	var id: StringName = carta["id"]
+	# A carta que compra a skill sai do sorteio assim que ela é comprada.
+	if id == &"machado" and machado_desbloqueado:
+		return false
+	# No teto de machados, a carta de quantidade não tem mais efeito.
+	if id == &"machado_quantidade" and quantidade_machados >= QUANTIDADE_MACHADO_MAXIMA:
+		return false
+	if not REQUER_MACHADO.has(id):
+		return true
+	return machado_desbloqueado
 
 func selecionar_carta(id: StringName) -> void:
 	if not escolhendo_carta or cartas_pendentes <= 0:
@@ -109,12 +141,16 @@ func selecionar_carta(id: StringName) -> void:
 			velocidade_movimento += 0.1
 		&"destreza":
 			velocidade_ataque += 0.2
+		&"machado":
+			machado_desbloqueado = true
 		&"machado_dano":
 			dano_extra_machado += 1.0
 		&"machado_velocidade":
 			velocidade_machado *= 1.2
 		&"machado_intervalo":
 			intervalo_machado = maxf(INTERVALO_MACHADO_MINIMO, intervalo_machado - 2.0)
+		&"machado_quantidade":
+			quantidade_machados = mini(quantidade_machados + 1, QUANTIDADE_MACHADO_MAXIMA)
 		_:
 			return
 	cartas_selecionadas.append(id)
@@ -128,9 +164,12 @@ func nova_partida() -> void:
 	vida_maxima = VIDA_INICIAL
 	vida_atual = VIDA_INICIAL
 	dano_jogador = DANO_INICIAL
+	dano_machado = DANO_MACHADO_INICIAL
 	dano_extra_machado = 0.0
 	velocidade_machado = VELOCIDADE_MACHADO_INICIAL
 	intervalo_machado = INTERVALO_MACHADO_INICIAL
+	quantidade_machados = QUANTIDADE_MACHADO_INICIAL
+	machado_desbloqueado = false
 	velocidade_movimento = VELOCIDADE_INICIAL
 	velocidade_ataque = ATTACK_SPEED_INICIAL
 	xp_total = 0

@@ -1,0 +1,87 @@
+--- "inimigo aranha.gd"	2026-10-20 00:38:31.507462600 -0300
++++ aranhapequena.gd	2026-10-20 00:38:56.242191300 -0300
+@@ -10,6 +10,10 @@
+ @export var speed: float = 5.0 # Mais rapido que o slime (2.0)
+ @export var max_health: float = 1.0 # Morre com um hit
+ 
++@export_group("Aparência")
++@export var escala_aranha: Vector3 = Vector3(0.45, 0.45, 0.45) # Reduzida de 0.7 para 0.45 (bem menor)
++@export var cor_aranha: Color = Color(1.8, 0.2, 0.2, 1.0) # Vermelho intenso/vibrante
++
+ @export_group("Cabeçada (Super Rápida)")
+ @export var attack_range: float = 1.45
+ @export var hit_range: float = 1.75
+@@ -53,6 +57,11 @@
+ 	if player == null and get_parent():
+ 		player = get_parent().get_node_or_null("Player") as CharacterBody3D
+ 
++	# --- APLICA TAMANHO REDUZIDO E TOM AVERMELHADO ---
++	if sprite:
++		sprite.scale = escala_aranha
++		sprite.modulate = cor_aranha
++
+ 	_preparar_sprite_recuo()
+ 	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(&"walk"):
+ 		sprite.play(&"walk")
+@@ -102,7 +111,7 @@
+ 			_walk_time += delta * 1.2
+ 			var pulse: float = sin(_walk_time * TAU)
+ 			if sprite:
+-				sprite.scale = Vector3(1.0 - pulse * 0.05, 1.0 + pulse * 0.08, 1.0)
++				sprite.scale = Vector3(escala_aranha.x - pulse * 0.03, escala_aranha.y + pulse * 0.05, escala_aranha.z)
+ 		else:
+ 			_stop_horizontal()
+ 			_set_animation(&"idle")
+@@ -119,7 +128,7 @@
+ 	_attack_direction = to_player.normalized()
+ 	_stop_horizontal()
+ 	if sprite:
+-		sprite.scale = Vector3.ONE
++		sprite.scale = escala_aranha
+ 		if sprite.sprite_frames and sprite.sprite_frames.has_animation(&"attack"):
+ 			sprite.speed_scale = 2.0 / maxf(attack_duration, 0.01) / sprite.sprite_frames.get_animation_speed(&"attack")
+ 			sprite.play(&"attack")
+@@ -178,7 +187,7 @@
+ 		return
+ 	if sprite.animation != anim_name or not sprite.is_playing():
+ 		if sprite.sprite_frames.has_animation(anim_name):
+-			sprite.scale = Vector3.ONE
++			sprite.scale = escala_aranha
+ 			sprite.play(anim_name)
+ 
+ 
+@@ -210,6 +219,7 @@
+ 	_sprite_recuo.pixel_size = sprite.pixel_size
+ 	_sprite_recuo.billboard = sprite.billboard
+ 	_sprite_recuo.no_depth_test = sprite.no_depth_test
++	_sprite_recuo.modulate = cor_aranha
+ 	_sprite_recuo.visible = false
+ 	add_child(_sprite_recuo)
+ 
+@@ -232,7 +242,7 @@
+ 	if _sprite_recuo == null:
+ 		return
+ 	_sprite_recuo.flip_h = sprite.flip_h
+-	_sprite_recuo.scale = sprite.scale * Vector3(1.12, 0.9, 1.0)
++	_sprite_recuo.scale = escala_aranha * Vector3(1.12, 0.9, 1.0)
+ 	sprite.visible = false
+ 	_sprite_recuo.visible = true
+ 	if _tween_recuo and _tween_recuo.is_running():
+@@ -241,7 +251,7 @@
+ 	_tween_recuo.tween_property(
+ 		_sprite_recuo,
+ 		"scale",
+-		sprite.scale,
++		escala_aranha,
+ 		0.12
+ 	).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+ 
+@@ -260,7 +270,7 @@
+ 		sprite.visible = true
+ 		if _sprite_recuo:
+ 			_sprite_recuo.visible = false
+-		sprite.scale = Vector3.ONE
++		sprite.scale = escala_aranha
+ 	return true
+ 
+ 
